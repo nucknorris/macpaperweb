@@ -34,14 +34,14 @@ import de.htwkleipzig.mmdb.service.TwitterService;
 /**
  * Implementation of the TwitterService interface.
  */
-@Service
+//@Service
 public class DefaultTwitterService implements TwitterService {
 
     /** Holds a collection of polled Twitter messages */
     private Map<Long, TwitterMessage> twitterMessages;
 
-    @Autowired
-    @Qualifier("controlBusChannel")
+//    @Autowired
+//    @Qualifier("controlBusChannel")
     private DirectChannel channel;
 
     /**

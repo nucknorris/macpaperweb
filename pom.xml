@@ -77,6 +77,13 @@
 			<scope>test</scope>
 		</dependency>
 
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<version>${org.springframework-version}</version>
+		</dependency>
+
+
 		<!-- Spring -->
 
 		<dependency>
@@ -166,6 +173,18 @@
 			<artifactId>tika-parsers</artifactId>
 			<version>1.1</version>
 		</dependency>
+		<!-- Elastic search -->
+		<dependency>
+			<groupId>org.elasticsearch</groupId>
+			<artifactId>elasticsearch</artifactId>
+			<version>0.19.2</version>
+		</dependency>
 
+		<dependency>
+			<groupId>fr.pilato.spring</groupId>
+			<artifactId>spring-elasticsearch</artifactId>
+			<!-- <name>spring-elasticsearch</name> -->
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
 	</dependencies>
 </project>
