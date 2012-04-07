@@ -15,11 +15,10 @@
  */
 package de.htwkleipzig.mmdb.mvc.controller;
 
-import java.io.File;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.Collection;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.elasticsearch.action.admin.indices.create.CreateIndexRequest;
@@ -43,9 +42,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import de.htwkleipzig.mmdb.model.TwitterMessage;
+import com.google.gson.Gson;
+
+import de.htwkleipzig.mmdb.model.Author;
+import de.htwkleipzig.mmdb.model.Paper;
+import de.htwkleipzig.mmdb.model.University;
 import de.htwkleipzig.mmdb.service.ElasticsearchService;
-import de.htwkleipzig.mmdb.service.TwitterService;
 import de.htwkleipzig.mmdb.util.PDFParser;
 
 /**
@@ -57,7 +59,7 @@ public class HomeController {
     private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 
     // @Autowired
-    private TwitterService twitterService;
+    // private TwitterService twitterService;
 
     @Autowired
     private ElasticsearchService elasticService;
@@ -134,12 +136,6 @@ public class HomeController {
     // @RequestMapping(value = "/elastic")
     public String elasticSearch(Model model) {
         Map<String, Object> test = new HashMap<String, Object>();
-        // test.put("pdf", PDFParser.pdfParser());
-        // Node node = NodeBuilder.nodeBuilder().node();
-        // node.start();
-        //
-        // Client client = node.client();
-        //
 
         logger.info("create settings");
         Settings settings = ImmutableSettings.settingsBuilder().build();
@@ -149,26 +145,26 @@ public class HomeController {
         logger.info("add settings to transportclient");
         client.addTransportAddress(new InetSocketTransportAddress("127.0.0.1", 9300));
         try {
-            // create an index called myindex
-            logger.info("create an index called myindex");
-            client.admin().indices().create(new CreateIndexRequest("myindex")).actionGet();
+            // create an index called paperindex
+            logger.info("create an index called paperindex");
+            client.admin().indices().create(new CreateIndexRequest("paperindex")).actionGet();
         } catch (IndexAlreadyExistsException ex) {
             logger.warn("already exists", ex);
         }
         logger.info("indexRequestBuilder");
-        // index the object test on index myindex with indextype indextype and id 3
-        IndexRequestBuilder irb = client.prepareIndex("myindex", "indextype", "3").
+        // index the object test on index paperindex with indextype indextype and id 3
+        IndexRequestBuilder irb = client.prepareIndex("paperindex", "indextype", "3").
                 setSource(test);
         irb.execute().actionGet();
-        // gets the object from myindex with indextype indextype and id 3
-        GetResponse rsp = client.prepareGet("myindex", "indextype", "3").
+        // gets the object from paperindex with indextype indextype and id 3
+        GetResponse rsp = client.prepareGet("paperindex", "indextype", "3").
                 execute().actionGet();
         Map<String, Object> source = rsp.getSource();
         logger.info(source.size() + "");
         // logger.info((String) source.get("pdf"));
 
-        // search at myindex
-        SearchRequestBuilder builder = client.prepareSearch("myindex");
+        // search at paperindex
+        SearchRequestBuilder builder = client.prepareSearch("paperindex");
         // search at QuizRDF
         QueryStringQueryBuilder qb = QueryBuilders.queryString("QuizRDF").allowLeadingWildcard(false)
                 .useDisMax(true);
@@ -196,7 +192,7 @@ public class HomeController {
     @RequestMapping(value = "/elasticget")
     public String elasticbean(@RequestParam(required = true) String id, Model model) {
 
-        GetResponse rsp = elasticService.get("myindex", "indextype", id);
+        GetResponse rsp = elasticService.get("paperindex", "indextype", id);
         Map<String, Object> source = rsp.getSource();
         for (String key : source.keySet()) {
             logger.info("resource {}", key);
@@ -208,7 +204,7 @@ public class HomeController {
     @RequestMapping(value = "/")
     public String elasticstart(Model model) {
         logger.info("try to find the document with the id swse");
-        GetResponse rsp = elasticService.get("myindex", "indextype", "swse");
+        GetResponse rsp = elasticService.get("paperindex", "indextype", "swse");
         Map<String, Object> source = rsp.getSource();
         for (String key : source.keySet()) {
             logger.info("resource {}", key);
@@ -223,7 +219,7 @@ public class HomeController {
         logger.info("search for a query");
         QueryStringQueryBuilder qb = QueryBuilders.queryString(searchPhrase).allowLeadingWildcard(false)
                 .useDisMax(true);
-        SearchResponse search = elasticService.searchsearch("myindex", qb);
+        SearchResponse search = elasticService.searchsearch("paperindex", qb);
         logger.info("total hits {}", search.getHits().getTotalHits());
         logger.info("MaxScore {}", search.getHits().getMaxScore());
         for (SearchHit hit : search.getHits().getHits()) {
@@ -252,8 +248,70 @@ public class HomeController {
         test.put("pdf", PDFParser.pdfParser(path));
         logger.debug("the extracted content {}", test.get("pdf").toString());
         logger.debug("try to save the context of the pdf to es");
-        elasticService.save("myindex", "indextype", id, test);
+        elasticService.save("paperindex", "indextype", id, test);
         logger.debug("saved");
+        return "elastic";
+    }
+
+    @RequestMapping(value = "/savejson")
+    public String elasticSaveJson(Model model) {
+
+        List<String> keywords = new ArrayList<String>();
+        keywords.add("semantic search");
+        keywords.add("Information Retrieval");
+        keywords.add("evaluation benchmarks");
+
+        Paper paper = new Paper();
+        paper.setCreateDate(new Date(System.currentTimeMillis()));
+        paper.setKindOf("paper");
+        paper.setTitle("Using TREC for cross-comparison between classic IR and ontology-based search models at a Web scale");
+        paper.setKeywords(keywords);
+
+        University uniMadrid = new University();
+        uniMadrid.setCity("Madrid");
+        uniMadrid.setCountry("Spain");
+        uniMadrid.setPostcode("28048");
+        uniMadrid.setHousenumber("11");
+        uniMadrid.setName("Escuela Politecnica Superior Universidad Autonoma de Madrid");
+        uniMadrid.setStreet("C/ Francisco Tomas y Valiente");
+
+        University uniMiltonKeynes = new University();
+        uniMiltonKeynes.setCity("Milton Keynes");
+        uniMiltonKeynes.setCountry("United Kingdom");
+        uniMiltonKeynes.setPostcode("MK7 6AA");
+        uniMiltonKeynes.setName("Knowledge Media institute The Open University");
+        uniMiltonKeynes.setStreet("Walton Hall");
+
+        Author authorFern = new Author();
+        authorFern.setEmail("Miriam.fernandez@uam.es");
+        authorFern.setLastname("Fernandez");
+        authorFern.setName("Miriam");
+        authorFern.setUniversity(uniMadrid);
+        paper.getAuthors().add(authorFern);
+
+        Author authorVallet = new Author();
+        authorVallet.setEmail("David.vallet@uam.es");
+        authorVallet.setLastname("Vallet");
+        authorVallet.setName("David");
+        authorVallet.setUniversity(uniMadrid);
+        paper.getAuthors().add(authorVallet);
+
+        Author authorCastells = new Author();
+        authorCastells.setEmail("pablo.castells@uam.es");
+        authorCastells.setLastname("Castells");
+        authorCastells.setName("Paplo");
+        authorCastells.setUniversity(uniMadrid);
+        paper.getAuthors().add(authorCastells);
+
+        paper.setContent("hier kommt der ganze inhalt mit rein");
+        Gson gson = new Gson();
+
+        // convert java object to JSON format,
+        // and returned as JSON formatted string
+        String json = gson.toJson(paper);
+
+        System.out.println(json);
+
         return "elastic";
     }
 }

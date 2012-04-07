@@ -174,16 +174,24 @@
 			<version>1.1</version>
 		</dependency>
 		<!-- Elastic search -->
-<!-- 		<dependency> -->
-<!-- 			<groupId>org.elasticsearch</groupId> -->
-<!-- 			<artifactId>elasticsearch</artifactId> -->
-<!-- 			<version>0.19.2</version> -->
-<!-- 		</dependency> -->
+
+		<!-- <dependency> -->
+		<!-- <groupId>org.elasticsearch</groupId> -->
+		<!-- <artifactId>elasticsearch</artifactId> -->
+		<!-- <version>0.19.2</version> -->
+		<!-- </dependency> -->
 
 		<dependency>
 			<groupId>fr.pilato.spring</groupId>
 			<artifactId>spring-elasticsearch</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+
+		<!-- google gson json -->
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+			<version>2.1</version>
 		</dependency>
 	</dependencies>
 </project>
