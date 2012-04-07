@@ -33,6 +33,9 @@ public class ElasticsearchServiceImpl implements ElasticsearchService {
     @Override
     public void init() {
         logger.info("init TransportClient");
+        for (String node : transportFactoryBean.getEsNodes()) {
+            logger.info("node {}", node);
+        }
         try {
             client = (TransportClient) transportFactoryBean.getObject();
         } catch (Exception e) {
@@ -86,7 +89,7 @@ public class ElasticsearchServiceImpl implements ElasticsearchService {
 
     @Override
     public DeleteResponse delete(String indexName, String type, String id) {
-        DeleteResponse response = client.prepareDelete("twitter", "tweet", "1")
+        DeleteResponse response = client.prepareDelete(indexName, type, id)
                 .execute()
                 .actionGet();
 
@@ -99,6 +102,11 @@ public class ElasticsearchServiceImpl implements ElasticsearchService {
         builder.setQuery(query);
 
         return builder.execute().actionGet();
+    }
+
+    @Override
+    public void onShutdown() {
+        client.close();
     }
 
 }

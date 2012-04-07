@@ -62,46 +62,46 @@ public class HomeController {
     @Autowired
     private ElasticsearchService elasticService;
 
-    /**
-     * Simply selects the home view to render by returning its name.
-     */
-    @RequestMapping(value = "/")
-    public String home(Model model, @RequestParam(required = false) String startTwitter,
-            @RequestParam(required = false) String stopTwitter) {
-
-        if (startTwitter != null) {
-            twitterService.startTwitterAdapter();
-            return "redirect:/";
-        }
-
-        if (stopTwitter != null) {
-            twitterService.stopTwitterAdapter();
-            return "redirect:/";
-        }
-
-        final Collection<TwitterMessage> twitterMessages = twitterService.getTwitterMessages();
-
-        logger.info("Retrieved {} Twitter messages.", twitterMessages.size());
-
-        model.addAttribute("twitterMessages", twitterMessages);
-
-        return "home";
-    }
-
-    /**
-     * Simply selects the home view to render by returning its name.
-     */
-    @RequestMapping(value = "/ajax")
-    public String ajaxCall(Model model) {
-
-        final Collection<TwitterMessage> twitterMessages = twitterService.getTwitterMessages();
-
-        logger.info("Retrieved {} Twitter messages.", twitterMessages.size());
-        model.addAttribute("twitterMessages", twitterMessages);
-
-        return "twitterMessages";
-
-    }
+    // /**
+    // * Simply selects the home view to render by returning its name.
+    // */
+    // @RequestMapping(value = "/")
+    // public String home(Model model, @RequestParam(required = false) String startTwitter,
+    // @RequestParam(required = false) String stopTwitter) {
+    //
+    // if (startTwitter != null) {
+    // twitterService.startTwitterAdapter();
+    // return "redirect:/";
+    // }
+    //
+    // if (stopTwitter != null) {
+    // twitterService.stopTwitterAdapter();
+    // return "redirect:/";
+    // }
+    //
+    // final Collection<TwitterMessage> twitterMessages = twitterService.getTwitterMessages();
+    //
+    // logger.info("Retrieved {} Twitter messages.", twitterMessages.size());
+    //
+    // model.addAttribute("twitterMessages", twitterMessages);
+    //
+    // return "home";
+    // }
+    //
+    // /**
+    // * Simply selects the home view to render by returning its name.
+    // */
+    // @RequestMapping(value = "/ajax")
+    // public String ajaxCall(Model model) {
+    //
+    // final Collection<TwitterMessage> twitterMessages = twitterService.getTwitterMessages();
+    //
+    // logger.info("Retrieved {} Twitter messages.", twitterMessages.size());
+    // model.addAttribute("twitterMessages", twitterMessages);
+    //
+    // return "twitterMessages";
+    //
+    // }
 
     // @RequestMapping(value = "/tika")
     // public String tikaTest(Model model) {
@@ -205,6 +205,18 @@ public class HomeController {
         return "elastic";
     }
 
+    @RequestMapping(value = "/")
+    public String elasticstart(Model model) {
+        logger.info("try to find the document with the id swse");
+        GetResponse rsp = elasticService.get("myindex", "indextype", "swse");
+        Map<String, Object> source = rsp.getSource();
+        for (String key : source.keySet()) {
+            logger.info("resource {}", key);
+            logger.info(source.get(key).toString());
+        }
+        return "elastic";
+    }
+
     @RequestMapping(value = "/elasticsearch")
     public String elasticsearch(@RequestParam(required = true) String searchPhrase, Model model) {
         // search at QuizRDF
@@ -234,7 +246,7 @@ public class HomeController {
     @RequestMapping(value = "/elasticsave")
     public String elasticsave(@RequestParam(required = true) String path, @RequestParam(required = true) String id,
             Model model) {
-//        File file = new File(path);
+        // File file = new File(path);
         Map<String, Object> test = new HashMap<String, Object>();
         logger.debug("extract the content and metadata from the pdf");
         test.put("pdf", PDFParser.pdfParser(path));

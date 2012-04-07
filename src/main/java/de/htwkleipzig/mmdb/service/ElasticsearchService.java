@@ -66,4 +66,6 @@ public interface ElasticsearchService {
      * @return
      */
     boolean saveJson(String indexName, String type, String id, XContentBuilder content);
+
+    public void onShutdown();
 }

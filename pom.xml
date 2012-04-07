@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>de.htwkleipzig.mmdb</groupId>
-	<artifactId>macpaper</artifactId>
+	<artifactId>macpaperweb</artifactId>
 	<version>1.0-SNAPSHOT</version>
 	<packaging>war</packaging>
 
@@ -174,16 +174,15 @@
 			<version>1.1</version>
 		</dependency>
 		<!-- Elastic search -->
-		<dependency>
-			<groupId>org.elasticsearch</groupId>
-			<artifactId>elasticsearch</artifactId>
-			<version>0.19.2</version>
-		</dependency>
+<!-- 		<dependency> -->
+<!-- 			<groupId>org.elasticsearch</groupId> -->
+<!-- 			<artifactId>elasticsearch</artifactId> -->
+<!-- 			<version>0.19.2</version> -->
+<!-- 		</dependency> -->
 
 		<dependency>
 			<groupId>fr.pilato.spring</groupId>
 			<artifactId>spring-elasticsearch</artifactId>
-			<!-- <name>spring-elasticsearch</name> -->
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
