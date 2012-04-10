@@ -28,13 +28,11 @@ public class PDFParser {
 //        ContentHandler textHandler = new BodyContentHandler();
         ToHTMLContentHandler toHTMLHandler = new ToHTMLContentHandler();
 //        TeeContentHandler teeHandler = new TeeContentHandler(linkHandler, textHandler, toHTMLHandler);
-//        PDFParser pdfParser = new PDFParser();
         ParseContext parseContext = new ParseContext();
 
         try {
             Parser parser = tika.getParser();
             parser.parse(pdf.openStream(), toHTMLHandler, met, parseContext);
-            // pdfParser.parse(pdf.openStream(), teeHandler, met, parseContext);
             logger.info(System.getProperty("line.separator") + "Metadata:\t" + met);
         } catch (Exception e) {
             logger.error(e.getLocalizedMessage() + " " + e.getCause());
