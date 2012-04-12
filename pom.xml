@@ -29,15 +29,15 @@
 			<url>http://maven.springframework.org/release</url>
 		</repository>
 		<repository>
-			<id>sonatype-releases</id>
-			<name>Sonatype Releases Repository</name>
-			<url>http://oss.sonatype.org/content/repositories/releases/</url>
+			<id>dev</id>
+			<name>leichendev</name>
+			<url>http://leichentraktor.dyndns.org:7777/nexus/content/repositories/snapshots</url>
 		</repository>
-		<repository>
-			<id>leichentraktor</id>
-			<name>leichentraktor</name>
-			<url>http://leichentraktor.dyndns.org:7777/nexus/content/repositories/snapshots/</url>
-		</repository>
+	<repository>
+		<id>sonatype-releases</id>
+		<name>Sonatype Releases Repository</name>
+		<url>http://oss.sonatype.org/content/repositories/releases/</url>
+	</repository>
 	</repositories>
 	<build>
 		<plugins>
@@ -183,7 +183,7 @@
 		<!-- <dependency> -->
 		<!-- <groupId>org.elasticsearch</groupId> -->
 		<!-- <artifactId>elasticsearch</artifactId> -->
-		<!-- <version>0.19.1</version> -->
+		<!-- <version>0.19.2</version> -->
 		<!-- </dependency> -->
 
 		<dependency>

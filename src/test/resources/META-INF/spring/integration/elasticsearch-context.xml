@@ -20,7 +20,7 @@
 		</property>
 		<property name="esNodes">
 			<list>
-				<value>http://leichentraktor.dyndns.org:9300/</value>
+				<value>leichentraktor.dyndns.org:9300</value>
 			</list>
 		</property>
 	</bean>
