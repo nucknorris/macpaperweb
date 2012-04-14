@@ -12,22 +12,24 @@
                         http://www.springframework.org/schema/context
                         http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 
-	<context:component-scan base-package="de.htwkleipzig.mmdb.service" />
+	<!-- <context:component-scan base-package="de.htwkleipzig.mmdb.service" 
+		/> -->
 
 	<!-- See also: http://static.springsource.org/spring-integration/reference/htmlsingle/#twitter -->
-<!-- 	<int-twitter:search-inbound-channel-adapter -->
-<!-- 		id="twitter" query="#springsource" channel="twitterChannel" -->
-<!-- 		auto-startup="true"> -->
-<!-- 		<int:poller fixed-rate="5000" max-messages-per-poll="10" /> -->
-<!-- 	</int-twitter:search-inbound-channel-adapter> -->
+	<!-- <int-twitter:search-inbound-channel-adapter -->
+	<!-- id="twitter" query="#springsource" channel="twitterChannel" -->
+	<!-- auto-startup="true"> -->
+	<!-- <int:poller fixed-rate="5000" max-messages-per-poll="10" /> -->
+	<!-- </int-twitter:search-inbound-channel-adapter> -->
 
 	<!-- See also: http://static.springsource.org/spring-integration/reference/htmlsingle/#service-activator 
 		http://www.eaipatterns.com/MessagingAdapter.html -->
-<!-- 	<int:service-activator id="twitterServiceActivator" -->
-<!-- 		input-channel="twitterChannel" output-channel="nullChannel" ref="twitterService" -->
-<!-- 		method="addTwitterMessages" /> -->
+	<!-- <int:service-activator id="twitterServiceActivator" -->
+	<!-- input-channel="twitterChannel" output-channel="nullChannel" ref="twitterService" -->
+	<!-- method="addTwitterMessages" /> -->
 
-<!-- 	<bean id="twitterService" class="de.htwkleipzig.mmdb.service.impl.DefaultTwitterService" /> -->
+	<!-- <bean id="twitterService" class="de.htwkleipzig.mmdb.service.impl.DefaultTwitterService" 
+		/> -->
 
 	<int:logging-channel-adapter id="logger"
 		level="INFO"
@@ -35,11 +37,11 @@
 
 	<!-- See also: http://static.springsource.org/spring-integration/reference/htmlsingle/#channel 
 		http://www.eaipatterns.com/MessageChannel.html -->
-<!-- 	<int:channel id="twitterChannel"> -->
-<!-- 		<int:interceptors> -->
-<!-- 			<int:wire-tap channel="logger" /> -->
-<!-- 		</int:interceptors> -->
-<!-- 	</int:channel> -->
+	<!-- <int:channel id="twitterChannel"> -->
+	<!-- <int:interceptors> -->
+	<!-- <int:wire-tap channel="logger" /> -->
+	<!-- </int:interceptors> -->
+	<!-- </int:channel> -->
 
 	<int:channel id="controlBusChannel" />
 
