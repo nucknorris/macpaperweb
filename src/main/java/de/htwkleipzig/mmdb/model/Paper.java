@@ -24,6 +24,22 @@ public class Paper implements Serializable {
     private List<String> keywords;
     private String kindOf;
     private String content;
+    private String latexBib;
+
+    /**
+     * @return the latexBib
+     */
+    public String getLatexBib() {
+        return latexBib;
+    }
+
+    /**
+     * @param latexBib
+     *            the latexBib to set
+     */
+    public void setLatexBib(String latexBib) {
+        this.latexBib = latexBib;
+    }
 
     /**
      * @return the title

@@ -21,18 +21,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.elasticsearch.action.admin.indices.create.CreateIndexRequest;
 import org.elasticsearch.action.get.GetResponse;
-import org.elasticsearch.action.index.IndexRequestBuilder;
-import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;
-import org.elasticsearch.client.transport.TransportClient;
-import org.elasticsearch.common.settings.ImmutableSettings;
-import org.elasticsearch.common.settings.Settings;
-import org.elasticsearch.common.transport.InetSocketTransportAddress;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.index.query.QueryStringQueryBuilder;
-import org.elasticsearch.indices.IndexAlreadyExistsException;
 import org.elasticsearch.search.SearchHit;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,15 +32,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
+import com.vaadin.ui.Window;
 
 import de.htwkleipzig.mmdb.model.Author;
 import de.htwkleipzig.mmdb.model.Paper;
 import de.htwkleipzig.mmdb.model.University;
 import de.htwkleipzig.mmdb.service.ElasticsearchService;
 import de.htwkleipzig.mmdb.util.PDFParser;
+import de.htwkleipzig.mmdb.vaadin.HelloButton;
 
 /**
  * Handles requests for the application home page.
@@ -56,143 +52,23 @@ import de.htwkleipzig.mmdb.util.PDFParser;
 @Controller
 public class HomeController {
 
-    private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
+    private static final String INDEXTYPE = "indextype";
 
-    // @Autowired
-    // private TwitterService twitterService;
+    private static final String PAPERINDEX = "paperindex";
+
+    private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 
     @Autowired
     private ElasticsearchService elasticService;
 
-    // /**
-    // * Simply selects the home view to render by returning its name.
-    // */
-    // @RequestMapping(value = "/")
-    // public String home(Model model, @RequestParam(required = false) String startTwitter,
-    // @RequestParam(required = false) String stopTwitter) {
-    //
-    // if (startTwitter != null) {
-    // twitterService.startTwitterAdapter();
-    // return "redirect:/";
-    // }
-    //
-    // if (stopTwitter != null) {
-    // twitterService.stopTwitterAdapter();
-    // return "redirect:/";
-    // }
-    //
-    // final Collection<TwitterMessage> twitterMessages = twitterService.getTwitterMessages();
-    //
-    // logger.info("Retrieved {} Twitter messages.", twitterMessages.size());
-    //
-    // model.addAttribute("twitterMessages", twitterMessages);
-    //
-    // return "home";
-    // }
-    //
-    // /**
-    // * Simply selects the home view to render by returning its name.
-    // */
-    // @RequestMapping(value = "/ajax")
-    // public String ajaxCall(Model model) {
-    //
-    // final Collection<TwitterMessage> twitterMessages = twitterService.getTwitterMessages();
-    //
-    // logger.info("Retrieved {} Twitter messages.", twitterMessages.size());
-    // model.addAttribute("twitterMessages", twitterMessages);
-    //
-    // return "twitterMessages";
-    //
-    // }
-
-    // @RequestMapping(value = "/tika")
-    // public String tikaTest(Model model) {
-    // Tika tika = new Tika();
-    // Metadata met = new Metadata();
-    // URL pdf = (HomeController.class.getClassLoader().getResource("10.1.1.122.5934.pdf"));
-    // LinkContentHandler linkHandler = new LinkContentHandler();
-    // ContentHandler textHandler = new BodyContentHandler();
-    // ToHTMLContentHandler toHTMLHandler = new ToHTMLContentHandler();
-    // TeeContentHandler teeHandler = new TeeContentHandler(linkHandler, textHandler, toHTMLHandler);
-    // PDFParser pdfParser = new PDFParser();
-    // ParseContext parseContext = new ParseContext();
-    //
-    // try {
-    // Parser parser = tika.getParser();
-    // // parser.parse(pdf.openStream(), toHTMLHandler, met, null);
-    // pdfParser.parse(pdf.openStream(), teeHandler, met, parseContext);
-    // logger.info(System.getProperty("line.separator") + "Metadata:\t" + met);
-    // model.addAttribute("applicationName", met.toString());
-    // model.addAttribute("toHtml", toHTMLHandler.toString());
-    // model.addAttribute("link", linkHandler.toString());
-    // // model.addAttribute("text", textHandler.toString());
-    // model.addAttribute("text", parseContext.toString());
-    // } catch (Exception e) {
-    // logger.error(e.getLocalizedMessage() + " " + e.getCause());
-    // }
-    // return "tika";
-    // }
-
-    // @RequestMapping(value = "/elastic")
-    public String elasticSearch(Model model) {
-        Map<String, Object> test = new HashMap<String, Object>();
-
-        logger.info("create settings");
-        Settings settings = ImmutableSettings.settingsBuilder().build();
-        logger.info("Add transport adresse");
-        TransportClient client = new TransportClient(settings);
-
-        logger.info("add settings to transportclient");
-        client.addTransportAddress(new InetSocketTransportAddress("127.0.0.1", 9300));
-        try {
-            // create an index called paperindex
-            logger.info("create an index called paperindex");
-            client.admin().indices().create(new CreateIndexRequest("paperindex")).actionGet();
-        } catch (IndexAlreadyExistsException ex) {
-            logger.warn("already exists", ex);
-        }
-        logger.info("indexRequestBuilder");
-        // index the object test on index paperindex with indextype indextype and id 3
-        IndexRequestBuilder irb = client.prepareIndex("paperindex", "indextype", "3").
-                setSource(test);
-        irb.execute().actionGet();
-        // gets the object from paperindex with indextype indextype and id 3
-        GetResponse rsp = client.prepareGet("paperindex", "indextype", "3").
-                execute().actionGet();
-        Map<String, Object> source = rsp.getSource();
-        logger.info(source.size() + "");
-        // logger.info((String) source.get("pdf"));
-
-        // search at paperindex
-        SearchRequestBuilder builder = client.prepareSearch("paperindex");
-        // search at QuizRDF
-        QueryStringQueryBuilder qb = QueryBuilders.queryString("QuizRDF").allowLeadingWildcard(false)
-                .useDisMax(true);
-        builder.setQuery(qb);
-
-        SearchResponse searchresponse = builder.execute().actionGet();
-        SearchHit[] docs = searchresponse.getHits().getHits();
-        for (SearchHit sd : docs) {
-            // to get explanation you'll need to enable this when querying:
-            // System.out.println(sd.getExplanation().toString());
-
-            // if we use in mapping: "_source" : {"enabled" : false}
-            // we need to include all necessary fields in query and then to use doc.getFields()
-            // instead of doc.getSource()
-            Map<String, Object> searchSource = sd.getSource();
-            for (String key : searchSource.keySet()) {
-                logger.info((String) searchSource.get(key));
-            }
-        }
-        client.close();
-
-        return "elastic";
+    public HomeController(ElasticsearchService elasticsearchService) {
+        this.elasticService = elasticsearchService;
     }
 
     @RequestMapping(value = "/elasticget")
     public String elasticbean(@RequestParam(required = true) String id, Model model) {
 
-        GetResponse rsp = elasticService.get("paperindex", "indextype", id);
+        GetResponse rsp = elasticService.get(HomeController.PAPERINDEX, HomeController.INDEXTYPE, id);
         Map<String, Object> source = rsp.getSource();
         for (String key : source.keySet()) {
             logger.info("resource {}", key);
@@ -201,17 +77,17 @@ public class HomeController {
         return "elastic";
     }
 
-    @RequestMapping(value = "/")
-    public String elasticstart(Model model) {
-        logger.info("try to find the document with the id swse");
-        GetResponse rsp = elasticService.get("paperindex", "indextype", "swse");
-        Map<String, Object> source = rsp.getSource();
-        for (String key : source.keySet()) {
-            logger.info("resource {}", key);
-            logger.info(source.get(key).toString());
-        }
-        return "elastic";
-    }
+    // @RequestMapping(value = "/")
+    // public String elasticstart(Model model) {
+    // logger.info("try to find the document with the id swse");
+    // GetResponse rsp = elasticService.get(HomeController.PAPERINDEX, HomeController.INDEXTYPE, "swse");
+    // Map<String, Object> source = rsp.getSource();
+    // for (String key : source.keySet()) {
+    // logger.info("resource {}", key);
+    // logger.info(source.get(key).toString());
+    // }
+    // return "elastic";
+    // }
 
     @RequestMapping(value = "/elasticsearch")
     public String elasticsearch(@RequestParam(required = true) String searchPhrase, Model model) {
@@ -219,7 +95,7 @@ public class HomeController {
         logger.info("search for a query");
         QueryStringQueryBuilder qb = QueryBuilders.queryString(searchPhrase).allowLeadingWildcard(false)
                 .useDisMax(true);
-        SearchResponse search = elasticService.searchsearch("paperindex", qb);
+        SearchResponse search = elasticService.searchsearch(HomeController.PAPERINDEX, qb);
         logger.info("total hits {}", search.getHits().getTotalHits());
         logger.info("MaxScore {}", search.getHits().getMaxScore());
         for (SearchHit hit : search.getHits().getHits()) {
@@ -248,7 +124,7 @@ public class HomeController {
         test.put("pdf", PDFParser.pdfParser(path));
         logger.debug("the extracted content {}", test.get("pdf").toString());
         logger.debug("try to save the context of the pdf to es");
-        elasticService.save("paperindex", "indextype", id, test);
+        elasticService.save(HomeController.PAPERINDEX, HomeController.INDEXTYPE, id, test);
         logger.debug("saved");
         return "elastic";
     }
@@ -310,8 +186,37 @@ public class HomeController {
         // and returned as JSON formatted string
         String json = gson.toJson(paper);
 
-        System.out.println(json);
-
+        logger.info(json);
+        Map<String, Object> jsonMap = new HashMap<String, Object>();
+        jsonMap.put("paper2", json);
+        logger.info("paper wurde gebaut und wird gespeichert");
+        // final XContentBuilder jsonBuilder = XContentFactory.jsonBuilder();
+        // jsonBuilder.startObject();
+        // jsonBuilder.field("paper", paper);
+        //
+        // jsonBuilder.endObject();
+        elasticService.save(PAPERINDEX, INDEXTYPE, "jsonmap", jsonMap);
         return "elastic";
     }
+
+    @RequestMapping(value = "/getpaper", method = RequestMethod.GET)
+    @ResponseBody
+    public String getPaper(String id) {
+
+        logger.info("starting list test");
+        GetResponse resp = elasticService.get(PAPERINDEX, INDEXTYPE, "jsonmap");
+        Map<String, Object> source = resp.getSource();
+        if (source != null && !source.isEmpty()) {
+            logger.info("source ist nicht null oder empty");
+            if (source.containsKey("paper2")) {
+                logger.info("paper sollte existieren");
+                String paper = (String) source.get("paper2");
+                logger.info("paper wird ausgespuckt");
+                return paper;
+            }
+        }
+        logger.info("paper existiert wohl nicht");
+        return null;
+    }
+
 }
