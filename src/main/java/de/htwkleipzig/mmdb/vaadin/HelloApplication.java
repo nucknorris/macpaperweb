@@ -22,22 +22,30 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.vaadin.Application;
 import com.vaadin.ui.Window;
 
+import de.htwkleipzig.mmdb.gui.MyUploader;
 import de.htwkleipzig.mmdb.service.ElasticsearchService;
 
 /**
  * The Application's "main" class
  */
 public class HelloApplication extends Application {
-    private Window window;
-    @Autowired
-    private ElasticsearchService elasticService;
-    private static final Logger logger = LoggerFactory.getLogger(HelloApplication.class);
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -786044568801260648L;
+	private Window window;
+	@Autowired
+	private ElasticsearchService elasticService;
+	private static final Logger logger = LoggerFactory
+			.getLogger(HelloApplication.class);
 
-    @Override
-    public void init() {
-        window = new Window("My Vaadin Application");
-        setMainWindow(window);
-        window.addComponent(new HelloButton());
-    }
+	@Override
+	public void init() {
+		window = new Window("My Vaadin Application");
+		setMainWindow(window);
+//		window.addComponent(new UploadGui());		
+		
+		window.addComponent(new MyUploader());
+	}
 
 }

@@ -34,7 +34,7 @@
         <init-param>
             <description>Vaadin application class to start</description>
             <param-name>application</param-name>
-            <param-value>de.htwkleipzig.mmdb.vaadin.HelloApplication</param-value>
+            <param-value>de.htwkleipzig.mmdb.gui.AddGuiMain</param-value>
         </init-param>
 <!-- 		<init-param> -->
 <!-- 			<param-name>contextConfigLocation</param-name> -->

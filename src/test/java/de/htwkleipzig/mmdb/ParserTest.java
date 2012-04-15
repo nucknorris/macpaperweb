@@ -17,7 +17,7 @@ public class ParserTest {
 
 		List<String> listOfKeywords = new ArrayList<String>();
 		listOfKeywords.add("Abstract");
-		parser.startTokenizing(listOfKeywords, pdfUrl);
+//		parser.startTokenizing(listOfKeywords, pdfUrl);
 
 	}
 }

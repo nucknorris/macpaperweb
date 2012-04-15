@@ -12,9 +12,8 @@
                         http://www.springframework.org/schema/context
                         http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 
-	<!-- <context:component-scan base-package="de.htwkleipzig.mmdb.service" 
-		/> -->
-
+	<context:component-scan base-package="de.htwkleipzig.mmdb.service" />
+<!-- 	<context:component-scan base-package="de.htwkleipzig.mmdb.vaadin" /> -->
 	<!-- See also: http://static.springsource.org/spring-integration/reference/htmlsingle/#twitter -->
 	<!-- <int-twitter:search-inbound-channel-adapter -->
 	<!-- id="twitter" query="#springsource" channel="twitterChannel" -->
@@ -31,9 +30,10 @@
 	<!-- <bean id="twitterService" class="de.htwkleipzig.mmdb.service.impl.DefaultTwitterService" 
 		/> -->
 
-	<int:logging-channel-adapter id="logger"
-		level="INFO"
-		expression="'Id:' + payload.id + '; Date:' + payload.createdAt + '; FromUser: ' + payload.fromUser" />
+	<!-- <int:logging-channel-adapter id="logger" -->
+	<!-- level="INFO" -->
+	<!-- expression="'Id:' + payload.id + '; Date:' + payload.createdAt + '; 
+		FromUser: ' + payload.fromUser" /> -->
 
 	<!-- See also: http://static.springsource.org/spring-integration/reference/htmlsingle/#channel 
 		http://www.eaipatterns.com/MessageChannel.html -->
@@ -43,10 +43,11 @@
 	<!-- </int:interceptors> -->
 	<!-- </int:channel> -->
 
-	<int:channel id="controlBusChannel" />
+	<!-- <int:channel id="controlBusChannel" /> -->
 
 	<!-- See also: http://static.springsource.org/spring-integration/reference/htmlsingle/#control-bus 
 		http://www.eaipatterns.com/ControlBus.html -->
-	<int:control-bus id="controlBus" input-channel="controlBusChannel" />
+	<!-- <int:control-bus id="controlBus" input-channel="controlBusChannel" 
+		/> -->
 	<import resource="elasticsearch-context.xml" />
 </beans>

@@ -45,7 +45,7 @@ public class ElasticsearchServiceImpl implements ElasticsearchService {
 
         try {
             // create an index called myindex
-            logger.info("create an index called myindex");
+            logger.info("create an index called paperindex");
             client.admin().indices().create(new CreateIndexRequest("paperindex")).actionGet();
         } catch (IndexAlreadyExistsException ex) {
             logger.warn("already exists", ex);
