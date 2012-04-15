@@ -1,7 +1,5 @@
 package de.htwkleipzig.mmdb.util;
 
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,8 +18,7 @@ public class TikaParser {
 	private static final Logger logger = LoggerFactory
 			.getLogger(TikaParser.class);
 
-	public String startTokenizing(List<String> listOfKeywords,
-			InputStream fileUrl) {
+	public String startTokenizing(List<String> listOfKeywords, URL fileUrl) {
 		String startsWith = "<p>";
 		String endsWith = "</p>";
 		String extractedString = null;
@@ -40,7 +37,7 @@ public class TikaParser {
 		return null;
 	}
 
-	public String parsePdfToXml(InputStream file) {
+	public String parsePdfToXml(URL file) {
 		Tika tika = new Tika();
 		Metadata met = new Metadata();
 		ToHTMLContentHandler toHTMLHandler = new ToHTMLContentHandler();
@@ -48,7 +45,7 @@ public class TikaParser {
 
 		try {
 			Parser parser = tika.getParser();
-			parser.parse(file, toHTMLHandler, met, parseContext);
+			parser.parse(file.openStream(), toHTMLHandler, met, parseContext);
 			logger.info(System.getProperty("line.separator") + "Metadata:\t"
 					+ met);
 		} catch (Exception e) {

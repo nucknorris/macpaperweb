@@ -29,10 +29,10 @@ public class MyUploader extends CustomComponent implements
 	File file; // File to write to.
 
 	private static final Logger logger = LoggerFactory
-			.getLogger(HelloButton.class);
+			.getLogger(MyUploader.class);
 
 	public MyUploader() {
-		Injector.inject(this);
+//		Injector.injectC(this);
 
 		root = new Panel("My Upload Component");
 		setCompositionRoot(root);
@@ -82,6 +82,7 @@ public class MyUploader extends CustomComponent implements
 		// Display the uploaded file in the image panel.
 		final FileResource imageResource = new FileResource(file,
 				getApplication());
+		
 		// imagePanel.removeAllComponents();
 		// imagePanel.addComponent(new Embedded("", imageResource));
 	}

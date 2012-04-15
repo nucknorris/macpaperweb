@@ -1,21 +1,23 @@
 package de.htwkleipzig.mmdb.gui;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
-import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
+import com.vaadin.ui.Button.ClickEvent;
 
-public class UploadDialog extends VerticalLayout {
+public class ReadDocument extends VerticalLayout {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1147481315499097706L;
 	Window subwindow;
 
-	public UploadDialog() {
+	private static final Logger logger = LoggerFactory
+			.getLogger(ReadDocument.class);
+
+	public ReadDocument() {
 
 		// Create the window...
 		subwindow = new Window("A modal subwindow");
@@ -32,10 +34,6 @@ public class UploadDialog extends VerticalLayout {
 		subwindow.addComponent(message);
 
 		Button close = new Button("Close", new Button.ClickListener() {
-			/**
-			 * 
-			 */
-			private static final long serialVersionUID = -7333544037346488679L;
 
 			// inline click-listener
 			public void buttonClick(ClickEvent event) {
