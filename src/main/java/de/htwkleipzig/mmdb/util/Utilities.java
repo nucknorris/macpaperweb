@@ -6,9 +6,8 @@ import java.util.List;
 
 public class Utilities {
 
-	public static final List<File> allFiles() {
+	public static final List<File> getAllFilesOfDirectory() {
 		File file = new File("/tmp/uploads");
-		
 		return Arrays.asList(file.listFiles());
 	}
 }

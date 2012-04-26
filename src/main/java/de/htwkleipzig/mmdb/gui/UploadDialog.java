@@ -7,49 +7,38 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
+@SuppressWarnings("serial")
 public class UploadDialog extends VerticalLayout {
 
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1147481315499097706L;
 	Window subwindow;
 
 	public UploadDialog() {
 
-		// Create the window...
-		subwindow = new Window("A modal subwindow");
-		// ...and make it modal
+		subwindow = new Window("File uploader");
 		subwindow.setModal(true);
-
-		// Configure the windws layout; by default a VerticalLayout
+		subwindow.setHeight(280, UNITS_PIXELS);
+		subwindow.setWidth(500, UNITS_PIXELS);
 		VerticalLayout layout = (VerticalLayout) subwindow.getContent();
 		layout.setMargin(true);
 		layout.setSpacing(true);
-		MyUploader up = new MyUploader();
-		// Add some content; a label and a close-button
-		Label message = new Label("This is a modal subwindow.");
+		MyUploader uploader = new MyUploader();
+		Label message = new Label("To upload a new file choose file and click on upload now.");
 		subwindow.addComponent(message);
 
 		Button close = new Button("Close", new Button.ClickListener() {
-			/**
-			 * 
-			 */
-			private static final long serialVersionUID = -7333544037346488679L;
 
-			// inline click-listener
 			public void buttonClick(ClickEvent event) {
-				// close the window by removing it from the parent window
 				(subwindow.getParent()).removeWindow(subwindow);
 			}
 		});
-		// The components added to the window are actually added to the window's
-		// layout; you can use either. Alignments are set using the layout#
-		layout.addComponent(up);
+		layout.addComponent(uploader);
 		layout.addComponent(close);
 
 		layout.setComponentAlignment(close, Alignment.BOTTOM_LEFT);
-		layout.setComponentAlignment(up, Alignment.TOP_CENTER);
+		layout.setComponentAlignment(uploader, Alignment.TOP_CENTER);
 
 	}
 

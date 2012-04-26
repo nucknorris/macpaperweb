@@ -38,6 +38,10 @@
 			<name>Sonatype Releases Repository</name>
 			<url>http://oss.sonatype.org/content/repositories/releases/</url>
 		</repository>
+		<repository>
+			<id>vaadin-addons</id>
+			<url>http://maven.vaadin.com/vaadin-addons</url>
+		</repository>
 	</repositories>
 	<build>
 		<plugins>
@@ -125,6 +129,19 @@
 			<artifactId>vaadin</artifactId>
 			<version>6.7.7</version>
 		</dependency>
+
+		<!-- vaadin addons -->
+		<dependency>
+			<groupId>org.vaadin.addons</groupId>
+			<artifactId>reindeermods</artifactId>
+			<version>0.2</version>
+		</dependency>
+		<dependency>
+			<groupId>org.vaadin.addons</groupId>
+			<artifactId>navigator</artifactId>
+			<version>0.3</version>
+		</dependency>
+
 		<!-- Logging -->
 
 		<dependency>

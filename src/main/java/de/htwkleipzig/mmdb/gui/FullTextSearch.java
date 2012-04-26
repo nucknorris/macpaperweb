@@ -24,12 +24,12 @@ import de.htwkleipzig.mmdb.mvc.controller.HomeController;
 import de.htwkleipzig.mmdb.service.ElasticsearchService;
 import de.htwkleipzig.mmdb.vaadin.Injector;
 
-public class SearchDocument extends VerticalLayout {
+public class FullTextSearch extends VerticalLayout {
 
 	Window subwindow;
 
 	private static final Logger logger = LoggerFactory
-			.getLogger(SearchDocument.class);
+			.getLogger(FullTextSearch.class);
 	private final TextField editor = new TextField("insert text:");
 	Label plainText = null;
 	VerticalLayout layout;
@@ -37,7 +37,7 @@ public class SearchDocument extends VerticalLayout {
 	@Autowired
 	private ElasticsearchService elasticService;
 
-	public SearchDocument() {
+	public FullTextSearch() {
 		Injector.inject(this);
 
 		// Create the window...

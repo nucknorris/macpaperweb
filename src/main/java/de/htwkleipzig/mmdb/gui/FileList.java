@@ -29,77 +29,62 @@ import de.htwkleipzig.mmdb.util.TikaParser;
 import de.htwkleipzig.mmdb.util.Utilities;
 import de.htwkleipzig.mmdb.vaadin.Injector;
 
-public class ListDocuments extends VerticalLayout implements
+public class FileList extends VerticalLayout implements
 		Property.ValueChangeListener {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -7619413228955358314L;
 	private static final Logger logger = LoggerFactory
-			.getLogger(ListDocuments.class);
+			.getLogger(FileList.class);
 
 	@Autowired
 	private ElasticsearchService elasticService;
 
 	Window subwindow;
 
-	public ListDocuments() {
+	public FileList() {
 		Injector.inject(this);
-		if(elasticService==null){
-			logger.debug("komisch");
-		}else{
-			logger.debug("nciht so komisch");
-		}
-		// Create the window...
-		subwindow = new Window("Choose the file, god damnit");
-		// ...and make it modal
+		subwindow = new Window("Indexing file");
 		subwindow.setModal(true);
+		subwindow.setHeight(230, UNITS_PIXELS);
+		subwindow.setWidth(300, UNITS_PIXELS);
 
-		// Configure the windws layout; by default a VerticalLayout
 		VerticalLayout layout = (VerticalLayout) subwindow.getContent();
 		layout.setMargin(true);
 		layout.setSpacing(true);
-		// Add some content; a label and a close-button
-		Label message = new Label("This is a modal subwindow.");
+		Label message = new Label("Choose the file you want to be indexed.");
 		subwindow.addComponent(message);
 
 		Button close = new Button("Close", new Button.ClickListener() {
-			/**
-			 * 
-			 */
 			private static final long serialVersionUID = -6545625632671563939L;
 
-			// inline click-listener
 			public void buttonClick(ClickEvent event) {
-				// close the window by removing it from the parent window
 				(subwindow.getParent()).removeWindow(subwindow);
 			}
 		});
 
 		setSpacing(true);
 
-		ComboBox l = new ComboBox("Please select a city");
-		for (File file : Utilities.allFiles()) {
-			l.addItem(file.getName());
+		ComboBox filesComboBox = new ComboBox("Please select a file");
+		for (File file : Utilities.getAllFilesOfDirectory()) {
+			filesComboBox.addItem(file.getName());
 		}
 
-		l.setFilteringMode(Filtering.FILTERINGMODE_OFF);
-		l.setImmediate(true);
-		l.addListener(this);
+		Button startIndexingFile = new Button("Index file");
 
-		layout.addComponent(l);
+		filesComboBox.setFilteringMode(Filtering.FILTERINGMODE_OFF);
+		filesComboBox.setImmediate(true);
+		// startIndexingFile.addListener(this);
+		filesComboBox.addListener(this);
 
-		// The components added to the window are actually added to the window's
-		// layout; you can use either. Alignments are set using the layout#
+		layout.addComponent(filesComboBox);
+		layout.addComponent(startIndexingFile);
 		layout.addComponent(close);
-
 		layout.setComponentAlignment(close, Alignment.BOTTOM_LEFT);
-		layout.setComponentAlignment(l, Alignment.TOP_CENTER);
+		layout.setComponentAlignment(filesComboBox, Alignment.TOP_CENTER);
 	}
 
 	public Window getSubwindow() {
-		return this.subwindow;
+		return subwindow;
 	}
 
 	/*
@@ -127,7 +112,8 @@ public class ListDocuments extends VerticalLayout implements
 		data.put("htmlPDF", abs);
 		if (elasticService != null) {
 			elasticService.save(HomeController.PAPERINDEX,
-					HomeController.INDEXTYPE, event.getProperty().toString(), data);
+					HomeController.INDEXTYPE, event.getProperty().toString(),
+					data);
 		} else {
 			logger.info("Scheisse");
 		}
