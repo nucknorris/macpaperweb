@@ -25,6 +25,7 @@ public class Paper implements Serializable {
     private String kindOf;
     private String content;
     private String latexBib;
+    private Date uploadDate;
 
     /**
      * @return the latexBib
@@ -135,6 +136,20 @@ public class Paper implements Serializable {
      */
     public void setContent(String content) {
         this.content = content;
+    }
+
+    /**
+     * @return the uploadDate
+     */
+    public Date getUploadDate() {
+        return uploadDate;
+    }
+
+    /**
+     * @param uploadDate the uploadDate to set
+     */
+    public void setUploadDate(Date uploadDate) {
+        this.uploadDate = uploadDate;
     }
 
     /*
