@@ -13,11 +13,6 @@
 
 	<bean id="esClient"
 		class="fr.pilato.spring.elasticsearch.ElasticsearchTransportClientFactoryBean">
-		<property name="mappings">
-			<list>
-				<value>myindex/indextype</value>
-			</list>
-		</property>
 		<property name="esNodes">
 			<list>
 				<value>leichentraktor.dyndns.org:9300</value>

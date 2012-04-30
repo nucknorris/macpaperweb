@@ -18,7 +18,8 @@ public class Injector {
     }
 
     private static ApplicationContext getApplicationContext() {
-        ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+        ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder
+                .currentRequestAttributes();
         HttpServletRequest request = requestAttributes.getRequest();
         HttpSession session = request.getSession(false);
         return WebApplicationContextUtils.getRequiredWebApplicationContext(session.getServletContext());

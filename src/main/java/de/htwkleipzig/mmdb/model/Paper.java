@@ -26,6 +26,7 @@ public class Paper implements Serializable {
     private String content;
     private String latexBib;
     private Date uploadDate;
+    private DeweyDecimalClassification ddc;
 
     /**
      * @return the latexBib
@@ -146,7 +147,8 @@ public class Paper implements Serializable {
     }
 
     /**
-     * @param uploadDate the uploadDate to set
+     * @param uploadDate
+     *            the uploadDate to set
      */
     public void setUploadDate(Date uploadDate) {
         this.uploadDate = uploadDate;
@@ -164,5 +166,20 @@ public class Paper implements Serializable {
                 .append(createDate).append(", keywords=").append(keywords).append(", kindOf=").append(kindOf)
                 .append("]");
         return builder.toString();
+    }
+
+    /**
+     * @return the ddc
+     */
+    public DeweyDecimalClassification getDdc() {
+        return ddc;
+    }
+
+    /**
+     * @param ddc
+     *            the ddc to set
+     */
+    public void setDdc(DeweyDecimalClassification ddc) {
+        this.ddc = ddc;
     }
 }

@@ -17,17 +17,17 @@ public class PDFParser {
     public static String pdfParser(String path) {
         Tika tika = new Tika();
         Metadata met = new Metadata();
-        URL pdf =null;
+        URL pdf = null;
         try {
             pdf = new URL(path);
         } catch (MalformedURLException e1) {
             logger.error("error while loading from path");
             e1.printStackTrace();
         }
-//        LinkContentHandler linkHandler = new LinkContentHandler();
-//        ContentHandler textHandler = new BodyContentHandler();
+        // LinkContentHandler linkHandler = new LinkContentHandler();
+        // ContentHandler textHandler = new BodyContentHandler();
         ToHTMLContentHandler toHTMLHandler = new ToHTMLContentHandler();
-//        TeeContentHandler teeHandler = new TeeContentHandler(linkHandler, textHandler, toHTMLHandler);
+        // TeeContentHandler teeHandler = new TeeContentHandler(linkHandler, textHandler, toHTMLHandler);
         ParseContext parseContext = new ParseContext();
 
         try {

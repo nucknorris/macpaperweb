@@ -15,11 +15,7 @@ import de.htwkleipzig.mmdb.service.ElasticsearchService;
 
 public class HelloButton extends Button {
 
-    private static final String INDEXTYPE = "indextype";
-
-    private static final String PAPERINDEX = "paperindex";
-
-    private static final Logger logger = LoggerFactory.getLogger(HelloButton.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(HelloButton.class);
 
     // @Autowired
     // private HelloService helloService;
@@ -43,30 +39,30 @@ public class HelloButton extends Button {
 
     public String getPaper(String id) {
 
-        logger.info("starting list test");
+        LOGGER.info("starting list test");
 
-        GetResponse resp = elasticService.get(PAPERINDEX, INDEXTYPE, "jsonmap");
+        GetResponse resp = elasticService.get("jsonmap");
         Map<String, Object> source = resp.getSource();
         if (source != null && !source.isEmpty()) {
-            logger.info("source ist nicht null oder empty");
+            LOGGER.info("source ist nicht null oder empty");
             if (source.containsKey("paper2")) {
-                logger.info("paper sollte existieren");
+                LOGGER.info("paper sollte existieren");
                 String paper = (String) source.get("paper2");
-                logger.info("paper wird ausgespuckt");
+                LOGGER.info("paper wird ausgespuckt");
                 Gson gson = new Gson();
 
                 // convert java object to JSON format,
                 // and returned as JSON formatted string
                 Paper fromJson = gson.fromJson(paper, Paper.class);
                 if (fromJson != null) {
-                    logger.info("sollte richtig gemapped worden sein");
-                    logger.info("title: {}", fromJson.getTitle());
-                    logger.info("number of authors: {}", fromJson.getAuthors().size());
+                    LOGGER.info("sollte richtig gemapped worden sein");
+                    LOGGER.info("title: {}", fromJson.getTitle());
+                    LOGGER.info("number of authors: {}", fromJson.getAuthors().size());
                 }
                 return paper;
             }
         }
-        logger.info("paper existiert wohl nicht");
+        LOGGER.info("paper existiert wohl nicht");
         return null;
     }
 }

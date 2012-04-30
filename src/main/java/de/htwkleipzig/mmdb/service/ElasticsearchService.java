@@ -3,6 +3,7 @@
  */
 package de.htwkleipzig.mmdb.service;
 
+import java.io.Serializable;
 import java.util.Map;
 
 import org.elasticsearch.action.delete.DeleteResponse;
@@ -15,57 +16,47 @@ import org.elasticsearch.index.query.QueryBuilder;
  * @author spinner0815
  * 
  */
-public interface ElasticsearchService {
+public interface ElasticsearchService extends Serializable {
 
     void init();
 
     /**
      * get a resource from the elastic search
      * 
-     * @param indexName
-     * @param type
      * @param id
      * @return the resource
      */
-    GetResponse get(String indexName, String type, String id);
+    GetResponse get(String id);
 
     /**
      * save a object to es
      * 
-     * @param indexName
-     * @param type
      * @param id
      * @param data
      * @return
      */
-    boolean save(String indexName, String type, String id, Map<String, Object> data);
+    boolean save(String id, Map<String, Object> data);
 
     /**
      * 
-     * @param indexName
      * @param query
      * @return
      */
-    SearchResponse searchsearch(String indexName, QueryBuilder query);
+    SearchResponse search(QueryBuilder query);
 
     /**
      * 
-     * @param indexName
-     * @param type
      * @param id
      * @return
      */
-    DeleteResponse delete(String indexName, String type, String id);
+    DeleteResponse delete(String id);
 
     /**
-     * 
-     * @param indexName
-     * @param type
      * @param id
      * @param content
      * @return
      */
-    boolean saveJson(String indexName, String type, String id, XContentBuilder content);
+    boolean saveJson(String id, XContentBuilder content);
 
     public void onShutdown();
 }

@@ -2,23 +2,28 @@
 
 <configuration>
 
-	<appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
-		<encoder>
-			<pattern>%d %5p | %t | %-55logger{55} | %m | %n</pattern>
-		</encoder>
-	</appender>
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d %5p | %t | %-55logger{55} | %m | %n</pattern>
+        </encoder>
+    </appender>
 
-	<logger name="org.springframework.integration">
-		<level value="INFO" />
-	</logger>
+    <logger name="de.htwkleipzig">
+        <level value="DEBUG" />
+        <appender-ref ref="CONSOLE" />
+    </logger>
+    
+    <logger name="org.springframework.integration">
+        <level value="INFO" />
+    </logger>
 
-	<logger name="org.springframework">
-		<level value="INFO" />
-	</logger>
+    <logger name="org.springframework">
+        <level value="INFO" />
+    </logger>
 
-	<root>
-		<level value="INFO" />
-		<appender-ref ref="CONSOLE" />
-	</root>
+    <root>
+        <level value="INFO" />
+        <appender-ref ref="CONSOLE" />
+    </root>
 
 </configuration>

@@ -3,23 +3,6 @@
  */
 package de.htwkleipzig.mmdb.mvc.controller;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import org.elasticsearch.action.admin.indices.create.CreateIndexRequest;
-import org.elasticsearch.action.get.GetResponse;
-import org.elasticsearch.action.index.IndexRequestBuilder;
-import org.elasticsearch.action.search.SearchRequestBuilder;
-import org.elasticsearch.action.search.SearchResponse;
-import org.elasticsearch.client.transport.TransportClient;
-import org.elasticsearch.common.settings.ImmutableSettings;
-import org.elasticsearch.common.settings.Settings;
-import org.elasticsearch.common.transport.InetSocketTransportAddress;
-import org.elasticsearch.index.query.QueryBuilders;
-import org.elasticsearch.index.query.QueryStringQueryBuilder;
-import org.elasticsearch.indices.IndexAlreadyExistsException;
-import org.elasticsearch.search.SearchHit;
-import org.springframework.ui.Model;
 
 /**
  * @author spinner0815
