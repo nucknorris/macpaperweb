@@ -1,21 +1,22 @@
-.container {
-    border: 1px solid #728C16;
-    margin-top: 1.5em;
+#header {
+	/*background-color: #EEEEEE;*/
 }
 
-#header {
-    background-color: #EEEEEE;
+.container {
+	border: 1px solid #728C16;
+	margin-top: 3.5em;
+	padding: 3em;
 }
 
 .twitterMessages {
-    list-style: none;
+	list-style: none;
 }
 
 .twitterMessages img {
-    vertical-align: middle;
+	vertical-align: middle;
 }
 
 .twitterMessages li {
-    padding-top: 2px;
-    padding-bottom: 2px;
+	padding-top: 2px;
+	padding-bottom: 2px;
 }
