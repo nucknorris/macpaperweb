@@ -18,13 +18,27 @@
 			<h1>SearchResults</h1>
 		</div>
 		<a href="javascript:history.back()">back</a>
-		<p>Search Term: ${searchTerm}</p>
-		<p>Document Score: ${documentScore}</p>
-		<p>Document ID: ${documentId}</p>
-		<p>Total Hits: ${totalHits}</p>
-		<p>Max Score: ${maxScore}</p>
 
-		<p>Document Key: ${documentKey}</p>
+		<table border="1">
+			<tr>
+				<th>Key</th>
+				<th>value</th>
+				<th>Key Class</th>
+			</tr>
+			<c:forEach var="entry" items="${myMap}" varStatus="status">
+				<tr>
+					<td>${entry.key}</td>
+					<td>${entry.value}</td>
+					<td>${entry.key.class}</td>
+				</tr>
+			</c:forEach>
+		</table>
+
+<!-- 		<p> -->
+<%-- 			Search Term: ${searchTerm} <br /> Document Score: ${documentScore}<br /> --%>
+<%-- 			Document ID: ${documentId} <br />Total Hits: ${totalHits} <br />Max --%>
+<%-- 			Score: ${maxScore} --%>
+<!-- 		</p> -->
 	</div>
 </body>
 </html>

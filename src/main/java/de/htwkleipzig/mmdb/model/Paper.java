@@ -20,6 +20,7 @@ public class Paper implements Serializable {
     private static final long serialVersionUID = 275195800963878375L;
     private String paperId;
     private String title;
+    private String paperAbstract;
     private List<String> authorsId;
     private Date createDate;
     private List<String> keywords;
@@ -27,6 +28,7 @@ public class Paper implements Serializable {
     private String content;
     private String latexBib;
     private Date uploadDate;
+    private String fileName;
     private DeweyDecimalClassification ddc;
 
     /**
@@ -180,6 +182,36 @@ public class Paper implements Serializable {
      */
     public void setPaperId(String paperId) {
         this.paperId = paperId;
+    }
+
+    /**
+     * @return the fileName
+     */
+    public String getFileName() {
+        return fileName;
+    }
+
+    /**
+     * @param fileName
+     *            the fileName to set
+     */
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
+    }
+
+    /**
+     * @return the paperAbstract
+     */
+    public String getPaperAbstract() {
+        return paperAbstract;
+    }
+
+    /**
+     * @param paperAbstract
+     *            the paperAbstract to set
+     */
+    public void setPaperAbstract(String paperAbstract) {
+        this.paperAbstract = paperAbstract;
     }
 
     /*
