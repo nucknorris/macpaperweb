@@ -22,8 +22,15 @@ public class MyUploader extends CustomComponent implements Upload.SucceededListe
 	 * 
 	 */
     private static final long serialVersionUID = 1L;
+    /**
+     * @uml.property  name="root"
+     * @uml.associationEnd  multiplicity="(1 1)"
+     */
     Panel root; // Root element for contained components.
     // Panel imagePanel; // Panel that contains the uploaded image.
+    /**
+     * @uml.property  name="file"
+     */
     File file; // File to write to.
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MyUploader.class);

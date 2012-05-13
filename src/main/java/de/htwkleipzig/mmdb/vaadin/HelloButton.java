@@ -19,6 +19,10 @@ public class HelloButton extends Button {
 
     // @Autowired
     // private HelloService helloService;
+    /**
+     * @uml.property  name="elasticService"
+     * @uml.associationEnd  readOnly="true"
+     */
     @Autowired
     private ElasticsearchService elasticService;
 

@@ -52,6 +52,10 @@ public class HomeController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(HomeController.class);
 
+    /**
+     * @uml.property  name="elasticService"
+     * @uml.associationEnd  readOnly="true"
+     */
     @Autowired
     private ElasticsearchService elasticService;
 

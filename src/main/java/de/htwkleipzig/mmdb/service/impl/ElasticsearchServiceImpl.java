@@ -17,7 +17,6 @@ import org.elasticsearch.indices.IndexAlreadyExistsException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import com.google.gson.JsonObject;
 
@@ -25,7 +24,7 @@ import de.htwkleipzig.mmdb.service.ElasticsearchService;
 import de.htwkleipzig.mmdb.util.Utilities;
 import fr.pilato.spring.elasticsearch.ElasticsearchTransportClientFactoryBean;
 
-@Service
+//@Service
 public class ElasticsearchServiceImpl implements ElasticsearchService {
 
     /**
@@ -35,8 +34,16 @@ public class ElasticsearchServiceImpl implements ElasticsearchService {
     private static final Logger LOGGER = LoggerFactory.getLogger(ElasticsearchServiceImpl.class);
     private static String INDEX_NAME = Utilities.getProperty("index.name");
     private static String INDEX_TYPE = Utilities.getProperty("index.type");
+    /**
+     * @uml.property  name="client"
+     * @uml.associationEnd  multiplicity="(0 -1)" elementType="org.elasticsearch.action.delete.DeleteResponse"
+     */
     TransportClient client;
 
+    /**
+     * @uml.property  name="transportFactoryBean"
+     * @uml.associationEnd  readOnly="true"
+     */
     @Autowired
     ElasticsearchTransportClientFactoryBean transportFactoryBean;
 

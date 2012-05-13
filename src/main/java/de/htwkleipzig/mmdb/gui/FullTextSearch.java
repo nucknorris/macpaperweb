@@ -23,13 +23,33 @@ import de.htwkleipzig.mmdb.vaadin.Injector;
 
 public class FullTextSearch extends VerticalLayout {
 
+    /**
+     * @uml.property  name="subwindow"
+     * @uml.associationEnd  multiplicity="(1 1)"
+     */
     Window subwindow;
 
     private static final Logger logger = LoggerFactory.getLogger(FullTextSearch.class);
+    /**
+     * @uml.property  name="editor"
+     * @uml.associationEnd  multiplicity="(1 1)"
+     */
     private final TextField editor = new TextField("insert text:");
+    /**
+     * @uml.property  name="plainText"
+     * @uml.associationEnd  
+     */
     Label plainText = null;
+    /**
+     * @uml.property  name="layout"
+     * @uml.associationEnd  multiplicity="(1 1)"
+     */
     VerticalLayout layout;
 
+    /**
+     * @uml.property  name="elasticService"
+     * @uml.associationEnd  readOnly="true"
+     */
     @Autowired
     private ElasticsearchService elasticService;
 
@@ -123,6 +143,10 @@ public class FullTextSearch extends VerticalLayout {
 
     }
 
+    /**
+     * @return
+     * @uml.property  name="subwindow"
+     */
     public Window getSubwindow() {
         return this.subwindow;
     }

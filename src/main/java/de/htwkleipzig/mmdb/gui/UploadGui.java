@@ -29,17 +29,45 @@ import de.htwkleipzig.mmdb.vaadin.Injector;
 @SuppressWarnings("serial")
 public class UploadGui extends VerticalLayout {
 
+    /**
+     * @uml.property  name="state"
+     * @uml.associationEnd  multiplicity="(1 1)"
+     */
     private Label state = new Label();
+    /**
+     * @uml.property  name="result"
+     * @uml.associationEnd  multiplicity="(1 1)"
+     */
     private Label result = new Label();
+    /**
+     * @uml.property  name="fileName"
+     * @uml.associationEnd  multiplicity="(1 1)"
+     */
     private Label fileName = new Label();
+    /**
+     * @uml.property  name="textualProgress"
+     * @uml.associationEnd  multiplicity="(1 1)"
+     */
     private Label textualProgress = new Label();
     private static File file; // File to write to.
 
+    /**
+     * @uml.property  name="pi"
+     * @uml.associationEnd  multiplicity="(1 1)"
+     */
     private ProgressIndicator pi = new ProgressIndicator();
 
+    /**
+     * @uml.property  name="counter"
+     * @uml.associationEnd  multiplicity="(1 1)"
+     */
     private LineBreakCounter counter = new LineBreakCounter();
     private static final Logger logger = LoggerFactory.getLogger(UploadGui.class);
 
+    /**
+     * @uml.property  name="upload"
+     * @uml.associationEnd  multiplicity="(1 1)"
+     */
     private Upload upload = new Upload(null, counter);
 
     public UploadGui() {
@@ -178,8 +206,14 @@ public class UploadGui extends VerticalLayout {
 
     }
 
+    /**
+     * @author  spinner0815
+     */
     public static class LineBreakCounter implements Receiver {
 
+        /**
+         * @uml.property  name="fileName"
+         */
         private String fileName;
         private String mtype;
 
@@ -216,6 +250,10 @@ public class UploadGui extends VerticalLayout {
             };
         }
 
+        /**
+         * @return
+         * @uml.property  name="fileName"
+         */
         public String getFileName() {
             return fileName;
         }

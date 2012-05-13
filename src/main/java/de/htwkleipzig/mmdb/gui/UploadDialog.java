@@ -11,8 +11,9 @@ import com.vaadin.ui.Window;
 public class UploadDialog extends VerticalLayout {
 
     /**
-	 * 
-	 */
+     * @uml.property  name="subwindow"
+     * @uml.associationEnd  multiplicity="(1 1)"
+     */
     Window subwindow;
 
     public UploadDialog() {
@@ -42,6 +43,10 @@ public class UploadDialog extends VerticalLayout {
 
     }
 
+    /**
+     * @return
+     * @uml.property  name="subwindow"
+     */
     public Window getSubwindow() {
         return this.subwindow;
     }

@@ -33,7 +33,15 @@ public class HelloApplication extends Application {
 	 * 
 	 */
     private static final long serialVersionUID = -786044568801260648L;
+    /**
+     * @uml.property  name="window"
+     * @uml.associationEnd  
+     */
     private Window window;
+    /**
+     * @uml.property  name="elasticService"
+     * @uml.associationEnd  readOnly="true"
+     */
     @Autowired
     private ElasticsearchService elasticService;
     private static final Logger logger = LoggerFactory.getLogger(HelloApplication.class);
