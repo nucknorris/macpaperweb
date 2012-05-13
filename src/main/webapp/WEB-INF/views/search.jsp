@@ -18,6 +18,11 @@
 			<h1>SearchResults</h1>
 		</div>
 		<a href="javascript:history.back()">back</a>
+		<p>
+			Search Term: ${searchTerm} <br /> Document Score: ${documentScore}<br />
+			Document ID: ${documentId} <br />Total Hits: ${totalHits} <br />Max
+			Score: ${maxScore}
+		</p>
 
 		<table border="1">
 			<tr>
@@ -34,11 +39,6 @@
 			</c:forEach>
 		</table>
 
-<!-- 		<p> -->
-<%-- 			Search Term: ${searchTerm} <br /> Document Score: ${documentScore}<br /> --%>
-<%-- 			Document ID: ${documentId} <br />Total Hits: ${totalHits} <br />Max --%>
-<%-- 			Score: ${maxScore} --%>
-<!-- 		</p> -->
 	</div>
 </body>
 </html>
