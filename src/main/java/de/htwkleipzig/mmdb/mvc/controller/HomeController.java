@@ -42,101 +42,103 @@ import de.htwkleipzig.mmdb.util.PDFParser;
 @Controller
 public class HomeController {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(HomeController.class);
+	private static final Logger LOGGER = LoggerFactory
+			.getLogger(HomeController.class);
 
-    @Autowired
-    private PaperService paperService;
+	@Autowired
+	private PaperService paperService;
 
-    public HomeController() {
-    }
+	public HomeController() {
+	}
 
-    @RequestMapping(value = "/elasticget")
-    public String elasticbean(@RequestParam(required = true) String id, Model model) {
+	@RequestMapping(value = "/elasticget")
+	public String elasticbean(@RequestParam(required = true) String id,
+			Model model) {
 
-        GetResponse rsp = paperService.get(id);
-        Map<String, Object> source = rsp.getSource();
-        for (String key : source.keySet()) {
-            LOGGER.info("resource {}", key);
-            LOGGER.info(source.get(key).toString());
-        }
-        return "elastic";
-    }
+		GetResponse rsp = paperService.get(id);
+		Map<String, Object> source = rsp.getSource();
+		for (String key : source.keySet()) {
+			LOGGER.info("resource {}", key);
+			LOGGER.info(source.get(key).toString());
+		}
+		return "elastic";
+	}
 
-    @RequestMapping(value = "/")
-    public String elasticstart(Model model) {
-        LOGGER.info("startpage home");
-        model.addAttribute("attribute", "hier kann text drin stehen");
-        return "elastic";
-    }
-    
-    
+	@RequestMapping(value = "/")
+	public String elasticstart(Model model) {
+		LOGGER.info("startpage home");
+		model.addAttribute("attribute", "hier kann text drin stehen");
+		return "elastic";
+	}
 
-    @RequestMapping(value = "/elasticsearch")
-    public String elasticsearch(@RequestParam(required = true) String searchPhrase, Model model) {
-        // search at QuizRDF
-        LOGGER.info("search for a query");
-        QueryStringQueryBuilder query = QueryBuilders.queryString(searchPhrase).allowLeadingWildcard(false)
-                .useDisMax(true);
-        SearchResponse response = paperService.search(query);
-        LOGGER.info("total hits {}", response.getHits().getTotalHits());
-        LOGGER.info("MaxScore {}", response.getHits().getMaxScore());
-        model.addAttribute("totalHits", response.getHits().getTotalHits());
-        model.addAttribute("maxScore", response.getHits().getTotalHits());
+	@RequestMapping(value = "/elasticsearch")
+	public String elasticsearch(
+			@RequestParam(required = true) String searchPhrase, Model model) {
+		// search at QuizRDF
+		LOGGER.info("search for a query");
+		QueryStringQueryBuilder query = QueryBuilders.queryString(searchPhrase)
+				.allowLeadingWildcard(false).useDisMax(true);
+		SearchResponse response = paperService.search(query);
+		LOGGER.info("total hits {}", response.getHits().getTotalHits());
+		LOGGER.info("MaxScore {}", response.getHits().getMaxScore());
+		model.addAttribute("totalHits", response.getHits().getTotalHits());
+		model.addAttribute("maxScore", response.getHits().getTotalHits());
 
-        for (SearchHit hit : response.getHits().getHits()) {
-            if (hit.isSourceEmpty()) {
-                LOGGER.info("source is empty");
-            }
-            LOGGER.info("id of the document {}", hit.getId());
-            LOGGER.info("score of the hit {}", hit.getScore());
-            model.addAttribute("documentId", hit.getId());
-            model.addAttribute("documentScore", hit.getScore());
+		for (SearchHit hit : response.getHits().getHits()) {
+			if (hit.isSourceEmpty()) {
+				LOGGER.info("source is empty");
+			}
+			LOGGER.info("id of the document {}", hit.getId());
+			LOGGER.info("score of the hit {}", hit.getScore());
+			model.addAttribute("documentId", hit.getId());
+			model.addAttribute("documentScore", hit.getScore());
 
-            Map<String, Object> source = hit.sourceAsMap();
-            for (String key : source.keySet()) {
-                LOGGER.info("key of the source {}", key);
-                LOGGER.info(source.get(key).toString());
-                // model.addAttribute("documentKey",
-                // source.get(key).toString());
-            }
-        }
-        LOGGER.info("MaxScore {}", response.getHits().getHits());
-        model.addAttribute("searchTerm", searchPhrase);
-        return "search";
-    }
+			Map<String, Object> source = hit.sourceAsMap();
+			for (String key : source.keySet()) {
+				LOGGER.info("key of the source {}", key);
+				// LOGGER.info(source.get(key).toString());
+				// model.addAttribute("documentKey",
+				// source.get(key).toString());
+			}
+			model.addAttribute("myMap", hit.sourceAsMap());
+		}
+		// LOGGER.info("MaxScore {}", response.getHits().getHits());
+		model.addAttribute("searchTerm", searchPhrase);
+		return "search";
+	}
 
-    @RequestMapping(value = "/elasticsave")
-    public String elasticsave(@RequestParam(required = true) String path, @RequestParam(required = true) String id,
-            Model model) {
-        // File file = new File(path);
-        Map<String, Object> test = new HashMap<String, Object>();
-        LOGGER.debug("extract the content and metadata from the pdf");
-        test.put("pdf", PDFParser.pdfParser(path));
-        LOGGER.debug("the extracted content {}", test.get("pdf").toString());
-        LOGGER.debug("try to save the context of the pdf to es");
-        paperService.save(id, test);
-        LOGGER.debug("saved");
-        return "elastic";
-    }
+	@RequestMapping(value = "/elasticsave")
+	public String elasticsave(@RequestParam(required = true) String path,
+			@RequestParam(required = true) String id, Model model) {
+		// File file = new File(path);
+		Map<String, Object> test = new HashMap<String, Object>();
+		LOGGER.debug("extract the content and metadata from the pdf");
+		test.put("pdf", PDFParser.pdfParser(path));
+		LOGGER.debug("the extracted content {}", test.get("pdf").toString());
+		LOGGER.debug("try to save the context of the pdf to es");
+		paperService.save(id, test);
+		LOGGER.debug("saved");
+		return "elastic";
+	}
 
-    @RequestMapping(value = "/getpaper", method = RequestMethod.GET)
-    @ResponseBody
-    public String getPaper(String id) {
+	@RequestMapping(value = "/getpaper", method = RequestMethod.GET)
+	@ResponseBody
+	public String getPaper(String id) {
 
-        LOGGER.info("starting list test");
-        GetResponse resp = paperService.get("jsonmap");
-        Map<String, Object> source = resp.getSource();
-        if (source != null && !source.isEmpty()) {
-            LOGGER.info("source ist nicht null oder empty");
-            if (source.containsKey("paper2")) {
-                LOGGER.info("paper sollte existieren");
-                String paper = (String) source.get("paper2");
-                LOGGER.info("paper wird ausgespuckt");
-                return paper;
-            }
-        }
-        LOGGER.info("paper existiert wohl nicht");
-        return null;
-    }
+		LOGGER.info("starting list test");
+		GetResponse resp = paperService.get("jsonmap");
+		Map<String, Object> source = resp.getSource();
+		if (source != null && !source.isEmpty()) {
+			LOGGER.info("source ist nicht null oder empty");
+			if (source.containsKey("paper2")) {
+				LOGGER.info("paper sollte existieren");
+				String paper = (String) source.get("paper2");
+				LOGGER.info("paper wird ausgespuckt");
+				return paper;
+			}
+		}
+		LOGGER.info("paper existiert wohl nicht");
+		return null;
+	}
 
 }
