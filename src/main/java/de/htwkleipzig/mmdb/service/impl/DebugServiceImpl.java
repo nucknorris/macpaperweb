@@ -1,5 +1,6 @@
 package de.htwkleipzig.mmdb.service.impl;
 
+import java.io.IOException;
 import java.util.Map;
 
 import org.elasticsearch.ElasticSearchException;
@@ -13,12 +14,12 @@ import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.IndicesAdminClient;
 import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.common.xcontent.XContentBuilder;
+import org.elasticsearch.common.xcontent.XContentFactory;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.indices.IndexAlreadyExistsException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import com.google.gson.JsonObject;
 
@@ -26,16 +27,16 @@ import de.htwkleipzig.mmdb.service.AuthorService;
 import de.htwkleipzig.mmdb.util.Utilities;
 import fr.pilato.spring.elasticsearch.ElasticsearchTransportClientFactoryBean;
 
-@Service
-public class AuthorServiceImpl implements AuthorService {
+//@Service
+public class DebugServiceImpl implements AuthorService {
 
     /**
      * 
      */
     private static final long serialVersionUID = -5057845859337839315L;
-    private static final Logger LOGGER = LoggerFactory.getLogger(AuthorServiceImpl.class);
-    private static String INDEX_AUTHOR_NAME = Utilities.getProperty("index.author.name");
-    private static String INDEX_AUTHOR_TYPE = Utilities.getProperty("index.author.type");
+    private static final Logger LOGGER = LoggerFactory.getLogger(DebugServiceImpl.class);
+    private static String INDEX_DEBUG_NAME = Utilities.getProperty("index.debug.name");
+    private static String INDEX_DEBUG_TYPE = Utilities.getProperty("index.debug.type");
 
     TransportClient client;
 
@@ -56,14 +57,19 @@ public class AuthorServiceImpl implements AuthorService {
         }
 
         // create an index called myindex
-        LOGGER.info("create an index called {}", INDEX_AUTHOR_NAME);
+        LOGGER.info("create an index called {}", INDEX_DEBUG_NAME);
         // client.admin().indices().create(new CreateIndexRequest(INDEX_AUTHOR_NAME)).actionGet();
         IndicesAdminClient indAdminClient = client.admin().indices();
         // indexRequest.mapping(INDEX_AUTHOR_TYPE, data)
         try {
-            indAdminClient.create(createIndex(INDEX_AUTHOR_NAME, indAdminClient)).actionGet();
+
+            indAdminClient.create(
+                    createIndex(INDEX_DEBUG_NAME, indAdminClient).mapping(INDEX_DEBUG_TYPE, createMapping()))
+                    .actionGet();
+        } catch (IOException e) {
+            e.printStackTrace();
         } catch (IndexAlreadyExistsException ex) {
-            LOGGER.debug("{} already exists", INDEX_AUTHOR_NAME);
+            LOGGER.debug("{} already exists", INDEX_DEBUG_NAME);
         }
 
     }
@@ -79,17 +85,31 @@ public class AuthorServiceImpl implements AuthorService {
         return createIndexRequestBuilder.request();
     }
 
+    private XContentBuilder createMapping() throws IOException {
+        LOGGER.debug("create mapping");
+        XContentBuilder data = XContentFactory.jsonBuilder().startObject().startObject(INDEX_DEBUG_TYPE)
+                .startObject("properties").startObject("authorId").field("type", "string").field("store", "yes")
+                .endObject().startObject("name").field("type", "string").field("store", "yes").endObject()
+                .startObject("title").field("type", "string").field("store", "yes").endObject().startObject("name")
+                .field("type", "string").field("store", "yes").endObject().startObject("lastname")
+                .field("type", "string").field("store", "yes").endObject().startObject("universityId")
+                .field("type", "string").field("index", Utilities.getProperty("index.university.name"))
+                .field("store", "yes").endObject().endObject().endObject().endObject();
+        LOGGER.info(data.string());
+        return data;
+    }
+
     @Override
     public GetResponse get(String id) {
         LOGGER.debug("get a resource from index {}, type {}, id {}",
-                new Object[] { INDEX_AUTHOR_NAME, Utilities.getProperty("index.type"), id });
-        GetResponse rsp = client.prepareGet(INDEX_AUTHOR_NAME, INDEX_AUTHOR_TYPE, id).execute().actionGet();
+                new Object[] { INDEX_DEBUG_NAME, Utilities.getProperty("index.type"), id });
+        GetResponse rsp = client.prepareGet(INDEX_DEBUG_NAME, INDEX_DEBUG_TYPE, id).execute().actionGet();
         return rsp;
     }
 
     @Override
     public boolean save(String id, Map<String, Object> data) {
-        IndexRequestBuilder irb = client.prepareIndex(INDEX_AUTHOR_NAME, INDEX_AUTHOR_TYPE, id).setSource(data);
+        IndexRequestBuilder irb = client.prepareIndex(INDEX_DEBUG_NAME, INDEX_DEBUG_TYPE, id).setSource(data);
         try {
             LOGGER.debug("try to save the content to es");
             irb.execute().actionGet();
@@ -102,7 +122,7 @@ public class AuthorServiceImpl implements AuthorService {
 
     @Override
     public boolean saveJson(String id, XContentBuilder content) {
-        IndexRequestBuilder irb = client.prepareIndex(INDEX_AUTHOR_NAME, INDEX_AUTHOR_TYPE, id).setSource(content);
+        IndexRequestBuilder irb = client.prepareIndex(INDEX_DEBUG_NAME, INDEX_DEBUG_TYPE, id).setSource(content);
         try {
             irb.execute().actionGet();
         } catch (ElasticSearchException ese) {
@@ -114,14 +134,14 @@ public class AuthorServiceImpl implements AuthorService {
 
     @Override
     public DeleteResponse delete(String id) {
-        DeleteResponse response = client.prepareDelete(INDEX_AUTHOR_NAME, INDEX_AUTHOR_TYPE, id).execute().actionGet();
+        DeleteResponse response = client.prepareDelete(INDEX_DEBUG_NAME, INDEX_DEBUG_TYPE, id).execute().actionGet();
 
         return response;
     }
 
     @Override
     public SearchResponse search(QueryBuilder query) {
-        SearchRequestBuilder builder = client.prepareSearch(INDEX_AUTHOR_NAME);
+        SearchRequestBuilder builder = client.prepareSearch(INDEX_DEBUG_NAME);
         builder.setQuery(query);
 
         return builder.execute().actionGet();
