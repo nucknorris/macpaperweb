@@ -1,25 +1,25 @@
-<class-diagram version="1.0.7" icons="true" automaticImage="PNG" always-add-relationships="false" generalizations="true" 
+<class-diagram version="1.0.8" icons="true" automaticImage="PNG" always-add-relationships="false" generalizations="true" 
   realizations="true" associations="true" dependencies="false" nesting-relationships="true">  
   <class id="1" corner="BOTTOM_RIGHT" language="java" name="de.htwkleipzig.mmdb.model.Author" project="macpaperweb" 
     file="/macpaperweb/src/main/java/de/htwkleipzig/mmdb/model/Author.java" binary="false">    
     <position height="-1" width="-1" x="129" y="97"/>    
-    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true"/>      
       <operations public="false" package="false" protected="false" private="false"/>    
     </display>  
   </class>  
-  <class id="2" corner="BOTTOM_RIGHT" language="java" name="de.htwkleipzig.mmdb.model.Paper" project="macpaperweb" 
+  <class id="2" corner="TOP_LEFT" language="java" name="de.htwkleipzig.mmdb.model.Paper" project="macpaperweb" 
     file="/macpaperweb/src/main/java/de/htwkleipzig/mmdb/model/Paper.java" binary="false">    
-    <position height="-1" width="-1" x="347" y="102"/>    
-    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+    <position height="-1" width="-1" x="430" y="104"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true"/>      
       <operations public="false" package="false" protected="false" private="false"/>    
     </display>  
   </class>  
   <class id="3" corner="BOTTOM_RIGHT" language="java" name="de.htwkleipzig.mmdb.model.University" project="macpaperweb" 
     file="/macpaperweb/src/main/java/de/htwkleipzig/mmdb/model/University.java" binary="false">    
-    <position height="-1" width="-1" x="131" y="296"/>    
-    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+    <position height="-1" width="-1" x="132" y="330"/>    
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true"/>      
       <operations public="false" package="false" protected="false" private="false"/>    
     </display>  
@@ -40,7 +40,8 @@
     <end type="TARGET" refId="1" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <classifier-display autosize="true" package="true" initial-value="false" signature="true" visibility="true">    
+  <classifier-display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" 
+    visibility="true">    
     <attributes public="true" package="true" protected="true" private="true"/>    
     <operations public="true" package="true" protected="true" private="true"/>  
   </classifier-display>  

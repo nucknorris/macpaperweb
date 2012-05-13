@@ -27,9 +27,17 @@ public class ElasticsearchTransportClientTest {
 
     private static final Logger logger = LoggerFactory.getLogger(ElasticsearchTransportClientTest.class);
 
+    /**
+     * @uml.property  name="transportFactoryBean"
+     * @uml.associationEnd  readOnly="true"
+     */
     @Autowired
     ElasticsearchTransportClientFactoryBean transportFactoryBean;
 
+    /**
+     * @uml.property  name="client"
+     * @uml.associationEnd  multiplicity="(0 -1)" elementType="org.elasticsearch.cluster.node.DiscoveryNode"
+     */
     TransportClient client;
 
     @Before

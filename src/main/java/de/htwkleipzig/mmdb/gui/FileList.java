@@ -33,9 +33,17 @@ public class FileList extends VerticalLayout implements Property.ValueChangeList
     private static final long serialVersionUID = -7619413228955358314L;
     private static final Logger LOGGER = LoggerFactory.getLogger(FileList.class);
 
+    /**
+     * @uml.property  name="elasticService"
+     * @uml.associationEnd  readOnly="true"
+     */
     @Autowired
     private ElasticsearchService elasticService;
 
+    /**
+     * @uml.property  name="subwindow"
+     * @uml.associationEnd  multiplicity="(1 1)"
+     */
     Window subwindow;
 
     public FileList() {
@@ -83,6 +91,10 @@ public class FileList extends VerticalLayout implements Property.ValueChangeList
         layout.setComponentAlignment(filesComboBox, Alignment.TOP_CENTER);
     }
 
+    /**
+     * @return
+     * @uml.property  name="subwindow"
+     */
     public Window getSubwindow() {
         return subwindow;
     }

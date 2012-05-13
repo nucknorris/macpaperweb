@@ -12,6 +12,10 @@ import com.vaadin.ui.Window;
 
 public class ReadDocument extends VerticalLayout {
 
+    /**
+     * @uml.property  name="subwindow"
+     * @uml.associationEnd  multiplicity="(1 1)"
+     */
     Window subwindow;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ReadDocument.class);
@@ -50,6 +54,10 @@ public class ReadDocument extends VerticalLayout {
 
     }
 
+    /**
+     * @return
+     * @uml.property  name="subwindow"
+     */
     public Window getSubwindow() {
         return this.subwindow;
     }

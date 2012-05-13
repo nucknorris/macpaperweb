@@ -14,6 +14,10 @@ import com.vaadin.ui.Window;
 
 @SuppressWarnings({ "serial" })
 public class MainGui extends Application {
+    /**
+     * @uml.property  name="window"
+     * @uml.associationEnd  
+     */
     private Window window;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MainGui.class);
