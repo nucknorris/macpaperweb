@@ -68,6 +68,8 @@ public class HomeController {
         model.addAttribute("attribute", "hier kann text drin stehen");
         return "elastic";
     }
+    
+    
 
     @RequestMapping(value = "/elasticsearch")
     public String elasticsearch(@RequestParam(required = true) String searchPhrase, Model model) {
