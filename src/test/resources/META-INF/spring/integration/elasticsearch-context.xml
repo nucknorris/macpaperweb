@@ -8,9 +8,6 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
 		http://www.pilato.fr/schema/elasticsearch http://www.pilato.fr/schema/elasticsearch/elasticsearch-0.1.xsd">
 
-	<!-- <elasticsearch:client id="esClient" -->
-	<!-- esNodes="http://leichentraktor.dyndns.org:9300" /> -->
-
 	<bean id="esClient"
 		class="fr.pilato.spring.elasticsearch.ElasticsearchTransportClientFactoryBean">
 		<property name="esNodes">
@@ -20,8 +17,12 @@
 		</property>
 	</bean>
 
-	<bean id="elasticService"
-		class="de.htwkleipzig.mmdb.service.impl.ElasticsearchServiceImpl"
-		init-method="init" destroy-method="onShutdown"></bean>
+    <bean id="paperService" class="de.htwkleipzig.mmdb.service.impl.PaperServiceImpl"
+        init-method="init" destroy-method="onShutdown"></bean>
 
+    <bean id="authorService" class="de.htwkleipzig.mmdb.service.impl.AuthorServiceImpl"
+        init-method="init" destroy-method="onShutdown"></bean>
+
+    <bean id="universityService" class="de.htwkleipzig.mmdb.service.impl.UniversityServiceImpl"
+        init-method="init" destroy-method="onShutdown"></bean>
 </beans>

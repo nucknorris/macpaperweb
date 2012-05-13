@@ -15,10 +15,7 @@
  */
 package de.htwkleipzig.mmdb.mvc.controller;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.elasticsearch.action.get.GetResponse;
@@ -36,12 +33,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.google.gson.Gson;
-
-import de.htwkleipzig.mmdb.model.Author;
-import de.htwkleipzig.mmdb.model.Paper;
-import de.htwkleipzig.mmdb.model.University;
-import de.htwkleipzig.mmdb.service.ElasticsearchService;
+import de.htwkleipzig.mmdb.service.PaperService;
 import de.htwkleipzig.mmdb.util.PDFParser;
 
 /**
@@ -52,12 +44,8 @@ public class HomeController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(HomeController.class);
 
-    /**
-     * @uml.property name="elasticService"
-     * @uml.associationEnd readOnly="true"
-     */
     @Autowired
-    private ElasticsearchService elasticService;
+    private PaperService paperService;
 
     public HomeController() {
     }
@@ -65,7 +53,7 @@ public class HomeController {
     @RequestMapping(value = "/elasticget")
     public String elasticbean(@RequestParam(required = true) String id, Model model) {
 
-        GetResponse rsp = elasticService.get(id);
+        GetResponse rsp = paperService.get(id);
         Map<String, Object> source = rsp.getSource();
         for (String key : source.keySet()) {
             LOGGER.info("resource {}", key);
@@ -76,7 +64,7 @@ public class HomeController {
 
     @RequestMapping(value = "/")
     public String elasticstart(Model model) {
-        LOGGER.info("try to find the document with the id swse");
+        LOGGER.info("startpage home");
         model.addAttribute("attribute", "hier kann text drin stehen");
         return "elastic";
     }
@@ -87,7 +75,7 @@ public class HomeController {
         LOGGER.info("search for a query");
         QueryStringQueryBuilder qb = QueryBuilders.queryString(searchPhrase).allowLeadingWildcard(false)
                 .useDisMax(true);
-        SearchResponse search = elasticService.search(qb);
+        SearchResponse search = paperService.search(qb);
         LOGGER.info("total hits {}", search.getHits().getTotalHits());
         LOGGER.info("MaxScore {}", search.getHits().getMaxScore());
         for (SearchHit hit : search.getHits().getHits()) {
@@ -116,78 +104,8 @@ public class HomeController {
         test.put("pdf", PDFParser.pdfParser(path));
         LOGGER.debug("the extracted content {}", test.get("pdf").toString());
         LOGGER.debug("try to save the context of the pdf to es");
-        elasticService.save(id, test);
+        paperService.save(id, test);
         LOGGER.debug("saved");
-        return "elastic";
-    }
-
-    @RequestMapping(value = "/savejson")
-    public String elasticSaveJson(Model model) {
-
-        List<String> keywords = new ArrayList<String>();
-        keywords.add("semantic search");
-        keywords.add("Information Retrieval");
-        keywords.add("evaluation benchmarks");
-
-        Paper paper = new Paper();
-        paper.setCreateDate(new Date(System.currentTimeMillis()));
-        paper.setKindOf("paper");
-        paper.setTitle("Using TREC for cross-comparison between classic IR and ontology-based search models at a Web scale");
-        paper.setKeywords(keywords);
-
-        University uniMadrid = new University();
-        uniMadrid.setCity("Madrid");
-        uniMadrid.setCountry("Spain");
-        uniMadrid.setPostcode("28048");
-        uniMadrid.setHousenumber("11");
-        uniMadrid.setName("Escuela Politecnica Superior Universidad Autonoma de Madrid");
-        uniMadrid.setStreet("C/ Francisco Tomas y Valiente");
-
-        University uniMiltonKeynes = new University();
-        uniMiltonKeynes.setCity("Milton Keynes");
-        uniMiltonKeynes.setCountry("United Kingdom");
-        uniMiltonKeynes.setPostcode("MK7 6AA");
-        uniMiltonKeynes.setName("Knowledge Media institute The Open University");
-        uniMiltonKeynes.setStreet("Walton Hall");
-
-        Author authorFern = new Author();
-        authorFern.setEmail("Miriam.fernandez@uam.es");
-        authorFern.setLastname("Fernandez");
-        authorFern.setName("Miriam");
-        authorFern.setUniversity(uniMadrid);
-        paper.getAuthors().add(authorFern);
-
-        Author authorVallet = new Author();
-        authorVallet.setEmail("David.vallet@uam.es");
-        authorVallet.setLastname("Vallet");
-        authorVallet.setName("David");
-        authorVallet.setUniversity(uniMadrid);
-        paper.getAuthors().add(authorVallet);
-
-        Author authorCastells = new Author();
-        authorCastells.setEmail("pablo.castells@uam.es");
-        authorCastells.setLastname("Castells");
-        authorCastells.setName("Paplo");
-        authorCastells.setUniversity(uniMadrid);
-        paper.getAuthors().add(authorCastells);
-
-        paper.setContent("hier kommt der ganze inhalt mit rein");
-        Gson gson = new Gson();
-
-        // convert java object to JSON format,
-        // and returned as JSON formatted string
-        String json = gson.toJson(paper);
-
-        LOGGER.info(json);
-        Map<String, Object> jsonMap = new HashMap<String, Object>();
-        jsonMap.put("paper2", json);
-        LOGGER.info("paper wurde gebaut und wird gespeichert");
-        // final XContentBuilder jsonBuilder = XContentFactory.jsonBuilder();
-        // jsonBuilder.startObject();
-        // jsonBuilder.field("paper", paper);
-        //
-        // jsonBuilder.endObject();
-        elasticService.save("jsonmap", jsonMap);
         return "elastic";
     }
 
@@ -196,7 +114,7 @@ public class HomeController {
     public String getPaper(String id) {
 
         LOGGER.info("starting list test");
-        GetResponse resp = elasticService.get("jsonmap");
+        GetResponse resp = paperService.get("jsonmap");
         Map<String, Object> source = resp.getSource();
         if (source != null && !source.isEmpty()) {
             LOGGER.info("source ist nicht null oder empty");

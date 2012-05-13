@@ -16,7 +16,7 @@ import org.elasticsearch.index.query.QueryBuilder;
  * @author spinner0815
  * 
  */
-public interface ElasticsearchService extends Serializable {
+public interface UniversityService extends Serializable {
 
     void init();
 
