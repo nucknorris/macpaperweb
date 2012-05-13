@@ -124,23 +124,23 @@
 
 
 		<!-- Vaadin -->
-		<dependency>
-			<groupId>com.vaadin</groupId>
-			<artifactId>vaadin</artifactId>
-			<version>6.7.7</version>
-		</dependency>
+		<!-- <dependency> -->
+		<!-- <groupId>com.vaadin</groupId> -->
+		<!-- <artifactId>vaadin</artifactId> -->
+		<!-- <version>6.7.7</version> -->
+		<!-- </dependency> -->
 
 		<!-- vaadin addons -->
-		<dependency>
-			<groupId>org.vaadin.addons</groupId>
-			<artifactId>reindeermods</artifactId>
-			<version>0.2</version>
-		</dependency>
-		<dependency>
-			<groupId>org.vaadin.addons</groupId>
-			<artifactId>navigator</artifactId>
-			<version>0.3</version>
-		</dependency>
+		<!-- <dependency> -->
+		<!-- <groupId>org.vaadin.addons</groupId> -->
+		<!-- <artifactId>reindeermods</artifactId> -->
+		<!-- <version>0.2</version> -->
+		<!-- </dependency> -->
+		<!-- <dependency> -->
+		<!-- <groupId>org.vaadin.addons</groupId> -->
+		<!-- <artifactId>navigator</artifactId> -->
+		<!-- <version>0.3</version> -->
+		<!-- </dependency> -->
 
 		<!-- Logging -->
 
@@ -198,16 +198,29 @@
 		</dependency>
 
 		<!-- Apache commons -->
-<!-- 		<dependency> -->
-<!-- 			<groupId>org.apache.commons</groupId> -->
-<!-- 			<artifactId>commons-lang3</artifactId> -->
-<!-- 			<version>3.1</version> -->
-<!-- 		</dependency> -->
+		<!-- <dependency> -->
+		<!-- <groupId>org.apache.commons</groupId> -->
+		<!-- <artifactId>commons-lang3</artifactId> -->
+		<!-- <version>3.1</version> -->
+		<!-- </dependency> -->
 		<dependency>
 			<groupId>commons-configuration</groupId>
 			<artifactId>commons-configuration</artifactId>
 			<version>1.6</version>
 		</dependency>
+
+		<dependency>
+			<groupId>commons-fileupload</groupId>
+			<artifactId>commons-fileupload</artifactId>
+			<version>1.2.2</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>1.3.2</version>
+		</dependency>
+
 
 		<!-- Elastic search -->
 
