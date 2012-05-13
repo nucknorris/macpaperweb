@@ -53,8 +53,8 @@ public class HomeController {
     private static final Logger LOGGER = LoggerFactory.getLogger(HomeController.class);
 
     /**
-     * @uml.property  name="elasticService"
-     * @uml.associationEnd  readOnly="true"
+     * @uml.property name="elasticService"
+     * @uml.associationEnd readOnly="true"
      */
     @Autowired
     private ElasticsearchService elasticService;
@@ -74,18 +74,12 @@ public class HomeController {
         return "elastic";
     }
 
-    // @RequestMapping(value = "/")
-    // public String elasticstart(Model model) {
-    // logger.info("try to find the document with the id swse");
-    // GetResponse rsp = elasticService.get(HomeController.PAPERINDEX,
-    // HomeController.INDEXTYPE, "swse");
-    // Map<String, Object> source = rsp.getSource();
-    // for (String key : source.keySet()) {
-    // logger.info("resource {}", key);
-    // logger.info(source.get(key).toString());
-    // }
-    // return "elastic";
-    // }
+    @RequestMapping(value = "/")
+    public String elasticstart(Model model) {
+        LOGGER.info("try to find the document with the id swse");
+        model.addAttribute("attribute", "hier kann text drin stehen");
+        return "elastic";
+    }
 
     @RequestMapping(value = "/elasticsearch")
     public String elasticsearch(@RequestParam(required = true) String searchPhrase, Model model) {
