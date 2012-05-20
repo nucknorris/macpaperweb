@@ -56,7 +56,15 @@ public interface PaperService extends Serializable {
      * @param content
      * @return
      */
-    boolean saveJson(String id, XContentBuilder content);
+    boolean save(String id, XContentBuilder content);
+
+    /**
+     * 
+     * @param id
+     * @param paperContent
+     * @return
+     */
+    boolean save(String id, String paperContent);
 
     public void onShutdown();
 }

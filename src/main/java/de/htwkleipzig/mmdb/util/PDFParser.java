@@ -1,5 +1,6 @@
 package de.htwkleipzig.mmdb.util;
 
+import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 
@@ -33,6 +34,26 @@ public class PDFParser {
         try {
             Parser parser = tika.getParser();
             parser.parse(pdf.openStream(), toHTMLHandler, met, parseContext);
+            logger.info(System.getProperty("line.separator") + "Metadata:\t" + met);
+        } catch (Exception e) {
+            logger.error(e.getLocalizedMessage() + " " + e.getCause());
+        }
+        logger.info(toHTMLHandler.toString());
+        return toHTMLHandler.toString();
+    }
+
+    public static String pdfParser(InputStream is) {
+        Tika tika = new Tika();
+        Metadata met = new Metadata();
+        // LinkContentHandler linkHandler = new LinkContentHandler();
+        // ContentHandler textHandler = new BodyContentHandler();
+        ToHTMLContentHandler toHTMLHandler = new ToHTMLContentHandler();
+        // TeeContentHandler teeHandler = new TeeContentHandler(linkHandler, textHandler, toHTMLHandler);
+        ParseContext parseContext = new ParseContext();
+
+        try {
+            Parser parser = tika.getParser();
+            parser.parse(is, toHTMLHandler, met, parseContext);
             logger.info(System.getProperty("line.separator") + "Metadata:\t" + met);
         } catch (Exception e) {
             logger.error(e.getLocalizedMessage() + " " + e.getCause());

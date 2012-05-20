@@ -101,8 +101,20 @@ public class PaperServiceImpl implements PaperService {
     }
 
     @Override
-    public boolean saveJson(String id, XContentBuilder content) {
+    public boolean save(String id, XContentBuilder content) {
         IndexRequestBuilder irb = client.prepareIndex(INDEX_PAPER_NAME, INDEX_PAPER_TYPE, id).setSource(content);
+        try {
+            irb.execute().actionGet();
+        } catch (ElasticSearchException ese) {
+            LOGGER.error("Error while saving it", ese);
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public boolean save(String id, String paperContent) {
+        IndexRequestBuilder irb = client.prepareIndex(INDEX_PAPER_NAME, INDEX_PAPER_TYPE, id).setSource(paperContent);
         try {
             irb.execute().actionGet();
         } catch (ElasticSearchException ese) {
