@@ -84,7 +84,7 @@
 					<path>/${project.artifactId}</path>
 					<url>http://85.214.197.33:8080/manager/text</url>
 					<username>deploy</username>
-					<password>mvndepl0yhksn</password>
+					<password></password>
 				</configuration>
 			</plugin>
 		</plugins>
