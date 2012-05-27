@@ -3,14 +3,16 @@
  */
 package de.htwkleipzig.mmdb.service;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.Map;
 
 import org.elasticsearch.action.delete.DeleteResponse;
-import org.elasticsearch.action.get.GetResponse;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.common.xcontent.XContentBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
+
+import de.htwkleipzig.mmdb.model.Author;
 
 /**
  * @author spinner0815
@@ -24,9 +26,9 @@ public interface AuthorService extends Serializable {
      * get a resource from the elastic search
      * 
      * @param id
-     * @return the resource
+     * @return the Author
      */
-    GetResponse get(String id);
+    Author get(String id);
 
     /**
      * save a object to es
@@ -57,6 +59,22 @@ public interface AuthorService extends Serializable {
      * @return
      */
     boolean saveJson(String id, XContentBuilder content);
+
+    /**
+     * 
+     * @param author
+     * @return
+     * @throws IOException
+     */
+    public boolean saveAthuor(Author author) throws IOException;
+
+    /**
+     * 
+     * @param author
+     * @return
+     * @throws IOException
+     */
+    public boolean updateAuthor(Author author) throws IOException;
 
     public void onShutdown();
 }

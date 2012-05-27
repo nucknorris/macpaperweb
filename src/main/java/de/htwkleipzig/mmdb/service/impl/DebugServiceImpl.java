@@ -23,6 +23,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.google.gson.JsonObject;
 
+import de.htwkleipzig.mmdb.model.Author;
 import de.htwkleipzig.mmdb.service.AuthorService;
 import de.htwkleipzig.mmdb.util.Utilities;
 import fr.pilato.spring.elasticsearch.ElasticsearchTransportClientFactoryBean;
@@ -100,11 +101,11 @@ public class DebugServiceImpl implements AuthorService {
     }
 
     @Override
-    public GetResponse get(String id) {
+    public Author get(String id) {
         LOGGER.debug("get a resource from index {}, type {}, id {}",
                 new Object[] { INDEX_DEBUG_NAME, Utilities.getProperty("index.type"), id });
         GetResponse rsp = client.prepareGet(INDEX_DEBUG_NAME, INDEX_DEBUG_TYPE, id).execute().actionGet();
-        return rsp;
+        return null;
     }
 
     @Override
@@ -150,6 +151,18 @@ public class DebugServiceImpl implements AuthorService {
     @Override
     public void onShutdown() {
         client.close();
+    }
+
+    @Override
+    public boolean saveAthuor(Author author) throws IOException {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    @Override
+    public boolean updateAuthor(Author author) throws IOException {
+        // TODO Auto-generated method stub
+        return false;
     }
 
 }
