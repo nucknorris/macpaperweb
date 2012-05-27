@@ -145,26 +145,12 @@ public class AuthorServiceImpl implements AuthorService {
         return builder.execute().actionGet();
     }
 
-    /**
-     * save the object author to es
-     * 
-     * @param author
-     *            The author
-     * @return true if the save was successful
-     * @throws IOException
-     *             if there is something wrong with the io e.g. author could not be parsed to json
-     */
     @Override
     public boolean save(Author author) {
 
         if (author == null) {
             LOGGER.debug("The author is NULL");
             throw new IllegalArgumentException("The author is NULL");
-        } else if (author.getAuthorId().isEmpty() || author.getEmail().isEmpty() || author.getLastname().isEmpty()
-                || author.getName().isEmpty() || author.getPaperIds().isEmpty() || author.getTitle().isEmpty()
-                || author.getUniversityId().isEmpty()) {
-            LOGGER.debug("one of the Author arguments is empty. this is illegal!");
-            throw new IllegalArgumentException("one of the author arguments is empty. This is illegal!");
         }
         LOGGER.debug("try to save the Author with id {}", author.getAuthorId());
         XContentBuilder b = null;

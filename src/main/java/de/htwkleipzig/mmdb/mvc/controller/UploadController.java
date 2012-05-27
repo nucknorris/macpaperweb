@@ -4,8 +4,7 @@
 package de.htwkleipzig.mmdb.mvc.controller;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Date;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,8 +16,7 @@ import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.google.gson.Gson;
-
+import de.htwkleipzig.mmdb.model.Paper;
 import de.htwkleipzig.mmdb.model.UploadItem;
 import de.htwkleipzig.mmdb.service.PaperService;
 import de.htwkleipzig.mmdb.util.FileUploader;
@@ -70,14 +68,16 @@ public class UploadController {
         }
 
         LOGGER.debug("is the paperContent empty? {}", paperContent.isEmpty());
-        Map<String, String> paper = new HashMap<String, String>();
-        paper.put(paperName, paperContent);
-        LOGGER.debug("converting Map<paperName, paperContent> into json String");
-        Gson gson = new Gson();
-        String jsonPaper = gson.toJson(paper);
 
         LOGGER.debug("save the String to elastic Search");
-        paperService.save(paperName, jsonPaper);
+        // create the paper object and store it
+        Paper paper1 = new Paper();
+        paper1.setPaperId(paperName);
+        paper1.setFileName(paperName + ".pdf");
+        paper1.setContent(paperContent);
+        paper1.setCreateDate(new Date(System.currentTimeMillis()));
+        paper1.setUploadDate(new Date(System.currentTimeMillis()));
+        paperService.save(paper1);
         LOGGER.debug("-------------------------------------------");
         return "redirect:/";
     }

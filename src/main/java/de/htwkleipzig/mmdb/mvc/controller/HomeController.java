@@ -18,7 +18,6 @@ package de.htwkleipzig.mmdb.mvc.controller;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.elasticsearch.action.get.GetResponse;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.index.query.QueryStringQueryBuilder;
@@ -33,6 +32,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import de.htwkleipzig.mmdb.model.Paper;
 import de.htwkleipzig.mmdb.service.PaperService;
 import de.htwkleipzig.mmdb.util.PDFParser;
 
@@ -53,12 +53,8 @@ public class HomeController {
     @RequestMapping(value = "/elasticget")
     public String elasticbean(@RequestParam(required = true) String id, Model model) {
 
-        GetResponse rsp = paperService.get(id);
-        Map<String, Object> source = rsp.getSource();
-        for (String key : source.keySet()) {
-            LOGGER.info("resource {}", key);
-            LOGGER.info(source.get(key).toString());
-        }
+        Paper rsp = paperService.get(id);
+        LOGGER.info("paper {}", rsp.toString());
         return "elastic";
     }
 
@@ -123,16 +119,10 @@ public class HomeController {
     public String getPaper(String id) {
 
         LOGGER.info("starting list test");
-        GetResponse resp = paperService.get("jsonmap");
-        Map<String, Object> source = resp.getSource();
-        if (source != null && !source.isEmpty()) {
-            LOGGER.info("source ist nicht null oder empty");
-            if (source.containsKey("paper2")) {
-                LOGGER.info("paper sollte existieren");
-                String paper = (String) source.get("paper2");
-                LOGGER.info("paper wird ausgespuckt");
-                return paper;
-            }
+        Paper paper = paperService.get("jsonmap");
+        if (paper != null) {
+            LOGGER.debug("paper existiert");
+            LOGGER.debug("paper {}", paper.toString());
         }
         LOGGER.info("paper existiert wohl nicht");
         return null;

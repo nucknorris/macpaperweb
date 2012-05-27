@@ -86,8 +86,8 @@ public class UniversityServiceImpl implements UniversityService {
 
     @Override
     public University get(String id) {
-        LOGGER.debug("get a resource from index {}, type {}, id {}",
-                new Object[] { INDEX_UNIVERSITY_NAME, Utilities.getProperty("index.type"), id });
+        LOGGER.debug("get a resource from index {}, type {}, id {}", new Object[] { INDEX_UNIVERSITY_NAME,
+                INDEX_UNIVERSITY_TYPE, id });
         GetResponse rsp = client.prepareGet(INDEX_UNIVERSITY_NAME, INDEX_UNIVERSITY_TYPE, id).execute().actionGet();
         Map<String, Object> ret = rsp.getSource();
         LOGGER.debug("try to map the response to University");
@@ -153,12 +153,6 @@ public class UniversityServiceImpl implements UniversityService {
         if (university == null) {
             LOGGER.debug("The university is NULL");
             throw new IllegalArgumentException("The university is NULL");
-        } else if (university.getUniversityId().isEmpty() || university.getCity().isEmpty()
-                || university.getCountry().isEmpty() || university.getName().isEmpty()
-                || university.getHousenumber().isEmpty() || university.getPostcode().isEmpty()
-                || university.getStreet().isEmpty()) {
-            LOGGER.debug("one of the university arguments is empty. this is illegal!");
-            throw new IllegalArgumentException("one of the university arguments is empty. This is illegal!");
         }
         LOGGER.debug("try to save the university with id {}", university.getUniversityId());
         XContentBuilder b = null;
