@@ -134,10 +134,13 @@ public class DebugServiceImpl implements AuthorService {
     }
 
     @Override
-    public DeleteResponse delete(String id) {
+    public boolean delete(String id) {
         DeleteResponse response = client.prepareDelete(INDEX_DEBUG_NAME, INDEX_DEBUG_TYPE, id).execute().actionGet();
-
-        return response;
+        if (response.notFound()) {
+            LOGGER.debug("there was no document foudn with the id {}", id);
+            return false;
+        }
+        return true;
     }
 
     @Override
@@ -154,13 +157,19 @@ public class DebugServiceImpl implements AuthorService {
     }
 
     @Override
-    public boolean saveAthuor(Author author) throws IOException {
+    public boolean save(Author author) {
         // TODO Auto-generated method stub
         return false;
     }
 
     @Override
-    public boolean updateAuthor(Author author) throws IOException {
+    public boolean updateAuthor(Author author) {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    @Override
+    public boolean authorExists(String authorId) {
         // TODO Auto-generated method stub
         return false;
     }

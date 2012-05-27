@@ -1,5 +1,9 @@
 package de.htwkleipzig.mmdb.service.impl;
 
+import static org.elasticsearch.common.xcontent.XContentFactory.jsonBuilder;
+
+import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 
 import org.elasticsearch.ElasticSearchException;
@@ -22,6 +26,7 @@ import org.springframework.stereotype.Service;
 
 import com.google.gson.JsonObject;
 
+import de.htwkleipzig.mmdb.model.University;
 import de.htwkleipzig.mmdb.service.UniversityService;
 import de.htwkleipzig.mmdb.util.Utilities;
 import fr.pilato.spring.elasticsearch.ElasticsearchTransportClientFactoryBean;
@@ -80,14 +85,23 @@ public class UniversityServiceImpl implements UniversityService {
     }
 
     @Override
-    public GetResponse get(String id) {
+    public University get(String id) {
         LOGGER.debug("get a resource from index {}, type {}, id {}",
                 new Object[] { INDEX_UNIVERSITY_NAME, Utilities.getProperty("index.type"), id });
         GetResponse rsp = client.prepareGet(INDEX_UNIVERSITY_NAME, INDEX_UNIVERSITY_TYPE, id).execute().actionGet();
-        return rsp;
+        Map<String, Object> ret = rsp.getSource();
+        LOGGER.debug("try to map the response to University");
+        if (rsp.exists()) {
+            LOGGER.debug("University exists and will be returned");
+            return source2University(ret);
+        } else {
+            LOGGER.debug("University doesn't exist");
+            return null;
+        }
     }
 
     @Override
+    @Deprecated
     public boolean save(String id, Map<String, Object> data) {
         IndexRequestBuilder irb = client.prepareIndex(INDEX_UNIVERSITY_NAME, INDEX_UNIVERSITY_TYPE, id).setSource(data);
         try {
@@ -101,6 +115,7 @@ public class UniversityServiceImpl implements UniversityService {
     }
 
     @Override
+    @Deprecated
     public boolean saveJson(String id, XContentBuilder content) {
         IndexRequestBuilder irb = client.prepareIndex(INDEX_UNIVERSITY_NAME, INDEX_UNIVERSITY_TYPE, id).setSource(
                 content);
@@ -114,11 +129,15 @@ public class UniversityServiceImpl implements UniversityService {
     }
 
     @Override
-    public DeleteResponse delete(String id) {
+    public boolean delete(String id) {
         DeleteResponse response = client.prepareDelete(INDEX_UNIVERSITY_NAME, INDEX_UNIVERSITY_TYPE, id).execute()
                 .actionGet();
 
-        return response;
+        if (response.notFound()) {
+            LOGGER.debug("there was no document foudn with the id {}", id);
+            return false;
+        }
+        return true;
     }
 
     @Override
@@ -130,8 +149,87 @@ public class UniversityServiceImpl implements UniversityService {
     }
 
     @Override
+    public boolean save(University university) {
+        if (university == null) {
+            LOGGER.debug("The university is NULL");
+            throw new IllegalArgumentException("The university is NULL");
+        } else if (university.getUniversityId().isEmpty() || university.getCity().isEmpty()
+                || university.getCountry().isEmpty() || university.getName().isEmpty()
+                || university.getHousenumber().isEmpty() || university.getPostcode().isEmpty()
+                || university.getStreet().isEmpty()) {
+            LOGGER.debug("one of the university arguments is empty. this is illegal!");
+            throw new IllegalArgumentException("one of the university arguments is empty. This is illegal!");
+        }
+        LOGGER.debug("try to save the university with id {}", university.getUniversityId());
+        XContentBuilder b = null;
+        try {
+            b = university2Json(university);
+        } catch (IOException e) {
+            LOGGER.error("error while parsing the university to xcontent {}", e.fillInStackTrace());
+        }
+        if (b == null) {
+            LOGGER.warn("something wrong while dao2json move from university with id {}", university.getUniversityId());
+            return false;
+        }
+        IndexRequestBuilder irb = client.prepareIndex(INDEX_UNIVERSITY_NAME, INDEX_UNIVERSITY_TYPE,
+                university.getUniversityId()).setSource(b);
+        irb.execute().actionGet();
+        return true;
+    }
+
+    @Override
+    public boolean updateUniversity(University university) {
+        LOGGER.debug("update author with id {}", university.getUniversityId());
+        if (universityExists(university.getUniversityId())) {
+            return save(university);
+        }
+        LOGGER.error("author with id {} doesn't exists", university.getUniversityId());
+        return false;
+    }
+
+    @Override
+    public boolean universityExists(String authorId) {
+        LOGGER.debug("authorExists({})", authorId);
+        if (this.get(authorId) != null) {
+            return true;
+        }
+        return false;
+    }
+
+    @Override
     public void onShutdown() {
         client.close();
     }
 
+    private XContentBuilder university2Json(University university) throws IOException {
+        LOGGER.debug("create the json object from University");
+        XContentBuilder b = jsonBuilder().startObject();
+        b.field("universityId", university.getUniversityId());
+        b.field("city", university.getCity());
+        b.field("country", university.getCountry());
+        b.field("name", university.getName());
+        b.field("housenumber", university.getHousenumber());
+        b.field("postcode", university.getPostcode());
+        b.field("street", university.getStreet());
+        b.field("street2", university.getStreet2());
+        b.field("authors", university.getAuthorIds());
+        LOGGER.debug(b.string());
+        return b;
+    }
+
+    private University source2University(Map<String, Object> source) {
+        LOGGER.debug("convert from source to university");
+        University university = new University();
+        university.setUniversityId((String) source.get("universityId"));
+        university.setCity((String) source.get("city"));
+        university.setCountry((String) source.get("country"));
+        university.setName((String) source.get("name"));
+        university.setHousenumber((String) source.get("housenumber"));
+        university.setPostcode((String) source.get("postcode"));
+        university.setStreet((String) source.get("street"));
+        university.setStreet2((String) source.get("street2"));
+        university.setAuthorIds((List<String>) source.get("authors"));
+        LOGGER.debug("finished converting {}", university.toString());
+        return university;
+    }
 }

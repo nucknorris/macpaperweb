@@ -14,7 +14,6 @@ import org.elasticsearch.action.get.GetResponse;
 import org.elasticsearch.action.index.IndexRequestBuilder;
 import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;
-import org.elasticsearch.action.update.UpdateRequestBuilder;
 import org.elasticsearch.client.IndicesAdminClient;
 import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.common.xcontent.XContentBuilder;
@@ -87,16 +86,22 @@ public class AuthorServiceImpl implements AuthorService {
 
     @Override
     public Author get(String id) {
-        LOGGER.debug("get a resource from index {}, type {}, id {}",
-                new Object[] { INDEX_AUTHOR_NAME, Utilities.getProperty("index.type"), id });
+        LOGGER.debug("get a resource from index {}, type {}, id {}", new Object[] { INDEX_AUTHOR_NAME,
+                INDEX_AUTHOR_TYPE, id });
         GetResponse rsp = client.prepareGet(INDEX_AUTHOR_NAME, INDEX_AUTHOR_TYPE, id).execute().actionGet();
         Map<String, Object> ret = rsp.getSource();
         LOGGER.debug("try to map the response to author");
-
-        return source2author(ret);
+        if (rsp.exists()) {
+            LOGGER.debug("author exists and will be returned");
+            return source2author(ret);
+        } else {
+            LOGGER.debug("author doesn't exist");
+            return null;
+        }
     }
 
     @Override
+    @Deprecated
     public boolean save(String id, Map<String, Object> data) {
         IndexRequestBuilder irb = client.prepareIndex(INDEX_AUTHOR_NAME, INDEX_AUTHOR_TYPE, id).setSource(data);
         try {
@@ -110,6 +115,7 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
+    @Deprecated
     public boolean saveJson(String id, XContentBuilder content) {
         IndexRequestBuilder irb = client.prepareIndex(INDEX_AUTHOR_NAME, INDEX_AUTHOR_TYPE, id).setSource(content);
         try {
@@ -122,10 +128,13 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
-    public DeleteResponse delete(String id) {
+    public boolean delete(String id) {
         DeleteResponse response = client.prepareDelete(INDEX_AUTHOR_NAME, INDEX_AUTHOR_TYPE, id).execute().actionGet();
-
-        return response;
+        if (response.notFound()) {
+            LOGGER.debug("there was no document foudn with the id {}", id);
+            return false;
+        }
+        return true;
     }
 
     @Override
@@ -146,11 +155,11 @@ public class AuthorServiceImpl implements AuthorService {
      *             if there is something wrong with the io e.g. author could not be parsed to json
      */
     @Override
-    public boolean saveAthuor(Author author) throws IOException {
+    public boolean save(Author author) {
 
         if (author == null) {
             LOGGER.debug("The author is NULL");
-            throw new NullPointerException("the Author is empty");
+            throw new IllegalArgumentException("The author is NULL");
         } else if (author.getAuthorId().isEmpty() || author.getEmail().isEmpty() || author.getLastname().isEmpty()
                 || author.getName().isEmpty() || author.getPaperIds().isEmpty() || author.getTitle().isEmpty()
                 || author.getUniversityId().isEmpty()) {
@@ -158,13 +167,16 @@ public class AuthorServiceImpl implements AuthorService {
             throw new IllegalArgumentException("one of the author arguments is empty. This is illegal!");
         }
         LOGGER.debug("try to save the Author with id {}", author.getAuthorId());
-        if (authorExists(author.getAuthorId())) {
-            LOGGER.debug("The author with the id {} exists", author.getAuthorId());
-            return updateAuthor(author);
+        XContentBuilder b = null;
+        try {
+            b = dao2json(author);
+        } catch (IOException e) {
+            LOGGER.error("error while parsing the author to xcontent {}", e.fillInStackTrace());
         }
-        LOGGER.debug("the author doesn't exists and will be created");
-        XContentBuilder b = dao2json(author);
-
+        if (b == null) {
+            LOGGER.warn("something wrong while dao2json move from author with id {}", author.getAuthorId());
+            return false;
+        }
         IndexRequestBuilder irb = client.prepareIndex(INDEX_AUTHOR_NAME, INDEX_AUTHOR_TYPE, author.getAuthorId())
                 .setSource(b);
         irb.execute().actionGet();
@@ -178,15 +190,21 @@ public class AuthorServiceImpl implements AuthorService {
      * @throws IOException
      */
     @Override
-    public boolean updateAuthor(Author author) throws IOException {
-        XContentBuilder xContent = dao2json(author);
-        UpdateRequestBuilder urp = client.prepareUpdate();
-
+    public boolean updateAuthor(Author author) {
+        LOGGER.debug("update author with id {}", author.getAuthorId());
+        if (authorExists(author.getAuthorId())) {
+            return save(author);
+        }
+        LOGGER.error("author with id {} doesn't exists", author.getAuthorId());
         return false;
     }
 
+    @Override
     public boolean authorExists(String authorId) {
-
+        LOGGER.debug("authorExists({})", authorId);
+        if (this.get(authorId) != null) {
+            return true;
+        }
         return false;
     }
 
@@ -198,7 +216,7 @@ public class AuthorServiceImpl implements AuthorService {
     private XContentBuilder dao2json(Author author) throws IOException {
         LOGGER.debug("create the json object from Author");
         XContentBuilder b = jsonBuilder().startObject();
-        // b.field("authorId", author.getAuthorId());
+        b.field("authorId", author.getAuthorId());
         b.field("title", author.getTitle());
         b.field("name", author.getName());
         b.field("lastName", author.getLastname());
@@ -211,12 +229,15 @@ public class AuthorServiceImpl implements AuthorService {
 
     private Author source2author(Map<String, Object> source) {
         Author author = new Author();
+        author.setAuthorId((String) source.get("authorId"));
         author.setTitle((String) source.get("title"));
         author.setName((String) source.get("name"));
         author.setLastname((String) source.get("lastName"));
         author.setEmail((String) source.get("email"));
         author.setUniversityId((String) source.get("universityId"));
-        author.setPaperIds((List<String>) source.get("paperIds"));
+        List<String> paperIds = (List<String>) source.get("paperIds");
+        LOGGER.debug("counted papers {}", paperIds.size());
+        author.setPaperIds(paperIds);
 
         return author;
     }

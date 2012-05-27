@@ -128,17 +128,24 @@ public class Author implements Serializable {
         this.authorId = authorId;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see java.lang.Object#toString()
-     */
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
-        builder.append("Author [title=").append(title).append(", name=").append(name).append(", lastname=")
-                .append(lastname).append(", email=").append(email).append(", universaty=").append(universityId)
-                .append("]");
+        builder.append("Author [authorId=");
+        builder.append(authorId);
+        builder.append(", title=");
+        builder.append(title);
+        builder.append(", name=");
+        builder.append(name);
+        builder.append(", lastname=");
+        builder.append(lastname);
+        builder.append(", email=");
+        builder.append(email);
+        builder.append(", universityId=");
+        builder.append(universityId);
+        builder.append(", paperIds=");
+        builder.append(paperIds);
+        builder.append("]");
         return builder.toString();
     }
 
