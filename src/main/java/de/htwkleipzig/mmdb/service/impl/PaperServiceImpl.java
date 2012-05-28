@@ -3,6 +3,8 @@ package de.htwkleipzig.mmdb.service.impl;
 import static org.elasticsearch.common.xcontent.XContentFactory.jsonBuilder;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -199,13 +201,21 @@ public class PaperServiceImpl implements PaperService {
         b.field("paperId", paper.getPaperId());
         b.field("title", paper.getTitle() == null ? "empty" : paper.getTitle());
         b.field("paperAbstract", paper.getPaperAbstract() == null ? "empty" : paper.getPaperAbstract());
-        b.field("authorsId", paper.getAuthors() == null ? "empty" : paper.getAuthors());
-        b.field("createDate", paper.getCreateDate() == null ? "empty" : paper.getCreateDate());
-        b.field("keywords", paper.getKeywords() == null ? "empty" : paper.getKeywords());
+
+        List<String> authorIds = new ArrayList<String>();
+        authorIds.add("empty");
+        b.field("authorsId", paper.getAuthors() == null ? authorIds : paper.getAuthors());
+        b.field("createDate",
+                paper.getCreateDate() == null ? new Date(System.currentTimeMillis()) : paper.getCreateDate());
+
+        List<String> keywords = new ArrayList<String>();
+        authorIds.add("empty");
+        b.field("keywords", paper.getKeywords() == null ? keywords : paper.getKeywords());
         b.field("kindOf", paper.getKindOf() == null ? "empty" : paper.getKindOf());
         b.field("content", paper.getContent() == null ? "empty" : paper.getContent());
         b.field("latexBib", paper.getLatexBib() == null ? "empty" : paper.getLatexBib());
-        b.field("uploadDate", paper.getUploadDate() == null ? "empty" : paper.getUploadDate());
+        b.field("uploadDate",
+                paper.getUploadDate() == null ? new Date(System.currentTimeMillis()) : paper.getUploadDate());
         b.field("fileName", paper.getFileName() == null ? "empty" : paper.getFileName());
         // b.field("ddc", paper.getDdc()); TODO - currently disabled
         LOGGER.debug(b.string());
