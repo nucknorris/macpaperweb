@@ -32,7 +32,7 @@ public class FileUploader {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(FileUploader.class);
 
-    public String fileUploader(UploadItem uploadItem) {
+    public static String uploadFileAndGenerateHash(UploadItem uploadItem) {
         String md5Hash = null;
         try {
             MultipartFile file = uploadItem.getFileData();

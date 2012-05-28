@@ -1,23 +1,22 @@
 package de.htwkleipzig.mmdb;
 
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import de.htwkleipzig.mmdb.util.TikaParser;
+import de.htwkleipzig.mmdb.service.PaperService;
 
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations = { "classpath:META-INF/spring/integration/spring-integration-context.xml" })
 public class ParserTest {
+
+    @Autowired
+    PaperService paperService;
 
     @Test
     public void testPdfParser() {
-        URL pdfUrl = (ParserTest.class.getClassLoader().getResource("10.1.1.122.5934.pdf"));
-        TikaParser parser = new TikaParser();
-
-        List<String> listOfKeywords = new ArrayList<String>();
-        listOfKeywords.add("Abstract");
-        // parser.startTokenizing(listOfKeywords, pdfUrl);
-
+        paperService.delete("809fe0e79e055d35ef11f6aedf83eff6");
     }
 }

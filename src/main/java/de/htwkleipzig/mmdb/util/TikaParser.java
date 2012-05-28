@@ -2,6 +2,7 @@ package de.htwkleipzig.mmdb.util;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -17,17 +18,28 @@ import org.slf4j.LoggerFactory;
 public class TikaParser {
     private static final Logger logger = LoggerFactory.getLogger(TikaParser.class);
 
-    public String startTokenizing(List<String> listOfKeywords, URL fileUrl) {
+    private static final List<String> listOfKeywords = Arrays.asList("abstract", "zusammenfassung");
+
+    /**
+     * Starts tokenizing, i.e. it splits the paper by tokens and extracts the
+     * token containing the keyword.
+     * 
+     * @param listOfKeywords
+     * @param paperContent
+     * @return
+     */
+    public String startTokenizing(String paperContent) {
         String startsWith = "<p>";
         String endsWith = "</p>";
         String extractedString = null;
         logger.info("starting tokenizing...");
 
-        List<String> listOfTokenizedStrings = tokenize(parsePdfToXml(fileUrl), startsWith, endsWith);
+        List<String> listOfTokenizedStrings = tokenize(paperContent, startsWith, endsWith);
 
         for (String keyword : listOfKeywords) {
             extractedString = extract(listOfTokenizedStrings, keyword, startsWith, endsWith);
             if (extractedString != null) {
+                logger.debug("abstract with keyword \"{}\" extacted: {}", keyword, extractedString);
                 return extractedString;
             }
         }
@@ -89,9 +101,10 @@ public class TikaParser {
         for (String string : listOfMatches) {
 
             /*
-             * One paragraph containing the keyword implies, that the next paragraph has to be the expected. After
-             * extracting this paragraph, the html tags and the leading and trailing whitespaces are going to be
-             * removed.
+             * One paragraph containing the keyword implies, that the next
+             * paragraph has to be the expected. After extracting this
+             * paragraph, the html tags and the leading and trailing whitespaces
+             * are going to be removed.
              */
 
             /*

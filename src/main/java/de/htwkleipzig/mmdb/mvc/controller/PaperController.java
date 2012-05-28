@@ -5,8 +5,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import de.htwkleipzig.mmdb.model.Paper;
 import de.htwkleipzig.mmdb.service.PaperService;
 
 /**
@@ -24,10 +26,12 @@ public class PaperController {
     public PaperController() {
     }
 
-    @RequestMapping(value = "")
-    public String elasticstart(Model model) {
-        LOGGER.info("startpage paper");
-        model.addAttribute("attribute", "Paper");
+    @RequestMapping(value = "/{recievedPaperName}")
+    public String elasticstart(@PathVariable("recievedPaperName") String recievedPaperName, Model model) {
+        LOGGER.info("startpage paper {}", recievedPaperName);
+        model.addAttribute("recievedPaperName", recievedPaperName);
+        Paper paper = paperService.get(recievedPaperName);
+        model.addAttribute("paperName", paper.getFileName());
         return "paper";
     }
 }

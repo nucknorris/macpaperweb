@@ -21,6 +21,7 @@ import de.htwkleipzig.mmdb.model.UploadItem;
 import de.htwkleipzig.mmdb.service.PaperService;
 import de.htwkleipzig.mmdb.util.FileUploader;
 import de.htwkleipzig.mmdb.util.PDFParser;
+import de.htwkleipzig.mmdb.util.TikaParser;
 
 /**
  * @author spinner0815
@@ -29,7 +30,8 @@ import de.htwkleipzig.mmdb.util.PDFParser;
 @Controller
 @RequestMapping(value = "/upload")
 public class UploadController {
-
+    private String paperName;
+    private String paperContent;
     private static final Logger LOGGER = LoggerFactory.getLogger(UploadController.class);
 
     @Autowired
@@ -54,31 +56,43 @@ public class UploadController {
         LOGGER.debug("-------------------------------------------");
         LOGGER.debug("Test upload: " + uploadItem.getName());
         LOGGER.debug("Test upload: " + uploadItem.getFileData().getOriginalFilename());
-        FileUploader fileUploader = new FileUploader();
-        LOGGER.debug("upload the file");
-        String paperName = fileUploader.fileUploader(uploadItem);
+
+        LOGGER.debug("uploading the file...");
+        paperName = FileUploader.uploadFileAndGenerateHash(uploadItem);
         LOGGER.debug("Name of the stored pdf file: {}", paperName);
 
-        LOGGER.debug("get the paper content");
-        String paperContent = null;
-        try {
-            paperContent = PDFParser.pdfParser(uploadItem.getFileData().getInputStream());
-        } catch (IOException e) {
-            LOGGER.error("ERROR while extracting the content", e.fillInStackTrace());
-        }
-
+        paperContent = parsePaperToHTML(uploadItem);
         LOGGER.debug("is the paperContent empty? {}", paperContent.isEmpty());
 
-        LOGGER.debug("save the String to elastic Search");
-        // create the paper object and store it
-        Paper paper1 = new Paper();
-        paper1.setPaperId(paperName);
-        paper1.setFileName(paperName + ".pdf");
-        paper1.setContent(paperContent);
-        paper1.setCreateDate(new Date(System.currentTimeMillis()));
-        paper1.setUploadDate(new Date(System.currentTimeMillis()));
-        paperService.save(paper1);
+        LOGGER.debug("saving the String to elastic Search");
+        Paper paper = new Paper();
+        savePaper(paper);
         LOGGER.debug("-------------------------------------------");
-        return "redirect:/";
+        // return "redirect:/";
+        // return "uploadDetailInputForm";
+        return "redirect:/paper/" + paperName;
+    }
+
+    private void savePaper(Paper paper) {
+        paper.setPaperId(paperName);
+        paper.setFileName(paperName + ".pdf");
+        paper.setContent(paperContent);
+        paper.setCreateDate(new Date(System.currentTimeMillis()));
+        paper.setUploadDate(new Date(System.currentTimeMillis()));
+        TikaParser parser = new TikaParser();
+        paper.setPaperAbstract(parser.startTokenizing(paperContent));
+        paperService.save(paper);
+    }
+
+    private String parsePaperToHTML(UploadItem paper) {
+        LOGGER.debug("start parsing the paper to html ...");
+        String originalPaper = null;
+        try {
+            originalPaper = paper.getFileData().getInputStream().toString();
+            return PDFParser.pdfParser(paper.getFileData().getInputStream());
+        } catch (IOException e) {
+            LOGGER.warn("error while parsing paper, returning the original paper");
+            return originalPaper;
+        }
     }
 }

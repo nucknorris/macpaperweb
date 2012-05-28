@@ -93,7 +93,9 @@ public class HomeController {
                 // model.addAttribute("documentKey",
                 // source.get(key).toString());
             }
-            model.addAttribute("myMap", hit.sourceAsMap());
+            Map<String, Object> resultMap = hit.sourceAsMap();
+            resultMap.remove("content");
+            model.addAttribute("myMap", resultMap);
         }
         // LOGGER.info("MaxScore {}", response.getHits().getHits());
         model.addAttribute("searchTerm", searchPhrase);
