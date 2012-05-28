@@ -38,10 +38,6 @@
 			<name>Sonatype Releases Repository</name>
 			<url>http://oss.sonatype.org/content/repositories/releases/</url>
 		</repository>
-		<repository>
-			<id>vaadin-addons</id>
-			<url>http://maven.vaadin.com/vaadin-addons</url>
-		</repository>
 	</repositories>
 	<build>
 		<plugins>
@@ -137,28 +133,7 @@
 			<version>${spring.integration.version}</version>
 		</dependency>
 
-
-		<!-- Vaadin -->
-		<!-- <dependency> -->
-		<!-- <groupId>com.vaadin</groupId> -->
-		<!-- <artifactId>vaadin</artifactId> -->
-		<!-- <version>6.7.7</version> -->
-		<!-- </dependency> -->
-
-		<!-- vaadin addons -->
-		<!-- <dependency> -->
-		<!-- <groupId>org.vaadin.addons</groupId> -->
-		<!-- <artifactId>reindeermods</artifactId> -->
-		<!-- <version>0.2</version> -->
-		<!-- </dependency> -->
-		<!-- <dependency> -->
-		<!-- <groupId>org.vaadin.addons</groupId> -->
-		<!-- <artifactId>navigator</artifactId> -->
-		<!-- <version>0.3</version> -->
-		<!-- </dependency> -->
-
 		<!-- Logging -->
-
 		<dependency>
 			<groupId>ch.qos.logback</groupId>
 			<artifactId>logback-classic</artifactId>
@@ -181,7 +156,6 @@
 		</dependency>
 
 		<!-- Servlet -->
-
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>servlet-api</artifactId>
@@ -211,13 +185,6 @@
 			<artifactId>tika-parsers</artifactId>
 			<version>1.1</version>
 		</dependency>
-
-		<!-- Apache commons -->
-		<!-- <dependency> -->
-		<!-- <groupId>org.apache.commons</groupId> -->
-		<!-- <artifactId>commons-lang3</artifactId> -->
-		<!-- <version>3.1</version> -->
-		<!-- </dependency> -->
 		<dependency>
 			<groupId>commons-configuration</groupId>
 			<artifactId>commons-configuration</artifactId>
@@ -235,15 +202,6 @@
 			<artifactId>commons-io</artifactId>
 			<version>1.3.2</version>
 		</dependency>
-
-
-		<!-- Elastic search -->
-
-		<!-- <dependency> -->
-		<!-- <groupId>org.elasticsearch</groupId> -->
-		<!-- <artifactId>elasticsearch</artifactId> -->
-		<!-- <version>0.19.2</version> -->
-		<!-- </dependency> -->
 
 		<dependency>
 			<groupId>fr.pilato.spring</groupId>
