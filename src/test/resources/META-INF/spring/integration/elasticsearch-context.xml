@@ -18,14 +18,19 @@
 	</bean>
 
 	<bean id="paperService" class="de.htwkleipzig.mmdb.service.impl.PaperServiceImpl"
-	init-method="init" destroy-method="onShutdown"></bean>
+		init-method="init" destroy-method="onShutdown"></bean>
 
 	<bean id="authorService" class="de.htwkleipzig.mmdb.service.impl.AuthorServiceImpl"
-	init-method="init" destroy-method="onShutdown"></bean>
+		init-method="init" destroy-method="onShutdown"></bean>
 
 	<bean id="universityService" class="de.htwkleipzig.mmdb.service.impl.UniversityServiceImpl"
-	init-method="init" destroy-method="onShutdown"></bean>
+		init-method="init" destroy-method="onShutdown"></bean>
 
-<!-- 	<bean id="debugService" class="de.htwkleipzig.mmdb.service.impl.DebugServiceImpl" -->
-<!-- 		init-method="init" destroy-method="onShutdown"></bean> -->
+	<bean id="fileDownload"
+		class="de.htwkleipzig.mmdb.mvc.controller.FileDownloadController">
+		<property name="filePath" value="srv/pdfs" />
+	</bean>
+
+	<!-- <bean id="debugService" class="de.htwkleipzig.mmdb.service.impl.DebugServiceImpl" -->
+	<!-- init-method="init" destroy-method="onShutdown"></bean> -->
 </beans>
