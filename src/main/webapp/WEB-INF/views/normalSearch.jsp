@@ -17,8 +17,20 @@
 		<div id="header" class="prepend-1 span-22 append-1 last">
 			<h1>einfache Suche</h1>
 		</div>
-		<a href="javascript:history.back()">back</a>
-		<h2>das ist ein test</h2>
+		<a href="javascript:history.back()">Zurück</a>
+		<form>
+		  <fieldset>
+			<legend>Suche nach:</legend>
+			
+		    <input type="text" name="tags" /><br />
+			Suche
+			<input type="radio" name="andor" value=and />enthät eines der Wörter<br />
+			<input type="radio" name="andor" value="andor" />enthält beide Wörter.<br />
+
+			<input type="submit" value="Suche starten" />
+		  </fieldset>
+		</form>
+		<a href="javascript:history.back()">Zurück</a>
 	</div>
 </body>
 </html>
