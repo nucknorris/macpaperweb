@@ -1,4 +1,5 @@
 <%@ include file="/WEB-INF/views/includes/taglibs.jsp"%>
+<%@ taglib prefix="s" uri="http://www.springframework.org/tags"%>
 
 <!DOCTYPE HTML>
 <html>
@@ -13,34 +14,43 @@
 <script src="<c:url value='/js/jquery-1.6.1.min.js'/>"></script>
 </head>
 <body>
-	<div class="container">
-		<div id="header" class="prepend-1 span-22 append-1 last">
-			<h1>Uploading a new paper</h1>
+	<div id="head">
+		<div id="logo">
+			<a href="${pageContext.request.contextPath}" class="quiet">MacPaper</a>
 		</div>
-		<a href="javascript:history.back()">back</a>
-		<form:form modelAttribute="uploadItem" method="post"
-			enctype="multipart/form-data">
-			<fieldset>
-				<legend>Upload Fields</legend>
+	</div>
+	<div id="subhead">
+		<h3>Uploading a new Paper</h3>
+	</div>
+	<div class="container">
+		<div id="header">To upload a new paper, choose the file and
+			title and click on submit:</div>
+		<div id="content" class="span-24 last">
 
-				<p>
-					<form:label for="title" path="title">Title</form:label>
-					<br />
-					<form:input path="title" />
-				</p>
+			<form:form modelAttribute="uploadItem" method="post"
+				enctype="multipart/form-data">
+				<fieldset>
+					<legend>Upload Fields</legend>
 
-				<p>
-					<form:label for="fileData" path="fileData">File</form:label>
-					<br />
-					<form:input path="fileData" type="file" />
-				</p>
+					<p>
+						<form:label for="title" path="title">Title</form:label>
+						<br />
+						<form:input path="title" />
+					</p>
 
-				<p>
-					<input type="submit" />
-				</p>
+					<p>
+						<form:label for="fileData" path="fileData">File</form:label>
+						<br />
+						<form:input path="fileData" type="file" />
+					</p>
 
-			</fieldset>
-		</form:form>
+					<p>
+						<input id="save-button" type="submit" />
+					</p>
+
+				</fieldset>
+			</form:form>
+		</div>
 	</div>
 </body>
 </html>

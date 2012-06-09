@@ -21,6 +21,14 @@
 	</div>
 	<div id="subhead">
 		<h3>Search Results for: ${searchTerm}</h3>
+		<div id="uploadPic">
+			<a href="upload"> <img
+				src="<s:url value="/icons/glyphicons_201_upload.png" />" />
+			</a>
+		</div>
+		<div id="uploadButton">
+			<a href="upload">Upload a new Paper </a>
+		</div>
 	</div>
 	<div class="container">
 		<div id="header">
@@ -41,10 +49,10 @@
 		</div>
 		<table border="1">
 			<tr>
-				<th></th>
-				<th>Paper ID</th>
-				<th>Title</th>
-				<th></th>
+				<th width="3%"></th>
+				<th width="30%">Paper ID</th>
+				<th width="64%">Title</th>
+				<th width="3%"></th>
 				<!-- 				<th>Key Class</th> -->
 			</tr>
 			<c:forEach var="paper" items="${paper}" varStatus="status">
@@ -53,7 +61,7 @@
 						<td><img
 							src="<s:url value="/icons/glyphicons_039_notes.png" />" /></td>
 						<td>${ paper.getPaperId()}</td>
-						<td>${ paper.getTitle()}</td>
+						<td><b>${ paper.getTitle()}</b></td>
 						<td><a
 							href="${pageContext.request.contextPath}/paper/${ paper.getPaperId()}"><img
 								src="<s:url value="/icons/glyphicons_195_circle_info.png" />" />

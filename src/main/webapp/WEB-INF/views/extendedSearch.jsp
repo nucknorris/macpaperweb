@@ -1,4 +1,6 @@
 <%@ include file="/WEB-INF/views/includes/taglibs.jsp"%>
+<%@ taglib prefix="s" uri="http://www.springframework.org/tags"%>
+
 
 <!DOCTYPE HTML>
 <html>
@@ -21,6 +23,14 @@
 	</div>
 	<div id="subhead">
 		<h3>Extended Search:</h3>
+		<div id="uploadPic">
+			<a href="upload"> <img
+				src="<s:url value="/icons/glyphicons_201_upload.png" />" />
+			</a>
+		</div>
+		<div id="uploadButton">
+			<a href="upload">Upload a new Paper </a>
+		</div>
 	</div>
 	<div class="container">
 		<div id="header">
@@ -64,6 +74,7 @@
 						type="radio" name="andor" value="andor" />all words.<br />
 
 				</fieldset>
+				<input id="save-button" type="submit" value="Search" />
 			</form>
 		</div>
 	</div>

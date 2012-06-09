@@ -1,4 +1,6 @@
 <%@ include file="/WEB-INF/views/includes/taglibs.jsp"%>
+<%@ taglib prefix="s" uri="http://www.springframework.org/tags"%>
+
 
 <!DOCTYPE HTML>
 
@@ -14,34 +16,36 @@
 <script src="<c:url value='/js/jquery-1.6.1.min.js'/>"></script>
 </head>
 <body>
-	<div id="head">
-		<div id="logo">
-			<a href="${pageContext.request.contextPath}" class="quiet">MacPaper</a>
-		</div>
+	<div id="uploadPic">
+		<a href="upload"> <img
+			src="<s:url value="/icons/glyphicons_201_upload.png" />" />
+		</a>
 	</div>
-	<div id="subhead">
-		<h3>Welcome</h3>
+	<div id="uploadButton">
+		<a href="upload">Upload a new Paper </a>
 	</div>
 	<div class="container">
-		<div id="header">
-			<div id='search-box'>
-				<form action='elasticsearch' id='search-form' method='get'
-					target='_top'>
-					<input id='search-text' name='searchPhrase' placeholder='type here'
-						type='text' />
-					<button id='search-button' type='submit'>
-						<span>Search</span>
-					</button>
-					<button id='extendedsearch-button' type='button'
-						onClick="location.href='${pageContext.request.contextPath}/extendedSearch'">
-						<span>Extended Search</span>
-					</button>
-				</form>
+		<div id="startpage-search-box">
+			<div id="startpage-logo">MacPaper</div>
+			<div id="header">
+				<div id='search-box'>
+					<form action='elasticsearch' id='search-form' method='get'
+						target='_top'>
+						<input id='search-text' name='searchPhrase'
+							placeholder='type here' type='text' />
+						<button id='search-button' type='submit'>
+							<span>Search</span>
+						</button>
+						<button id='extendedsearch-button' type='button'
+							onClick="location.href='${pageContext.request.contextPath}/extendedSearch'">
+							<span>Extended Search</span>
+						</button>
+					</form>
+				</div>
+
 			</div>
 		</div>
-		<div id="content">
-			<a href="upload">upload new file</a>
-		</div>
+		<div id="content"></div>
 	</div>
 </body>
 </html>
