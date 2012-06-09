@@ -64,7 +64,7 @@ public class PaperController {
 		LOGGER.debug("paper: {}", paper.getPaperId());
 		LOGGER.debug("title: {}", paper.getTitle());
 		LOGGER.debug("abstract: {}", paper.getPaperAbstract());
-		paperService.save(paper);
+		paperService.updatePaper(paper);
 		LOGGER.debug("paper saved");
 		return "redirect:/paper/" + paper.getPaperId() + "/";
 	}
