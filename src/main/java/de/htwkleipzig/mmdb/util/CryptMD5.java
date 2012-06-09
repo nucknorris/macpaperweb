@@ -3,6 +3,10 @@ package de.htwkleipzig.mmdb.util;
 import java.io.InputStream;
 import java.security.MessageDigest;
 
+/**
+ * 
+ * @author men0x
+ */
 public class CryptMD5 {
 
 	public static byte[] createChecksum(InputStream fis) throws Exception {

@@ -6,7 +6,7 @@ import java.security.NoSuchAlgorithmException;
 
 /**
  * 
- * @author Administrator
+ * @author men0x
  */
 public class CryptSHA1 {
 
