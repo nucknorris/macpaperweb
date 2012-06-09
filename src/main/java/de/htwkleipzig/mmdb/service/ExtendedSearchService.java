@@ -15,13 +15,13 @@ public class ExtendedSearchService {
 			.getLogger(ExtendedSearchService.class);
 
 	public String search() {
-		LOGGER.info("Erweiterte Suche aufgerufen!");
+		LOGGER.info("call extended search");
 		return "extendedSearch";
 	}
 
 	@RequestMapping(value = "/runNormalSearch")
 	private String runSearch(@RequestParam(required = true) String searchPhrase) {
-		LOGGER.info("Suche gestartet!");
+		LOGGER.info("run search");
 		return "searchPhrase";
 	}
 

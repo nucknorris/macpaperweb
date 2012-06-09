@@ -3,7 +3,7 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-<title>Erweiterte Suche BÄM!</title>
+<title>Extended Search</title>
 <link rel="stylesheet" href="<c:url value='/css/blueprint/screen.css'/>"
 	type="text/css" media="screen, projection">
 <link rel="stylesheet" href="<c:url value='/css/blueprint/print.css'/>"
@@ -20,43 +20,42 @@
 
 	</div>
 	<div id="subhead">
-		<h3>Angepasste Suche:</h3>
+		<h3>Extended Search:</h3>
 	</div>
 	<div class="container">
 		<div id="header">
 			<div id='search-box'>
-				<a href="javascript:history.back()">Zurück</a>
+				<a href="javascript:history.back()">Back</a>
 				<form>
 					<fieldset>
 						<legend>Filter: </legend>
 
 						<input type="checkbox" name="e1" value="checkAuthor" />Author<br />
 						<input type="text" name="author"
-							placeholder='Bitte Author eingeben!' /> <br /> <input
-							type="checkbox" name="e2" value="checkUniversity" />Universität<br />
+							placeholder='Please insert author' /> <br /> <input
+							type="checkbox" name="e2" value="checkUniversity" />University<br />
 						<input type="text" name="uni"
-							placeholder='Bitte Universität eingeben!' /> <br /> <input
-							type="checkbox" name="e3" value="checkCategory" />Kategorie<br />
+							placeholder='Please insert university' /> <br /> <input
+							type="checkbox" name="e3" value="checkCategory" />Category<br />
 						<input type="text" name="category"
-							placeholder='Bitte Kategorie eingeben!' /> <br /> <input
+							placeholder='Please insert category' /> <br /> <input
 							type="checkbox" name="e3" value="checkTag" />Tag<br /> <input
-							type="text" name="tags" placeholder='Bitte Tags eingeben!' /> <br />
+							type="text" name="tags" placeholder='Please insert tags' /> <br />
 					</fieldset>
 					<fieldset>
-						<legend>Suche nach:</legend>
+						<legend>Searchphrase:</legend>
 
 						<input type="text" name="keywords"
-							placeholder='Bitte Suchort eingeben!' /><br /> Suche <input
-							type="radio" name="andor" value=and />enthät eines der Wörter<br />
-						<input type="radio" name="andor" value="andor" />enthält beide
-						Wörter.<br />
+							placeholder='Please insert searchphrase!' /><br /> Search for <input
+							type="radio" name="andor" value=and />each words<br />
+						<input type="radio" name="andor" value="andor" />all words.<br />
 
 						<button id='search-button' type='submit'>
 							<span>Search</span>
 						</button>
 					</fieldset>
 				</form>
-				<a href="javascript:history.back()">Zurück</a>
+				<a href="javascript:history.back()">Back</a>
 			</div>
 		</div>
 	</div>

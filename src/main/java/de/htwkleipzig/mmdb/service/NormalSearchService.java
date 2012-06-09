@@ -29,13 +29,13 @@ public class NormalSearchService {
 	private PaperService paperService;
 
 	public String search() {
-		LOGGER.info("Einfache Suche aufgerufen!");
+		LOGGER.info("call extended search");
 		return "normalSearch";
 	}
 
 	@RequestMapping(value = "/runNormalSearch")
 	private String runSearch(@RequestParam(required = true) String searchPhrase) {
-		LOGGER.info("Suche gestartet!");
+		LOGGER.info("run search");
 		QueryStringQueryBuilder query = QueryBuilders.queryString(searchPhrase)
 				.allowLeadingWildcard(false).useDisMax(true);
 		SearchResponse response = paperService.search(query);

@@ -3,7 +3,7 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-<title>Normale Suche BÄM!</title>
+<title>Basic Search</title>
 <link rel="stylesheet" href="<c:url value='/css/blueprint/screen.css'/>"
 	type="text/css" media="screen, projection">
 <link rel="stylesheet" href="<c:url value='/css/blueprint/print.css'/>"
@@ -20,11 +20,12 @@
 
 	</div>
 	<div id="subhead">
-		<h3>einfache Suche:</h3>
+		<h3>basic Search:</h3>
 	</div>
 	<div class="container">
 		<div id="header">
 			<div id='search-box'>
+				<a href="javascript:history.back()">Back</a>
 				<form action='elasticsearch' id='search-form' method='get'
 					target='_top'>
 					<input id='search-text' name='searchPhrase' placeholder='type here'
@@ -33,6 +34,7 @@
 						<span>Search</span>
 					</button>
 				</form>
+					<a href="javascript:history.back()">Back</a>
 			</div>
 		</div>
 	</div>
