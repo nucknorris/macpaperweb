@@ -30,10 +30,11 @@
 				<th>value</th>
 <!-- 				<th>Key Class</th> -->
 			</tr>
-			<c:forEach var="entry" items="${myMap}" varStatus="status">
+			<c:forEach var="entry" items="${paper}" varStatus="status">
 				<tr>
-					<td>${entry.key}</td>
-					<td>${entry.value}</td>
+					<td>${entry.paperId}</td>
+					<td>trolololo</td>
+<%-- 					<td>${entry.value}</td> --%>
 <%-- 					<td>${entry.key.class}</td> --%>
 				</tr>
 			</c:forEach>

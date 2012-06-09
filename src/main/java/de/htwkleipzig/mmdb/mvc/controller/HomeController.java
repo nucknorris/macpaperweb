@@ -15,7 +15,9 @@
  */
 package de.htwkleipzig.mmdb.mvc.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.elasticsearch.action.search.SearchResponse;
@@ -35,6 +37,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import de.htwkleipzig.mmdb.model.Paper;
 import de.htwkleipzig.mmdb.service.PaperService;
 import de.htwkleipzig.mmdb.util.PDFParser;
+import de.htwkleipzig.mmdb.util.PaperHelper;
 
 /**
  * Handles requests for the application home page.
@@ -86,16 +89,14 @@ public class HomeController {
             model.addAttribute("documentId", hit.getId());
             model.addAttribute("documentScore", hit.getScore());
 
-            Map<String, Object> source = hit.sourceAsMap();
-            for (String key : source.keySet()) {
-                LOGGER.info("key of the source {}", key);
-                // LOGGER.info(source.get(key).toString());
-                // model.addAttribute("documentKey",
-                // source.get(key).toString());
-            }
             Map<String, Object> resultMap = hit.sourceAsMap();
-            resultMap.remove("content");
-            model.addAttribute("myMap", resultMap);
+            List<Paper> papers = new ArrayList<Paper>();
+            Paper paper = PaperHelper.source2Paper(resultMap);
+
+            paper.setContent("");
+            LOGGER.debug("paper: {}", paper.getPaperId());
+            papers.add(paper);
+            model.addAttribute("paper", papers);
         }
         // LOGGER.info("MaxScore {}", response.getHits().getHits());
         model.addAttribute("searchTerm", searchPhrase);
