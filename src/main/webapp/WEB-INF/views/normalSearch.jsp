@@ -13,24 +13,26 @@
 <script src="<c:url value='/js/jquery-1.6.1.min.js'/>"></script>
 </head>
 <body>
+	<div id="head">
+		<div><h1>Suche</h1></div>
+		
+	</div>
+	<div id="subhead">
+		<h3>einfache Suche:</h3>
+	</div>
 	<div class="container">
-		<div id="header" class="prepend-1 span-22 append-1 last">
-			<h1>einfache Suche</h1>
+		<div id="header">
+			<div id='search-box'>
+				<form action='elasticsearch' id='search-form' method='get'
+					target='_top'>
+					<input id='search-text' name='searchPhrase' placeholder='type here'
+						type='text' />
+					<button id='search-button' type='submit'>
+						<span>Search</span>
+					</button>
+				</form>
+			</div>
 		</div>
-		<a href="javascript:history.back()">Zurück</a>
-		<form>
-		  <fieldset>
-			<legend>Suche nach:</legend>
-			
-		    <input type="text" name="tags" /><br />
-			Suche
-			<input type="radio" name="andor" value=and />enthät eines der Wörter<br />
-			<input type="radio" name="andor" value="andor" />enthält beide Wörter.<br />
-
-			<input type="submit" value="Suche starten" />
-		  </fieldset>
-		</form>
-		<a href="javascript:history.back()">Zurück</a>
 	</div>
 </body>
 </html>
