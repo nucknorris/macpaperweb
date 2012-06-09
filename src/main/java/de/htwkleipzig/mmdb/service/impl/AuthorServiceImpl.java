@@ -1,9 +1,6 @@
 package de.htwkleipzig.mmdb.service.impl;
 
-import static org.elasticsearch.common.xcontent.XContentFactory.jsonBuilder;
-
 import java.io.IOException;
-import java.util.List;
 import java.util.Map;
 
 import org.elasticsearch.ElasticSearchException;
@@ -28,6 +25,7 @@ import com.google.gson.JsonObject;
 
 import de.htwkleipzig.mmdb.model.Author;
 import de.htwkleipzig.mmdb.service.AuthorService;
+import de.htwkleipzig.mmdb.util.AuthorHelper;
 import de.htwkleipzig.mmdb.util.Utilities;
 import fr.pilato.spring.elasticsearch.ElasticsearchTransportClientFactoryBean;
 
@@ -93,7 +91,7 @@ public class AuthorServiceImpl implements AuthorService {
         LOGGER.debug("try to map the response to author");
         if (rsp.exists()) {
             LOGGER.debug("author exists and will be returned");
-            return source2author(ret);
+            return AuthorHelper.source2author(ret);
         } else {
             LOGGER.debug("author doesn't exist");
             return null;
@@ -155,7 +153,7 @@ public class AuthorServiceImpl implements AuthorService {
         LOGGER.debug("try to save the Author with id {}", author.getAuthorId());
         XContentBuilder b = null;
         try {
-            b = dao2json(author);
+            b = AuthorHelper.dao2json(author);
         } catch (IOException e) {
             LOGGER.error("error while parsing the author to xcontent {}", e.fillInStackTrace());
         }
@@ -192,40 +190,6 @@ public class AuthorServiceImpl implements AuthorService {
             return true;
         }
         return false;
-    }
-
-    /**
-     * @param author
-     * @return
-     * @throws IOException
-     */
-    private XContentBuilder dao2json(Author author) throws IOException {
-        LOGGER.debug("create the json object from Author");
-        XContentBuilder b = jsonBuilder().startObject();
-        b.field("authorId", author.getAuthorId());
-        b.field("title", author.getTitle());
-        b.field("name", author.getName());
-        b.field("lastName", author.getLastname());
-        b.field("email", author.getEmail());
-        b.field("universityId", author.getUniversityId());
-        b.field("paperIds", author.getPaperIds());
-        LOGGER.debug(b.string());
-        return b;
-    }
-
-    private Author source2author(Map<String, Object> source) {
-        Author author = new Author();
-        author.setAuthorId((String) source.get("authorId"));
-        author.setTitle((String) source.get("title"));
-        author.setName((String) source.get("name"));
-        author.setLastname((String) source.get("lastName"));
-        author.setEmail((String) source.get("email"));
-        author.setUniversityId((String) source.get("universityId"));
-        List<String> paperIds = (List<String>) source.get("paperIds");
-        LOGGER.debug("counted papers {}", paperIds.size());
-        author.setPaperIds(paperIds);
-
-        return author;
     }
 
     @Override

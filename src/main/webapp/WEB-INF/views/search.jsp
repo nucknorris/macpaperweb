@@ -24,17 +24,19 @@
 			Score: ${maxScore}
 		</p>
 
+		<p>number of results : ${paper.size()}</p>
 		<table border="1">
 			<tr>
-				<th>Key</th>
-				<th>value</th>
-<!-- 				<th>Key Class</th> -->
+				<th>Paper ID</th>
+				<th>Title</th>
+				<th></th>
+				<!-- 				<th>Key Class</th> -->
 			</tr>
-			<c:forEach var="entry" items="${myMap}" varStatus="status">
+			<c:forEach var="paper" items="${paper}" varStatus="status">
 				<tr>
-					<td>${entry.key}</td>
-					<td>${entry.value}</td>
-<%-- 					<td>${entry.key.class}</td> --%>
+					<td>${ paper.getPaperId()}</td>
+					<td>${ paper.getTitle()}</td>
+					<td><a href="${pageContext.request.contextPath}/paper/${ paper.getPaperId()}">edit</a></td>
 				</tr>
 			</c:forEach>
 		</table>

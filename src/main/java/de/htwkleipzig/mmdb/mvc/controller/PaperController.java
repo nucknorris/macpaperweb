@@ -31,60 +31,54 @@ import de.htwkleipzig.mmdb.util.Utilities;
 @Controller
 @RequestMapping(value = "/paper")
 public class PaperController {
-	private static final Logger LOGGER = LoggerFactory
-			.getLogger(PaperController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(PaperController.class);
 
-	@Autowired
-	private PaperService paperService;
+    @Autowired
+    private PaperService paperService;
 
-	public PaperController() {
-	}
+    public PaperController() {
+    }
 
-	@RequestMapping(value = "/{recievedPaperName}")
-	public String elasticstart(
-			@PathVariable("recievedPaperName") String recievedPaperName,
-			Model model) {
-		LOGGER.info("startpage paper {}", recievedPaperName);
-		model.addAttribute("recievedPaperName", recievedPaperName);
-		Paper paper = paperService.get(recievedPaperName);
-		model.addAttribute("paper", paper);
+    @RequestMapping(value = "/{recievedPaperName}")
+    public String elasticstart(@PathVariable("recievedPaperName") String recievedPaperName, Model model) {
+        LOGGER.info("startpage paper {}", recievedPaperName);
+        model.addAttribute("recievedPaperName", recievedPaperName);
+        Paper paper = paperService.get(recievedPaperName);
+        model.addAttribute("paper", paper);
 
-		return "paper";
-	}
+        return "paper";
+    }
 
-	@RequestMapping(value = "/update", method = RequestMethod.POST)
-	public String savePaper(@ModelAttribute("paper") Paper paper,
-			BindingResult bindingResult) {
-		LOGGER.debug("Received request to update paper");
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
+    public String savePaper(@ModelAttribute("paper") Paper paper, BindingResult bindingResult) {
+        LOGGER.debug("Received request to update paper");
 
-		if (bindingResult.hasErrors()) {
-			LOGGER.debug("error:" + bindingResult.getAllErrors());
-		}
+        if (bindingResult.hasErrors()) {
+            LOGGER.debug("error:" + bindingResult.getAllErrors());
+        }
 
-		LOGGER.debug("paper: {}", paper.getPaperId());
-		LOGGER.debug("title: {}", paper.getTitle());
-		LOGGER.debug("abstract: {}", paper.getPaperAbstract());
-		paperService.save(paper);
-		LOGGER.debug("paper saved");
-		return "redirect:/paper/" + paper.getPaperId() + "/";
-	}
+        LOGGER.debug("paper: {}", paper.getPaperId());
+        LOGGER.debug("title: {}", paper.getTitle());
+        LOGGER.debug("abstract: {}", paper.getPaperAbstract());
+        paperService.updatePaper(paper);
+        LOGGER.debug("paper saved");
+        return "redirect:/paper/" + paper.getPaperId() + "/";
+    }
 
-	@RequestMapping(value = "/download")
-	public String downloadFile(@RequestParam("paperId") String paperId,
-			HttpServletResponse resp) throws IOException {
-		String paperDirectory = Utilities.getProperty("paper.directory");
-		LOGGER.debug("files loading from {}", paperDirectory);
-		File file = new File(paperDirectory + "/" + paperId + ".pdf");
+    @RequestMapping(value = "/download")
+    public String downloadFile(@RequestParam("paperId") String paperId, HttpServletResponse resp) throws IOException {
+        String paperDirectory = Utilities.getProperty("paper.directory");
+        LOGGER.debug("files loading from {}", paperDirectory);
+        File file = new File(paperDirectory + "/" + paperId + ".pdf");
 
-		resp.setHeader("Content-Disposition",
-				"attachment; filename=\"" + file.getName() + "\"");
-		OutputStream out = resp.getOutputStream();
-		resp.setContentType("text/plain; charset=utf-8");
-		FileInputStream fi = new FileInputStream(file);
-		IOUtils.copy(fi, out);
-		out.flush();
-		out.close();
+        resp.setHeader("Content-Disposition", "attachment; filename=\"" + file.getName() + "\"");
+        OutputStream out = resp.getOutputStream();
+        resp.setContentType("text/plain; charset=utf-8");
+        FileInputStream fi = new FileInputStream(file);
+        IOUtils.copy(fi, out);
+        out.flush();
+        out.close();
 
-		return null;
-	}
+        return null;
+    }
 }

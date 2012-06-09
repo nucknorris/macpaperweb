@@ -1,9 +1,6 @@
 package de.htwkleipzig.mmdb.service.impl;
 
-import static org.elasticsearch.common.xcontent.XContentFactory.jsonBuilder;
-
 import java.io.IOException;
-import java.util.List;
 import java.util.Map;
 
 import org.elasticsearch.ElasticSearchException;
@@ -28,6 +25,7 @@ import com.google.gson.JsonObject;
 
 import de.htwkleipzig.mmdb.model.University;
 import de.htwkleipzig.mmdb.service.UniversityService;
+import de.htwkleipzig.mmdb.util.UniversityHelper;
 import de.htwkleipzig.mmdb.util.Utilities;
 import fr.pilato.spring.elasticsearch.ElasticsearchTransportClientFactoryBean;
 
@@ -93,7 +91,7 @@ public class UniversityServiceImpl implements UniversityService {
         LOGGER.debug("try to map the response to University");
         if (rsp.exists()) {
             LOGGER.debug("University exists and will be returned");
-            return source2University(ret);
+            return UniversityHelper.source2University(ret);
         } else {
             LOGGER.debug("University doesn't exist");
             return null;
@@ -157,7 +155,7 @@ public class UniversityServiceImpl implements UniversityService {
         LOGGER.debug("try to save the university with id {}", university.getUniversityId());
         XContentBuilder b = null;
         try {
-            b = university2Json(university);
+            b = UniversityHelper.university2Json(university);
         } catch (IOException e) {
             LOGGER.error("error while parsing the university to xcontent {}", e.fillInStackTrace());
         }
@@ -195,35 +193,4 @@ public class UniversityServiceImpl implements UniversityService {
         client.close();
     }
 
-    private XContentBuilder university2Json(University university) throws IOException {
-        LOGGER.debug("create the json object from University");
-        XContentBuilder b = jsonBuilder().startObject();
-        b.field("universityId", university.getUniversityId());
-        b.field("city", university.getCity());
-        b.field("country", university.getCountry());
-        b.field("name", university.getName());
-        b.field("housenumber", university.getHousenumber());
-        b.field("postcode", university.getPostcode());
-        b.field("street", university.getStreet());
-        b.field("street2", university.getStreet2());
-        b.field("authors", university.getAuthorIds());
-        LOGGER.debug(b.string());
-        return b;
-    }
-
-    private University source2University(Map<String, Object> source) {
-        LOGGER.debug("convert from source to university");
-        University university = new University();
-        university.setUniversityId((String) source.get("universityId"));
-        university.setCity((String) source.get("city"));
-        university.setCountry((String) source.get("country"));
-        university.setName((String) source.get("name"));
-        university.setHousenumber((String) source.get("housenumber"));
-        university.setPostcode((String) source.get("postcode"));
-        university.setStreet((String) source.get("street"));
-        university.setStreet2((String) source.get("street2"));
-        university.setAuthorIds((List<String>) source.get("authors"));
-        LOGGER.debug("finished converting {}", university.toString());
-        return university;
-    }
 }

@@ -17,7 +17,7 @@
 	<div class="container">
 		<div id="header" class="prepend-1 span-22 append-1 last">
 			<h1>Detailed Information</h1>
-			<h2> about the paper ${recievedPaperName}</h2>
+			<h2>about the paper ${recievedPaperName}</h2>
 		</div>
 		<a href="javascript:history.back()">back</a>
 		<sf:form modelAttribute="paper" method="POST"
@@ -58,6 +58,7 @@
 					<td><sf:label path="paperAbstract">Abstract:</sf:label></td>
 					<td><sf:textarea path="paperAbstract" /></td>
 				</tr>
+
 
 
 			</table>
