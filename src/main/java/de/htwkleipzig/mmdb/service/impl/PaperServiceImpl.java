@@ -51,6 +51,7 @@ public class PaperServiceImpl implements PaperService {
 
     @Override
     public void init() {
+
         LOGGER.info("init TransportClient");
         for (String node : transportFactoryBean.getEsNodes()) {
             LOGGER.info("node {}", node);
