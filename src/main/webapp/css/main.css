@@ -1,22 +1,108 @@
+.container { /* 	border: 1px solid #728C16; */
+	margin-top: 2em;
+}
+
 #header {
-	/*background-color: #EEEEEE;*/
+	background: #F1F1F1;
+	padding: .5em;
 }
 
-.container {
-	border: 1px solid #728C16;
-	margin-top: 3.5em;
-	padding: 3em;
+#subheader {
+	padding: 1em;
 }
 
-.twitterMessages {
-	list-style: none;
+#content {
+	padding: 1em;
 }
 
-.twitterMessages img {
-	vertical-align: middle;
+#footer {
+	background: #F1F1F1;
+	height: 3em;
 }
 
-.twitterMessages li {
-	padding-top: 2px;
-	padding-bottom: 2px;
+#head {
+	background: #F1F1F1;
+	height: 5em;
+	padding-top: 1em;
+	padding-left: 1em;
+}
+
+#logos {
+	font-size: 4em;
+	color: #FFFFFF;
+	text-shadow: 0 1px 0 #ccc, 0 2px 0 #c9c9c9, 0 3px 0 #bbb, 0 4px 0
+		#b9b9b9, 0 5px 0 #aaa, 0 6px 1px rgba(0, 0, 0, .1), 0 0 5px
+		rgba(0, 0, 0, .1), 0 1px 3px rgba(0, 0, 0, .3), 0 3px 5px
+		rgba(0, 0, 0, .2), 0 5px 10px rgba(0, 0, 0, .25), 0 10px 10px
+		rgba(0, 0, 0, .2), 0 20px 20px rgba(0, 0, 0, .15)
+}
+
+#logo {
+	font-size: 3.6em;
+	font-weight: bold;
+	line-height: 1;
+	background-color: #666666;
+	-webkit-background-clip: text;
+	-moz-background-clip: text;
+	background-clip: text;
+	color: transparent;
+/* 	text-shadow: rgba(255, 255, 255, 0.5) 0px 3px 3px; */
+	line-height: 1;
+}
+
+#logo a {
+	text-decoration: none;
+}
+
+#subhead {
+	background: #444444;
+	height: 2em;
+}
+
+#subhead h3 {
+	color: #F1F1F1;
+	padding-top: .2em;
+	padding-left: .8em;
+}
+
+#search-box {
+	position: relative;
+	width: 100%;
+	margin: 0;
+}
+
+#search-form {
+	height: 2.2em;
+	border: 1px solid #999;
+	background-color: #F1F1F1;
+	overflow: hidden;
+}
+
+#search-text {
+	font-size: 14px;
+	color: #ddd;
+	border-width: 0;
+	background: transparent;
+}
+
+#search-box input[type="text"] {
+	width: 90%;
+	padding-left: 1em;
+	color: #333;
+	outline: none;
+	background: transparent;
+}
+
+#search-button {
+	position: absolute;
+	top: 0;
+	right: 0;
+	height: 2em;
+	width: 60px;
+	font-size: 14px;
+	color: #fff;
+	text-align: center;
+	border-width: 0;
+	background-color: #444444;
+	cursor: pointer;
 }
