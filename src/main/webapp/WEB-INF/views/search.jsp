@@ -20,11 +20,10 @@
 		<a href="javascript:history.back()">back</a>
 		<p>
 			Search Term: ${searchTerm} <br /> Document Score: ${documentScore}<br />
-			Document ID: ${documentId} <br />Total Hits: ${totalHits} <br />Max
+			Document ID: ${documentId} <br />Total Hits: ${totalHits} (only paper with ID are shown) <br />Max
 			Score: ${maxScore}
 		</p>
 
-		<p>number of results : ${paper.size()}</p>
 		<table border="1">
 			<tr>
 				<th>Paper ID</th>
@@ -33,11 +32,14 @@
 				<!-- 				<th>Key Class</th> -->
 			</tr>
 			<c:forEach var="paper" items="${paper}" varStatus="status">
-				<tr>
-					<td>${ paper.getPaperId()}</td>
-					<td>${ paper.getTitle()}</td>
-					<td><a href="${pageContext.request.contextPath}/paper/${ paper.getPaperId()}">edit</a></td>
-				</tr>
+				<c:if test="${not empty paper.getPaperId()}">
+					<tr>
+						<td>${ paper.getPaperId()}</td>
+						<td>${ paper.getTitle()}</td>
+						<td><a
+							href="${pageContext.request.contextPath}/paper/${ paper.getPaperId()}">edit</a></td>
+					</tr>
+				</c:if>
 			</c:forEach>
 		</table>
 
