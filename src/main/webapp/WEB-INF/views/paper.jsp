@@ -1,4 +1,5 @@
 <%@ include file="/WEB-INF/views/includes/taglibs.jsp"%>
+<%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form"%>
 
 <!DOCTYPE html>
 <html>
@@ -18,8 +19,62 @@
 			<h1>Detailed Information about the paper ${recievedPaperName}</h1>
 		</div>
 		<a href="javascript:history.back()">back</a>
+		<p>id: ${paper.getPaperId()}, title: ${paper.getTitle()}</p>
+		<sf:form modelAttribute="paper" method="POST"
+			action="${pageContext.request.contextPath}/paper/update" enctype="multipart/form-datahast ">
+			<table>
+				<tr>
+					<td><sf:label path="paperId">PaperId:</sf:label></td>
+					<td><sf:input path="paperId" disabled="true" /></td>
+				</tr>
+
+				<tr>
+					<td><sf:label path="title">Title:</sf:label></td>
+					<td><sf:input path="title" /></td>
+				</tr>
+
+				<tr>
+					<td><sf:label path="paperAbstract">Abstract:</sf:label></td>
+					<td><sf:input path="paperAbstract" /></td>
+				</tr>
 
 
+			</table>
+
+			<input type="submit" value="Save" />
+		</sf:form>
+
+		<%-- 		<sf:form modelAttribute="paper" method="POST" action="update"> --%>
+		<!-- 			<table border="1"> -->
+		<!-- 				<tr> -->
+		<!-- 					<th>Key</th> -->
+		<!-- 					<th>value</th> -->
+		<!-- 				</tr> -->
+		<!-- 				<tr> -->
+		<!-- 					<td>Paper Filename</td> -->
+		<%-- 					<td>${paper.getFileName()}</td> --%>
+		<!-- 				</tr> -->
+		<!-- 				<tr> -->
+		<!-- 					<td>Paper ID</td> -->
+		<%-- 					<td>${paper.getPaperId()}</td> --%>
+		<!-- 				</tr> -->
+		<!-- 				<tr> -->
+		<!-- 					<td>Paper Title</td> -->
+		<%-- 					<td><sf:input path="title" size="20" /></td> --%>
+		<!-- 											<td><input type="text" name="title" size="20" -->
+		<%-- 												value="${paper.getTitle()}"></td> --%>
+		<!-- 				</tr> -->
+		<!-- 				<tr> -->
+		<!-- 					<td>Paper Creation Date</td> -->
+		<%-- 					<td>${paper.getCreateDate()}</td> --%>
+		<!-- 				</tr> -->
+		<!-- 				<tr> -->
+		<!-- 					<td>Paper Abstract</td> -->
+		<%-- 					<td>${paper.getPaperAbstract()}</td> --%>
+		<!-- 				</tr> -->
+		<!-- 			</table> -->
+		<!-- 			<input type="submit" value="save"> -->
+		<%-- 		</sf:form> --%>
 	</div>
 </body>
 </html>
