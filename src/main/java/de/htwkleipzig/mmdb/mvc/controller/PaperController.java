@@ -61,11 +61,12 @@ public class PaperController {
 			LOGGER.debug("error:" + bindingResult.getAllErrors());
 		}
 
-		LOGGER.debug("paper: ", paper.getPaperId());
-		LOGGER.debug("title: ", paper.getTitle());
+		LOGGER.debug("paper: {}", paper.getPaperId());
+		LOGGER.debug("title: {}", paper.getTitle());
+		LOGGER.debug("abstract: {}", paper.getPaperAbstract());
 		paperService.save(paper);
 		LOGGER.debug("paper saved");
-		return "redirect:/{" + paper.getPaperId() + "}/";
+		return "redirect:/paper/" + paper.getPaperId() + "/";
 	}
 
 	@RequestMapping(value = "/download")
