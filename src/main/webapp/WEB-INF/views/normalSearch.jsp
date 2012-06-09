@@ -14,8 +14,10 @@
 </head>
 <body>
 	<div id="head">
-		<div><h1>Suche</h1></div>
-		
+		<div id="logo">
+			<a href="${pageContext.request.contextPath}" class="quiet">MacPaper</a>
+		</div>
+
 	</div>
 	<div id="subhead">
 		<h3>einfache Suche:</h3>

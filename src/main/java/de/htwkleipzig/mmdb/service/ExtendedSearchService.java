@@ -2,6 +2,8 @@ package de.htwkleipzig.mmdb.service;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  * 
@@ -17,15 +19,10 @@ public class ExtendedSearchService {
 		return "extendedSearch";
 	}
 
-	private void startSearch() {
+	@RequestMapping(value = "/runNormalSearch")
+	private String runSearch(@RequestParam(required = true) String searchPhrase) {
 		LOGGER.info("Suche gestartet!");
-		listPaper();
-
-	}
-
-	public void listPaper() {
-		LOGGER.info("Ergebnisse ausgeben!");
-
+		return "searchPhrase";
 	}
 
 }
