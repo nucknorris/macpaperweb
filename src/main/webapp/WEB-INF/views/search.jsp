@@ -13,17 +13,28 @@
 <script src="<c:url value='/js/jquery-1.6.1.min.js'/>"></script>
 </head>
 <body>
-	<div class="container">
-		<div id="header" class="prepend-1 span-22 append-1 last">
-			<h1>SearchResults</h1>
-		</div>
-		<a href="javascript:history.back()">back</a>
-		<p>
-			Search Term: ${searchTerm} <br /> Document Score: ${documentScore}<br />
-			Document ID: ${documentId} <br />Total Hits: ${totalHits} (only paper with ID are shown) <br />Max
-			Score: ${maxScore}
-		</p>
+	<div id="head">
 
+		<div id="logo">
+			<a href="${pageContext.request.contextPath}" class="quiet">MacPaper</a>
+		</div>
+	</div>
+	<div id="subhead">
+		<h3>Search Results for: ${searchTerm}</h3>
+	</div>
+	<div class="container">
+		<div id="header">
+			<div id='search-box'>
+				<form action='elasticsearch' id='search-form' method='get'
+					target='_top'>
+					<input id='search-text' name='searchPhrase'
+						placeholder='${searchTerm}' type='text' />
+					<button id='search-button' type='submit'>
+						<span>Search</span>
+					</button>
+				</form>
+			</div>
+		</div>
 		<table border="1">
 			<tr>
 				<th>Paper ID</th>
