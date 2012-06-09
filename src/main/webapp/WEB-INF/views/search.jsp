@@ -1,5 +1,5 @@
 <%@ include file="/WEB-INF/views/includes/taglibs.jsp"%>
-
+<%@ taglib prefix="s" uri="http://www.springframework.org/tags"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -32,11 +32,16 @@
 					<button id='search-button' type='submit'>
 						<span>Search</span>
 					</button>
+					<button id='extendedsearch-button' type='button'
+						onClick="location.href='${pageContext.request.contextPath}/extendedSearch'">
+						<span>Extended Search</span>
+					</button>
 				</form>
 			</div>
 		</div>
 		<table border="1">
 			<tr>
+				<th></th>
 				<th>Paper ID</th>
 				<th>Title</th>
 				<th></th>
@@ -45,10 +50,14 @@
 			<c:forEach var="paper" items="${paper}" varStatus="status">
 				<c:if test="${not empty paper.getPaperId()}">
 					<tr>
+						<td><img
+							src="<s:url value="/icons/glyphicons_039_notes.png" />" /></td>
 						<td>${ paper.getPaperId()}</td>
 						<td>${ paper.getTitle()}</td>
 						<td><a
-							href="${pageContext.request.contextPath}/paper/${ paper.getPaperId()}">edit</a></td>
+							href="${pageContext.request.contextPath}/paper/${ paper.getPaperId()}"><img
+								src="<s:url value="/icons/glyphicons_195_circle_info.png" />" />
+						</a></td>
 					</tr>
 				</c:if>
 			</c:forEach>

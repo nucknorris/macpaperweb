@@ -29,6 +29,7 @@
 		up static resources in the ${webappRoot}/css directory -->
 	<mvc:resources mapping="/css/**" location="/css/" />
 	<mvc:resources mapping="/js/**" location="/js/" />
+	<mvc:resources location="/icons/" mapping="/icons/**" />
 
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources 
 		in the /WEB-INF/views directory -->

@@ -32,6 +32,10 @@
 					<button id='search-button' type='submit'>
 						<span>Search</span>
 					</button>
+					<button id='extendedsearch-button' type='button'
+						onClick="location.href='${pageContext.request.contextPath}/extendedSearch'">
+						<span>Extended Search</span>
+					</button>
 				</form>
 			</div>
 		</div>

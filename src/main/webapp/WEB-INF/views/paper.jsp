@@ -23,6 +23,22 @@
 		<h3>Detailed Information about the paper ${recievedPaperName}</h3>
 	</div>
 	<div class="container">
+		<div id="header">
+			<div id='search-box'>
+				<form action='elasticsearch' id='search-form' method='get'
+					target='_top'>
+					<input id='search-text' name='searchPhrase' placeholder='type here'
+						type='text' />
+					<button id='search-button' type='submit'>
+						<span>Search</span>
+					</button>
+					<button id='extendedsearch-button' type='button'
+						onClick="location.href='${pageContext.request.contextPath}/extendedSearch'">
+						<span>Extended Search</span>
+					</button>
+				</form>
+			</div>
+		</div>
 
 		<!-- 		<div id="header" class="prepend-1 span-22 append-1 last"> -->
 		<div id="content" class="span-24 last">
@@ -70,7 +86,7 @@
 
 				</table>
 
-				<input type="submit" value="Save" />
+				<input id='save-button' type="submit" value="Save" />
 			</sf:form>
 
 		</div>
