@@ -16,26 +16,47 @@
 <body>
 	<div class="container">
 		<div id="header" class="prepend-1 span-22 append-1 last">
-			<h1>Detailed Information about the paper ${recievedPaperName}</h1>
+			<h1>Detailed Information</h1>
+			<h2> about the paper ${recievedPaperName}</h2>
 		</div>
 		<a href="javascript:history.back()">back</a>
-		<p>id: ${paper.getPaperId()}, title: ${paper.getTitle()}</p>
 		<sf:form modelAttribute="paper" method="POST"
-			action="${pageContext.request.contextPath}/paper/update" enctype="multipart/form-datahast ">
+			action="${pageContext.request.contextPath}/paper/update"
+			enctype="multipart/form-datahast ">
 			<table>
 				<tr>
 					<td><sf:label path="paperId">PaperId:</sf:label></td>
-					<td><sf:input path="paperId" /></td>
+					<td><sf:input path="paperId" readonly="true" size="50" /></td>
+				</tr>
+
+				<tr>
+					<td><sf:label path="uploadDate">Upload Date:</sf:label></td>
+					<td><sf:input path="uploadDate" readonly="true" size="50" /></td>
 				</tr>
 
 				<tr>
 					<td><sf:label path="title">Title:</sf:label></td>
-					<td><sf:input path="title" /></td>
+					<td><sf:input path="title" size="50" /></td>
+				</tr>
+
+				<tr>
+					<td><sf:label path="createDate">Creation Date:</sf:label></td>
+					<td><sf:input path="createDate" size="50" /></td>
+				</tr>
+
+				<tr>
+					<td><sf:label path="kindOf">Categories:</sf:label></td>
+					<td><sf:input path="kindOf" size="50" /></td>
+				</tr>
+
+				<tr>
+					<td><sf:label path="fileName">Filename:</sf:label></td>
+					<td><sf:input path="fileName" size="50" /></td>
 				</tr>
 
 				<tr>
 					<td><sf:label path="paperAbstract">Abstract:</sf:label></td>
-					<td><sf:input path="paperAbstract" /></td>
+					<td><sf:textarea path="paperAbstract" /></td>
 				</tr>
 
 
