@@ -53,8 +53,8 @@
 		<table border="1">
 			<tr>
 				<th width="3%"></th>
-				<th width="30%">Paper ID</th>
-				<th width="64%">Title</th>
+				<th width="25%">Paper ID</th>
+				<th width="69%">Title</th>
 				<th width="3%"></th>
 				<!-- 				<th>Key Class</th> -->
 			</tr>

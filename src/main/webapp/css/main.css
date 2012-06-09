@@ -22,6 +22,13 @@
 	height: 2em;
 }
 
+#backbutton {
+	position: absolute;
+	left: -40px;
+	top: 5px;
+	
+}
+
 #uploadButton {
 	position: absolute;
 	right: 1em;
@@ -47,8 +54,9 @@
 	padding: 1em;
 }
 
-#content {
-	padding: 1em;
+#content { /* 	padding: 1em; */
+	padding-top: .5em;
+	padding-bottom: .5em;
 }
 
 #footer {
@@ -98,7 +106,7 @@
 
 #subhead {
 	background: #444444;
-	height: 2em;
+	height: 2.2em;
 }
 
 #subhead h3 {
