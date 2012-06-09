@@ -79,7 +79,7 @@ public class HomeController {
         LOGGER.info("MaxScore {}", response.getHits().getMaxScore());
         model.addAttribute("totalHits", response.getHits().getTotalHits());
         model.addAttribute("maxScore", response.getHits().getMaxScore());
-
+        List<Paper> papers = new ArrayList<Paper>();
         for (SearchHit hit : response.getHits().getHits()) {
             if (hit.isSourceEmpty()) {
                 LOGGER.info("source is empty");
@@ -90,15 +90,16 @@ public class HomeController {
             model.addAttribute("documentScore", hit.getScore());
 
             Map<String, Object> resultMap = hit.sourceAsMap();
-            List<Paper> papers = new ArrayList<Paper>();
+
             Paper paper = PaperHelper.source2Paper(resultMap);
 
             paper.setContent("");
             LOGGER.debug("paper: {}", paper.getPaperId());
             papers.add(paper);
-            model.addAttribute("paper", papers);
+
         }
         // LOGGER.info("MaxScore {}", response.getHits().getHits());
+        model.addAttribute("paper", papers);
         model.addAttribute("searchTerm", searchPhrase);
         return "search";
     }
