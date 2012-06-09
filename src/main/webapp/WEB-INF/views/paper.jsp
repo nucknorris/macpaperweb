@@ -25,7 +25,7 @@
 			<table>
 				<tr>
 					<td><sf:label path="paperId">PaperId:</sf:label></td>
-					<td><sf:input path="paperId" disabled="true" /></td>
+					<td><sf:input path="paperId" /></td>
 				</tr>
 
 				<tr>
