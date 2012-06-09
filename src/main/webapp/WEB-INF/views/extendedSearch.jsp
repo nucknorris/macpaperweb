@@ -6,6 +6,9 @@
 <html>
 <head>
 <title>Extended Search</title>
+<link
+	href='http://fonts.googleapis.com/css?family=Open+Sans:400,600,700'
+	rel='stylesheet' type='text/css'>
 <link rel="stylesheet" href="<c:url value='/css/blueprint/screen.css'/>"
 	type="text/css" media="screen, projection">
 <link rel="stylesheet" href="<c:url value='/css/blueprint/print.css'/>"

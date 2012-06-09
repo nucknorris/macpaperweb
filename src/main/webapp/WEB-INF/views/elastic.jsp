@@ -7,6 +7,9 @@
 <html>
 <head>
 <title>MacPaper Start</title>
+<link
+	href='http://fonts.googleapis.com/css?family=Open+Sans:400,600,700'
+	rel='stylesheet' type='text/css'>
 <link rel="stylesheet" href="<c:url value='/css/blueprint/screen.css'/>"
 	type="text/css" media="screen, projection">
 <link rel="stylesheet" href="<c:url value='/css/blueprint/print.css'/>"
@@ -27,21 +30,19 @@
 	<div class="container">
 		<div id="startpage-search-box">
 			<div id="startpage-logo">MacPaper</div>
-			<div id="header">
-				<div id='search-box'>
-					<form action='elasticsearch' id='search-form' method='get'
-						target='_top'>
-						<input id='search-text' name='searchPhrase'
-							placeholder='type here' type='text' />
-						<button id='search-button' type='submit'>
-							<span>Search</span>
-						</button>
-						<button id='extendedsearch-button' type='button'
-							onClick="location.href='${pageContext.request.contextPath}/extendedSearch'">
-							<span>Extended Search</span>
-						</button>
-					</form>
-				</div>
+			<div id='search-box'>
+				<form action='elasticsearch' id='search-form' method='get'
+					target='_top'>
+					<input id='search-text' name='searchPhrase' placeholder='type here'
+						type='text' />
+					<button id='search-button' type='submit'>
+						<span>Search</span>
+					</button>
+					<button id='extendedsearch-button' type='button'
+						onClick="location.href='${pageContext.request.contextPath}/extendedSearch'">
+						<span>Extended Search</span>
+					</button>
+				</form>
 
 			</div>
 		</div>
