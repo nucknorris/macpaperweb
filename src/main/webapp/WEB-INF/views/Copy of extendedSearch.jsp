@@ -1,9 +1,11 @@
 <%@ include file="/WEB-INF/views/includes/taglibs.jsp"%>
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags"%>
-<!DOCTYPE html>
+
+
+<!DOCTYPE HTML>
 <html>
 <head>
-<title>MacPaper ResultPage</title>
+<title>Extended Search</title>
 <link
 	href='http://fonts.googleapis.com/css?family=Open+Sans:400,600,700'
 	rel='stylesheet' type='text/css'>
@@ -17,13 +19,13 @@
 </head>
 <body>
 	<div id="head">
-
 		<div id="logo">
 			<a href="${pageContext.request.contextPath}" class="quiet">MacPaper</a>
 		</div>
+
 	</div>
 	<div id="subhead">
-		<h3>Search Results for: ${searchTerm}</h3>
+		<h3>Extended Search:</h3>
 		<div id="uploadPic">
 			<a href="upload"> <img
 				src="<s:url value="/icons/glyphicons_201_upload.png" />" />
@@ -36,10 +38,10 @@
 	<div class="container">
 		<div id="header">
 			<div id='search-box'>
-				<form action='elasticsearch' id='search-form' method='get'
+				<form action='search' id='search-form' method='get'
 					target='_top'>
-					<input id='search-text' name='searchPhrase'
-						placeholder='${searchTerm}' type='text' />
+					<input id='search-text' name='searchPhrase' placeholder='type here'
+						type='text' />
 					<button id='search-button' type='submit'>
 						<span>Search</span>
 					</button>
@@ -50,30 +52,34 @@
 				</form>
 			</div>
 		</div>
-		<table border="1">
-			<tr>
-				<th width="3%"></th>
-				<th width="25%">Paper ID</th>
-				<th width="69%">Title</th>
-				<th width="3%"></th>
-				<!-- 				<th>Key Class</th> -->
-			</tr>
-			<c:forEach var="paper" items="${paper}" varStatus="status">
-				<c:if test="${not empty paper.getPaperId()}">
-					<tr>
-						<td><img
-							src="<s:url value="/icons/glyphicons_039_notes.png" />" /></td>
-						<td>${ paper.getPaperId()}</td>
-						<td><b>${ paper.getTitle()}</b></td>
-						<td><a
-							href="${pageContext.request.contextPath}/paper/${ paper.getPaperId()}"><img
-								src="<s:url value="/icons/glyphicons_195_circle_info.png" />" />
-						</a></td>
-					</tr>
-				</c:if>
-			</c:forEach>
-		</table>
 
+		<div id="content" class="span-24 last">
+			<form>
+				<fieldset>
+					<legend>Filter: </legend>
+
+					<input type="checkbox" name="e1" value="checkAuthor" />Author<br />
+					<input type="text" name="author" placeholder='Please insert author' />
+					<br /> <input type="checkbox" name="e2" value="checkUniversity" />University<br />
+					<input type="text" name="uni"
+						placeholder='Please insert university' /> <br /> <input
+						type="checkbox" name="e3" value="checkCategory" />Category<br />
+					<input type="text" name="category"
+						placeholder='Please insert category' /> <br /> <input
+						type="checkbox" name="e3" value="checkTag" />Tag<br /> <input
+						type="text" name="tags" placeholder='Please insert tags' /> <br />
+				</fieldset>
+				<fieldset>
+					<legend>Searchphrase:</legend>
+					<input type="text" name="keywords"
+						placeholder='Please insert searchphrase!' /><br /> Search for <input
+						type="radio" name="andor" value=and />each words<br /> <input
+						type="radio" name="andor" value="andor" />all words.<br />
+
+				</fieldset>
+				<input id="save-button" type="submit" value="Search" />
+			</form>
+		</div>
 	</div>
 </body>
 </html>

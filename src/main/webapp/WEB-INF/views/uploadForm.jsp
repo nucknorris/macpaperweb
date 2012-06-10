@@ -36,12 +36,6 @@
 					<legend>Upload Fields</legend>
 
 					<p>
-						<form:label for="title" path="title">Title</form:label>
-						<br />
-						<form:input path="title" />
-					</p>
-
-					<p>
 						<form:label for="fileData" path="fileData">File</form:label>
 						<br />
 						<form:input path="fileData" type="file" />

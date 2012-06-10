@@ -54,7 +54,6 @@ public class PaperServiceImpl implements PaperService {
         try {
             client = (TransportClient) transportFactoryBean.getObject();
         } catch (Exception e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 
@@ -169,18 +168,18 @@ public class PaperServiceImpl implements PaperService {
 
     @Override
     public boolean updatePaper(Paper paper) {
-        LOGGER.debug("update author with id {}", paper.getPaperId());
+        LOGGER.debug("update paper with id {}", paper.getPaperId());
         if (paperExists(paper.getPaperId())) {
             return save(paper);
         }
-        LOGGER.error("author with id {} doesn't exists", paper.getPaperId());
+        LOGGER.error("paper with id {} doesn't exists", paper.getPaperId());
         return false;
     }
 
     @Override
-    public boolean paperExists(String authorId) {
-        LOGGER.debug("authorExists({})", authorId);
-        if (this.get(authorId) != null) {
+    public boolean paperExists(String paperId) {
+        LOGGER.debug("paperExists({})", paperId);
+        if (this.get(paperId) != null) {
             return true;
         }
         return false;

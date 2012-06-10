@@ -38,7 +38,7 @@
 	<div class="container">
 		<div id="header">
 			<div id='search-box'>
-				<form action='elasticsearch' id='search-form' method='get'
+				<form action='search' id='search-form' method='get'
 					target='_top'>
 					<div id="backbutton">
 						<a href="javascript:history.back()"> <img
