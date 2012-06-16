@@ -56,18 +56,47 @@
 			<form action='evaluateExtendedSearch' id='search-form' method='get'>
 				<fieldset>
 					<legend>Filter: </legend>
-					Author: <br/> <input type="text" name="author" placeholder='Please insert author' /> <br/> 
-					University: <br/> <input type="text" name="uni" placeholder='Please insert university' /> <br/> 
-					Category: <br/> <input type="text" name="category" placeholder='Please insert category' /> <br/> 
-					Tags: <br/> <input type="text" name="tags" placeholder='Please insert tags' /> <br/>
+					<table border="0" width="100%" cellpadding="0" cellspacing="0">
+						<tr>
+							<td>Author:</td>
+							<td><input type="text" name="author"
+								placeholder='Please insert author' /></td>
+						</tr>
+						<tr>
+							<td>University:</td>
+							<td><input type="text" name="uni"
+								placeholder='Please insert university' /></td>
+						</tr>
+						<tr>
+							<td>Category:</td>
+							<td><input type="text" name="category"
+								placeholder='Please insert category' /></td>
+						</tr>
+						<tr>
+							<td>Tags:</td>
+							<td><input type="text" name="tags"
+								placeholder='Please insert tags' /></td>
+						</tr>
+					</table>
 				</fieldset>
 				<fieldset>
-					<legend>Keywords:</legend>
-					<input type="text" name="keywords"
-						placeholder='Please insert keywords' /><br /> Search for <br/><input
-						type="radio" name="andor" value=and />with all words<br /> <input
-						type="radio" name="andor" value="andor" checked/>exact with this wordgroup
-
+					<legend>Search papers, ... </legend>
+					<table border="0" width="100%" cellpadding="0" cellspacing="0">
+						<tr>
+							<td>contain all these words:</td>
+							<td><input type="text" name="and"
+								placeholder='Foo Bar Bull Shit' /></td>
+						</tr>
+						<tr>
+							<td>contain exactly the word or the phrase:</td>
+							<td><input type="text" name="secialand"
+								placeholder='"Foo Bar"' /></td>
+						</tr>
+						<tr>
+							<td>one of these words include:</td>
+							<td><input type="text" name="or" placeholder='Foo OR Bar' /></td>
+						</tr>
+					</table>
 				</fieldset>
 				<input id="save-button" type="submit" value="Search" />
 			</form>
