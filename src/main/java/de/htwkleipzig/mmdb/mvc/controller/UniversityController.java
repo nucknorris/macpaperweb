@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -32,10 +33,14 @@ public class UniversityController {
 	public UniversityController() {
 	}
 
-	@RequestMapping(value = "")
-	public String elasticstart(Model model) {
-		LOGGER.info("startpage university");
-		model.addAttribute("attribute", "university");
+	@RequestMapping(value = "/{recievedUniversityID}")
+	public String elasticstart(
+			@PathVariable("recievedUniversityID") String recievedUniversityID,
+			Model model) {
+		LOGGER.info("startpage university {}", recievedUniversityID);
+		model.addAttribute("recievedUniversityID", recievedUniversityID);
+		University university = universityService.get(recievedUniversityID);
+		model.addAttribute("university", university);
 		return "university";
 	}
 
