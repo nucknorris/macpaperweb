@@ -82,6 +82,12 @@
 						<td><sf:label path="country">Country:</sf:label></td>
 						<td><sf:input path="country" readonly="true" size="50" /></td>
 					</tr>
+					<tr>
+						<td width="3%"><img
+							src="<s:url value="/icons/glyphicons_341_github.png" />" /></td>
+						<td><sf:label path="authorIds">Authoren:</sf:label></td>
+						<td><sf:input path="authorIds" readonly="true" size="50" /></td>
+					</tr>
 				</table>
 				<input id='save-button' type="submit" value="Save" />
 			</sf:form>
