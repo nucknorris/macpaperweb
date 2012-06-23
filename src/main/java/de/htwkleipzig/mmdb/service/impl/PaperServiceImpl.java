@@ -137,9 +137,10 @@ public class PaperServiceImpl implements PaperService {
 
     @Override
     public SearchResponse search(QueryBuilder query) {
+        LOGGER.debug("search will be started");
         SearchRequestBuilder builder = client.prepareSearch(INDEX_PAPER_NAME);
         builder.setQuery(query);
-
+        LOGGER.debug("builder: {}", builder.toString());
         return builder.execute().actionGet();
     }
 

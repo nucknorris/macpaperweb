@@ -3,6 +3,7 @@ package de.htwkleipzig.mmdb.util;
 import static org.elasticsearch.common.xcontent.XContentFactory.jsonBuilder;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -23,13 +24,16 @@ public class AuthorHelper {
     public static XContentBuilder dao2json(Author author) throws IOException {
         LOGGER.debug("create the json object from Author");
         XContentBuilder b = jsonBuilder().startObject();
-        b.field("authorId", author.getAuthorId());
-        b.field("title", author.getTitle());
-        b.field("name", author.getName());
-        b.field("lastName", author.getLastname());
-        b.field("email", author.getEmail());
-        b.field("universityId", author.getUniversityId());
-        b.field("paperIds", author.getPaperIds());
+        b.field("authorId", author.getAuthorId() == null ? "empty" : author.getAuthorId());
+        b.field("title", author.getTitle() == null ? "empty" : author.getTitle());
+        b.field("name", author.getName() == null ? "empty" : author.getName());
+        b.field("lastName", author.getLastname() == null ? "empty" : author.getLastname());
+        b.field("email", author.getEmail() == null ? "empty" : author.getEmail());
+        b.field("universityId", author.getUniversityId() == null ? "empty" : author.getUniversityId());
+
+        List<String> paperIds = new ArrayList<String>();
+        paperIds.add("empty");
+        b.field("paperIds", author.getPaperIds() == null ? paperIds : author.getPaperIds());
         LOGGER.debug(b.string());
         return b;
     }

@@ -19,10 +19,16 @@ public class PaperHelper {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(PaperHelper.class);
 
+    /**
+     * 
+     * @param paper
+     * @return
+     * @throws IOException
+     */
     public static XContentBuilder paper2Json(Paper paper) throws IOException {
         LOGGER.debug("create the json object from Paper");
         XContentBuilder b = jsonBuilder().startObject();
-        b.field("paperId", paper.getPaperId());
+        b.field("paperId", paper.getPaperId() == null ? "empty" : paper.getPaperId());
         b.field("title", paper.getTitle() == null ? "empty" : paper.getTitle());
         b.field("paperAbstract", paper.getPaperAbstract() == null ? "empty" : paper.getPaperAbstract());
 
@@ -33,7 +39,7 @@ public class PaperHelper {
                 paper.getCreateDate() == null ? new Date(System.currentTimeMillis()) : paper.getCreateDate());
 
         List<String> keywords = new ArrayList<String>();
-        authorIds.add("empty");
+        keywords.add("empty");
         b.field("keywords", paper.getKeywords() == null ? keywords : paper.getKeywords());
         b.field("kindOf", paper.getKindOf() == null ? "empty" : paper.getKindOf());
         b.field("content", paper.getContent() == null ? "empty" : paper.getContent());
@@ -41,11 +47,21 @@ public class PaperHelper {
         b.field("uploadDate",
                 paper.getUploadDate() == null ? new Date(System.currentTimeMillis()) : paper.getUploadDate());
         b.field("fileName", paper.getFileName() == null ? "empty" : paper.getFileName());
+
+        List<String> universityIds = new ArrayList<String>();
+        universityIds.add("empty");
+        b.field("universityIds", paper.getUniversityIds() == null ? universityIds : paper.getUniversityIds());
+
         // b.field("ddc", paper.getDdc()); TODO - currently disabled
         LOGGER.debug(b.string());
         return b;
     }
 
+    /**
+     * 
+     * @param source
+     * @return
+     */
     public static Paper source2Paper(Map<String, Object> source) {
         LOGGER.debug("convert from source to paper");
         Paper paper = new Paper();
@@ -60,6 +76,7 @@ public class PaperHelper {
         paper.setKindOf((String) source.get("kindOf"));
         paper.setContent((String) source.get("content"));
         paper.setLatexBib((String) source.get("latexBib"));
+        paper.setUniversityIds((List<String>) source.get("universityIds"));
 
         dt = DateTime.parse((String) source.get("uploadDate"));// 2012-05-27T17:35:05.989Z
         paper.setUploadDate(dt.toDate());

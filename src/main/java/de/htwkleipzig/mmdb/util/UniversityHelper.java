@@ -3,6 +3,7 @@ package de.htwkleipzig.mmdb.util;
 import static org.elasticsearch.common.xcontent.XContentFactory.jsonBuilder;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -18,15 +19,18 @@ public class UniversityHelper {
     public static XContentBuilder university2Json(University university) throws IOException {
         LOGGER.debug("create the json object from University");
         XContentBuilder b = jsonBuilder().startObject();
-        b.field("universityId", university.getUniversityId());
-        b.field("city", university.getCity());
-        b.field("country", university.getCountry());
-        b.field("name", university.getName());
-        b.field("housenumber", university.getHousenumber());
-        b.field("postcode", university.getPostcode());
-        b.field("street", university.getStreet());
-        b.field("street2", university.getStreet2());
-        b.field("authors", university.getAuthorIds());
+        b.field("universityId", university.getUniversityId() == null ? "empty" : university.getUniversityId());
+        b.field("city", university.getCity() == null ? "empty" : university.getCity());
+        b.field("country", university.getCountry() == null ? "empty" : university.getCountry());
+        b.field("name", university.getName() == null ? "empty" : university.getName());
+        b.field("housenumber", university.getHousenumber() == null ? "empty" : university.getHousenumber());
+        b.field("postcode", university.getPostcode() == null ? "empty" : university.getPostcode());
+        b.field("street", university.getStreet() == null ? "empty" : university.getStreet());
+        b.field("street2", university.getStreet2() == null ? "empty" : university.getStreet2());
+
+        List<String> authorIds = new ArrayList<String>();
+        authorIds.add("empty");
+        b.field("authors", university.getAuthorIds() == null ? authorIds : university.getAuthorIds());
         LOGGER.debug(b.string());
         return b;
     }

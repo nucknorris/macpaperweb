@@ -9,6 +9,7 @@ import org.elasticsearch.action.admin.indices.create.CreateIndexRequestBuilder;
 import org.elasticsearch.action.delete.DeleteResponse;
 import org.elasticsearch.action.get.GetResponse;
 import org.elasticsearch.action.index.IndexRequestBuilder;
+import org.elasticsearch.action.index.IndexResponse;
 import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.IndicesAdminClient;
@@ -165,7 +166,8 @@ public class UniversityServiceImpl implements UniversityService {
         }
         IndexRequestBuilder irb = client.prepareIndex(INDEX_UNIVERSITY_NAME, INDEX_UNIVERSITY_TYPE,
                 university.getUniversityId()).setSource(b);
-        irb.execute().actionGet();
+        IndexResponse actionGet = irb.execute().actionGet();
+        LOGGER.debug("save result {}", actionGet.getId());
         return true;
     }
 

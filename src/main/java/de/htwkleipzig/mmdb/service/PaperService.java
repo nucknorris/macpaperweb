@@ -77,7 +77,7 @@ public interface PaperService extends Serializable {
      *            the querybuilder with the search query
      * @return the result in {@link SearchResponse} format
      */
-    SearchResponse search(QueryBuilder query);
+    SearchResponse search(QueryBuilder queries);
 
     /**
      * delete the paper with the given id

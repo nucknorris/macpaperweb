@@ -5,6 +5,7 @@ import java.util.List;
 
 import junit.framework.Assert;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -90,6 +91,7 @@ public class AuthorImplTest {
     }
 
     @Test
+    @Ignore
     public void deleteAuthorTest() {
         LOGGER.debug("deleteAuthorTest()");
         Assert.assertEquals(true, authorService.delete("OliDerMickrige"));
