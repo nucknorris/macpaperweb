@@ -56,13 +56,13 @@
 						<td width="3%"><img
 							src="<s:url value="/icons/glyphicons_341_github.png" />" /></td>
 						<td><sf:label path="lastname">Lastname:</sf:label></td>
-						<td><sf:input path="lastname" readonly="true" size="50" /></td>
+						<td><sf:input path="lastname" readonly="false" size="50" /></td>
 					</tr>
 					<tr>
 						<td width="3%"><img
 							src="<s:url value="/icons/glyphicons_341_github.png" />" /></td>
 						<td><sf:label path="email">Email:</sf:label></td>
-						<td><sf:input path="email" readonly="true" size="50" /></td>
+						<td><sf:input path="email" readonly="false" size="50" /></td>
 					</tr>
 					<tr>
 						<td width="3%"><img

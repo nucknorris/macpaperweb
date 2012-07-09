@@ -75,7 +75,7 @@ public class SearchController {
 
             Paper paper = PaperHelper.source2Paper(resultMap);
 
-            paper.setContent("");
+            // paper.setContent("");
             LOGGER.debug("paper: {}", paper.getPaperId());
             papers.add(paper);
 
@@ -90,6 +90,54 @@ public class SearchController {
     public String extendedSearch() {
         LOGGER.info("starting extended search");
         return "extendedSearch";
+    }
+
+    @RequestMapping(value = "/searchUniversity")
+    public String searchUniversity(@RequestParam String university, Model model) {
+        QueryBuilder universityQuery = universityQuery(university);
+        SearchResponse search = universityService.search(universityQuery);
+        List<University> universities = new ArrayList<University>();
+        for (SearchHit hit : search.getHits().getHits()) {
+            if (hit.isSourceEmpty()) {
+                LOGGER.info("source is empty");
+            }
+            LOGGER.info("id of the university {}", hit.getId());
+            LOGGER.info("score of the hit {}", hit.getScore());
+
+            Map<String, Object> resultMap = hit.sourceAsMap();
+
+            University universityObject = UniversityHelper.source2University(resultMap);
+            LOGGER.debug("university: {}", universityObject.toString());
+            universities.add(universityObject);
+
+        }
+
+        model.addAttribute("universities", universities);
+        return "resultUniversities";
+    }
+
+    @RequestMapping(value = "/searchAuthor")
+    public String searchAuthor(@RequestParam String author, Model model) {
+        QueryBuilder authorQuery = authorQuery(author);
+        SearchResponse search = authorService.search(authorQuery);
+        List<Author> authors = new ArrayList<Author>();
+        for (SearchHit hit : search.getHits().getHits()) {
+            if (hit.isSourceEmpty()) {
+                LOGGER.info("source is empty");
+            }
+            LOGGER.info("id of the author {}", hit.getId());
+            LOGGER.info("score of the hit {}", hit.getScore());
+
+            Map<String, Object> resultMap = hit.sourceAsMap();
+
+            Author authorObject = AuthorHelper.source2author(resultMap);
+            LOGGER.debug("university: {}", authorObject.toString());
+            authors.add(authorObject);
+
+        }
+
+        model.addAttribute("authors", authors);
+        return "resultAuthors";
     }
 
     /**
@@ -127,11 +175,13 @@ public class SearchController {
             boolQuery.should(orQuery(or));
         }
         if (!author.isEmpty()) {
-            boolQuery.should(authorQuery(author));
+            QueryBuilder docsfromAuthors = getDocsfromAuthors(authorQuery(author));
+            boolQuery.should(docsfromAuthors);
 
         }
         if (!uni.isEmpty()) {
-            boolQuery.should(uniQuery(uni));
+            QueryBuilder docsfromUniversities = getDocsfromUniversities(universityQuery(uni));
+            boolQuery.should(docsfromUniversities);
 
         }
         if (!category.isEmpty()) {
@@ -157,17 +207,26 @@ public class SearchController {
      * @param uni
      * @return
      */
-    private QueryBuilder uniQuery(String uni) {
+    private QueryBuilder universityQuery(String uni) {
         LOGGER.debug("University Search");
         // TODO - Author field is an id that point to the author in the author index
         // have to search the author in index author, get the id and have to search the authorId in field author of
         // index paper IMPORTANT the authorsId is an array!!
-        QueryBuilder universityDocQuery = null;
         QueryBuilder universityQuery = QueryBuilders.queryString(uni).useDisMax(true)
                 .defaultOperator(QueryStringQueryBuilder.Operator.OR).analyzer("simple").field("name");
+
         LOGGER.debug("universityQuery: {}", universityQuery.toString());
 
+        return universityQuery;
+    }
+
+    /**
+     * @param universityResponse
+     * @return
+     */
+    private QueryBuilder getDocsfromUniversities(QueryBuilder universityQuery) {
         SearchResponse universityResponse = universityService.search(universityQuery);
+        QueryBuilder universityDocQuery;
         List<String> universityIds = new ArrayList<String>();
         for (SearchHit hit : universityResponse.getHits().getHits()) {
             if (hit.isSourceEmpty()) {
@@ -187,7 +246,6 @@ public class SearchController {
         }
         universityDocQuery = QueryBuilders.inQuery("universityIds", universityIds.toArray());
         LOGGER.debug("query with universityIds for documentSearch {}", universityDocQuery.toString());
-
         return universityDocQuery;
     }
 
@@ -202,12 +260,20 @@ public class SearchController {
         // TODO - Author field is an id that point to the author in the author index
         // have to search the author in index author, get the id and have to search the authorId in field author of
         // index paper IMPORTANT the authorsId is an array!!
-        QueryBuilder authorDocQuery = null;
         QueryBuilder authorQuery = QueryBuilders.queryString(author).useDisMax(true)
                 .defaultOperator(QueryStringQueryBuilder.Operator.OR).analyzer("simple").field("lastName")
                 .field("name");
         LOGGER.debug("authorQuery: {}", authorQuery.toString());
 
+        return authorQuery;
+    }
+
+    /**
+     * @param authorQuery
+     * @return
+     */
+    private QueryBuilder getDocsfromAuthors(QueryBuilder authorQuery) {
+        QueryBuilder authorDocQuery;
         SearchResponse authorResponse = authorService.search(authorQuery);
         List<String> paperIds = new ArrayList<String>();
         for (SearchHit hit : authorResponse.getHits().getHits()) {
@@ -228,7 +294,6 @@ public class SearchController {
         }
         authorDocQuery = QueryBuilders.inQuery("paperId", paperIds.toArray());
         LOGGER.debug("query with authorIds for documentSearch {}", authorDocQuery.toString());
-
         return authorDocQuery;
     }
 
