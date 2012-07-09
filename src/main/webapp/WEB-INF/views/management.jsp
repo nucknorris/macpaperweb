@@ -34,80 +34,79 @@
 	</div>
 	<div class="container">
 
-		<div id="header">
+		<div id="header"></div>
+		<div id="authors">
 
-			<div id="authors">
+			<table>
 
-				<table>
+				<c:forEach var="author" items="${authors}" varStatus="status">
+					<c:if test="${not empty author.getAuthorId()}">
+						<tr>
+							<td>${ author.getAuthorId()}</td>
+							<td>${ author.getName()}</td>
+							<td><a
+								href="${pageContext.request.contextPath}/author/${ author.getAuthorId()}">+</a></td>
+						</tr>
+					</c:if>
+				</c:forEach>
 
-					<c:forEach var="author" items="${authors}" varStatus="status">
-						<c:if test="${not empty author.getAuthorId()}">
-							<tr>
-								<td>${ author.getAuthorId()}</td>
-								<td>${ author.getName()}</td>
-								<td><a
-									href="${pageContext.request.contextPath}/author/${ author.getAuthorId()}">+</a></td>
-							</tr>
-						</c:if>
-					</c:forEach>
-
-				</table>
+			</table>
 
 
-				<button id='new-author' type='button'
-					onClick="location.href='${pageContext.request.contextPath}/author/createAuthor'">
-					<span>New Author</span>
-				</button>
-			</div>
-
-			<div id="universities">
-
-				<table>
-
-					<c:forEach var="university" items="${universities}"
-						varStatus="status">
-						<c:if test="${not empty university.getUniversityId()}">
-							<tr>
-								<td>${university.getUniversityId()}</td>
-								<td>${university.getName()}</td>
-								<td><a
-									href="${pageContext.request.contextPath}/university/${university.getUniversityId()}">+</a></td>
-							</tr>
-						</c:if>
-					</c:forEach>
-
-				</table>
-
-				<button id='new-university' type='button'
-					onClick="location.href='${pageContext.request.contextPath}/university/createUniversity'">
-					<span>New University</span>
-				</button>
-			</div>
-
-			<div id="papers">
-
-				<table>
-
-					<c:forEach var="paper" items="${papers}" varStatus="status">
-						<c:if test="${not empty paper.getPaperId()}">
-							<tr>
-								<td>${paper.getPaperId()}</td>
-								<td>${paper.getTitle()}</td>
-								<td><a
-									href="${pageContext.request.contextPath}/paper/${paper.getPaperId()}">+</a></td>
-							</tr>
-						</c:if>
-					</c:forEach>
-
-				</table>
-
-				<button id='new-paper' type='button'
-					onClick="location.href='${pageContext.request.contextPath}/paper/upload'">
-					<span>New Paper</span>
-				</button>
-
-			</div>
+			<button id='new-author' type='button'
+				onClick="location.href='${pageContext.request.contextPath}/author/createAuthor'">
+				<span>New Author</span>
+			</button>
 		</div>
+
+		<div id="universities">
+
+			<table>
+
+				<c:forEach var="university" items="${universities}"
+					varStatus="status">
+					<c:if test="${not empty university.getUniversityId()}">
+						<tr>
+							<td>${university.getUniversityId()}</td>
+							<td>${university.getName()}</td>
+							<td><a
+								href="${pageContext.request.contextPath}/university/${university.getUniversityId()}">+</a></td>
+						</tr>
+					</c:if>
+				</c:forEach>
+
+			</table>
+
+			<button id='new-university' type='button'
+				onClick="location.href='${pageContext.request.contextPath}/university/createUniversity'">
+				<span>New University</span>
+			</button>
+		</div>
+
+		<div id="papers">
+
+			<table>
+
+				<c:forEach var="paper" items="${papers}" varStatus="status">
+					<c:if test="${not empty paper.getPaperId()}">
+						<tr>
+							<td>${paper.getPaperId()}</td>
+							<td>${paper.getTitle()}</td>
+							<td><a
+								href="${pageContext.request.contextPath}/paper/${paper.getPaperId()}">+</a></td>
+						</tr>
+					</c:if>
+				</c:forEach>
+
+			</table>
+
+			<button id='new-paper' type='button'
+				onClick="location.href='${pageContext.request.contextPath}/paper/upload'">
+				<span>New Paper</span>
+			</button>
+
+		</div>
+
 
 		<!-- 		<div id="header" class="prepend-1 span-22 append-1 last"> -->
 		<div id="content" class="span-24 last"></div>
