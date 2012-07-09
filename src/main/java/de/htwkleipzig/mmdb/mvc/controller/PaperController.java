@@ -27,7 +27,7 @@ import de.htwkleipzig.mmdb.service.PaperService;
 import de.htwkleipzig.mmdb.util.Utilities;
 
 /**
- * @author spinner0815, snuck
+ * @author spinner0815, snuck, men0x
  * 
  */
 @Controller

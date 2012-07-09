@@ -214,8 +214,8 @@ public class AuthorServiceImpl implements AuthorService {
         if (authorExists(author.getAuthorId())) {
             return save(author);
         }
-        LOGGER.error("author with id {} doesn't exists", author.getAuthorId());
-        return false;
+        LOGGER.debug("author with id {} doesn't exists", author.getAuthorId());
+        return save(author);
     }
 
     @Override
