@@ -33,6 +33,7 @@
 		</div>
 	</div>
 	<div class="container">
+
 		<div id="header">
 
 			<div id="authors">
@@ -58,7 +59,6 @@
 					<span>New Author</span>
 				</button>
 			</div>
-
 
 			<div id="universities">
 
@@ -107,12 +107,13 @@
 				</button>
 
 			</div>
-
-			<!-- 		<div id="header" class="prepend-1 span-22 append-1 last"> -->
-			<div id="content" class="span-24 last"></div>
-			<div id="footer" class="span-24 ">
-				<p></p>
-			</div>
 		</div>
+
+		<!-- 		<div id="header" class="prepend-1 span-22 append-1 last"> -->
+		<div id="content" class="span-24 last"></div>
+		<div id="footer" class="span-24 ">
+			<p></p>
+		</div>
+	</div>
 </body>
 </html>

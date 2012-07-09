@@ -84,35 +84,42 @@
 					<tr>
 						<td><img
 							src="<s:url value="/icons/glyphicons_024_parents.png" />" /></td>
-						<td><label>Authors:</label></td>
-
-						<td><c:forEach items="${paper.getAuthors()}" var="author">
-								<c:if test="${author}">
-									<a href="/author/${author}">${author}</a>
-								</c:if>
-
-								<c:choose>
-									<c:when test="test=${author}">
 
 
-										<INPUT NAME="feldauthorID" TYPE="TEXT" VALUE="">
-										<INPUT TYPE="button" VALUE="+"
-											onClick="openChild('authorpopup','win2')">
+						<sf:label path="team">Team:</sf:label>
+						<sf:select path="team">
+							<sf:options items="${paper.getAuthorsId()}" itemLabel="name" itemValue="id" />
+						</sf:select>
+
+						<!-- 						<td><label>Authors:</label></td> -->
+
+						<%-- 						<td><c:forEach items="${paper.getAuthors()}" var="author"> --%>
+						<%-- 								<c:if test="${author}"> --%>
+						<%-- 									<a href="/author/${author}">${author}</a> --%>
+						<%-- 								</c:if> --%>
+
+						<%-- 								<c:choose> --%>
+						<%-- 									<c:when test="test=${author}"> --%>
 
 
-										<%-- <a href="/author/${author}">${author}</a> --%>
-									</c:when>
+						<!-- 																				<INPUT NAME="feldauthorID" TYPE="TEXT" VALUE=""> -->
+						<!-- 																				<INPUT TYPE="button" VALUE="+" -->
+						<!-- 																					onClick="openChild('authorpopup','win2')"> -->
 
-									<c:otherwise>
 
-										<INPUT NAME="feldauthorID" TYPE="TEXT" VALUE="">
-										<INPUT TYPE="button" VALUE="+"
-											onClick="openChild('authorpopup','win2')">
+						<%-- 										<a href="/author/${author}">${author}</a> --%>
+						<%-- 									</c:when> --%>
 
-									</c:otherwise>
-								</c:choose>
+						<%-- 									<c:otherwise> --%>
 
-							</c:forEach></td>
+						<!-- 																				<INPUT NAME="feldauthorID" TYPE="TEXT" VALUE=""> -->
+						<!-- 																				<INPUT TYPE="button" VALUE="+" -->
+						<!-- 																					onClick="openChild('authorpopup','win2')"> -->
+
+						<%-- 									</c:otherwise> --%>
+						<%-- 								</c:choose> --%>
+
+						<%-- 							</c:forEach></td> --%>
 
 					</tr>
 
