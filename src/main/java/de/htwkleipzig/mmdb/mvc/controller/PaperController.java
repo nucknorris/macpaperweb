@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import de.htwkleipzig.mmdb.model.Paper;
+import de.htwkleipzig.mmdb.service.AuthorService;
 import de.htwkleipzig.mmdb.service.PaperService;
 import de.htwkleipzig.mmdb.util.Utilities;
 
@@ -36,7 +37,9 @@ public class PaperController {
 
     @Autowired
     private PaperService paperService;
-
+    @Autowired
+    private AuthorService authorService;
+    
     public PaperController() {
     }
 
@@ -96,5 +99,11 @@ public class PaperController {
     public String getAllAuthors() {
         LOGGER.info("all paper shit");
         return paperService.getAll().toString();
+    }
+
+    @RequestMapping(value = "/authorpopup", method = RequestMethod.GET)
+    public String authorPopup(Model model) {
+        model.addAttribute("authors", authorService.getAll());
+        return "authorpopup";
     }
 }
