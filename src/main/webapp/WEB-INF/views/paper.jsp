@@ -85,42 +85,35 @@
 						<td><img
 							src="<s:url value="/icons/glyphicons_024_parents.png" />" /></td>
 
+						<td><sf:label path="authorIds">Authors:</sf:label></td>
+						<td><sf:select path="authorIds" items="${paper.authorIds}"
+								name="feldauthorID">
+							</sf:select> <INPUT TYPE="button" VALUE="edit" onClick="authorPopup('${paper.paperId}')"></td>
 
-						<sf:label path="team">Team:</sf:label>
-						<sf:select path="team">
-							<sf:options items="${paper.getAuthorsId()}" itemLabel="name" itemValue="id" />
-						</sf:select>
-
+						<!-- 						<INPUT NAME="feldauthorID" TYPE="TEXT" VALUE=""> -->
 						<!-- 						<td><label>Authors:</label></td> -->
 
 						<%-- 						<td><c:forEach items="${paper.getAuthors()}" var="author"> --%>
 						<%-- 								<c:if test="${author}"> --%>
 						<%-- 									<a href="/author/${author}">${author}</a> --%>
 						<%-- 								</c:if> --%>
-
 						<%-- 								<c:choose> --%>
 						<%-- 									<c:when test="test=${author}"> --%>
 
 
-						<!-- 																				<INPUT NAME="feldauthorID" TYPE="TEXT" VALUE=""> -->
-						<!-- 																				<INPUT TYPE="button" VALUE="+" -->
-						<!-- 																					onClick="openChild('authorpopup','win2')"> -->
 
 
 						<%-- 										<a href="/author/${author}">${author}</a> --%>
 						<%-- 									</c:when> --%>
 
 						<%-- 									<c:otherwise> --%>
-
 						<!-- 																				<INPUT NAME="feldauthorID" TYPE="TEXT" VALUE=""> -->
 						<!-- 																				<INPUT TYPE="button" VALUE="+" -->
 						<!-- 																					onClick="openChild('authorpopup','win2')"> -->
 
 						<%-- 									</c:otherwise> --%>
 						<%-- 								</c:choose> --%>
-
 						<%-- 							</c:forEach></td> --%>
-
 					</tr>
 
 					<tr>
@@ -203,6 +196,12 @@
 		}
 
 		return false;
+	}
+
+	function authorPopup(id) {
+		window.open("/macpaperweb/paper/editListOfAuthors?id=" + id,
+				"myWindow",
+				"status = 1, height = 300, width = 300, resizable = 0");
 	}
 </script>
 </html>

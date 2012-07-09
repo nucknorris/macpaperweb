@@ -23,7 +23,8 @@ public class Paper implements Serializable {
     private String paperId;
     private String title;
     private String paperAbstract;
-    private List<String> authorsId;
+    private List<String> authorIds;
+
     private Date createDate;
     private List<String> keywords;
     private String kindOf;
@@ -32,6 +33,14 @@ public class Paper implements Serializable {
     private Date uploadDate;
     private String fileName;
     private DeweyDecimalClassification ddc;
+
+    public List<String> getAuthorIds() {
+        return authorIds;
+    }
+
+    public void setAuthorIds(List<String> authorIds) {
+        this.authorIds = authorIds;
+    }
 
     /**
      * @return the latexBib
@@ -62,21 +71,6 @@ public class Paper implements Serializable {
      */
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    /**
-     * @return the authors
-     */
-    public List<String> getAuthors() {
-        return authorsId;
-    }
-
-    /**
-     * @param authors
-     *            the authors to set
-     */
-    public void setAuthors(List<String> authorsId) {
-        this.authorsId = authorsId;
     }
 
     /**
@@ -234,7 +228,7 @@ public class Paper implements Serializable {
         builder.append(", paperAbstract=");
         builder.append(paperAbstract);
         builder.append(", authorsId=");
-        builder.append(authorsId);
+        builder.append(authorIds);
         builder.append(", createDate=");
         builder.append(createDate);
         builder.append(", keywords=");
