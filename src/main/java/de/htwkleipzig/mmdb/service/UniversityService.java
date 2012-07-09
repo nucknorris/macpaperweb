@@ -4,6 +4,7 @@
 package de.htwkleipzig.mmdb.service;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Map;
 
 import org.elasticsearch.action.search.SearchResponse;
@@ -27,6 +28,8 @@ public interface UniversityService extends Serializable {
      * @return the resource
      */
     University get(String id);
+
+    List<University> getAll();
 
     /**
      * @deprecated use {@link #save(University)} instead

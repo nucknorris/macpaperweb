@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import de.htwkleipzig.mmdb.model.Author;
 import de.htwkleipzig.mmdb.service.AuthorService;
@@ -24,8 +25,7 @@ import de.htwkleipzig.mmdb.service.AuthorService;
 @Controller
 @RequestMapping("/author")
 public class AuthorController {
-    private static final Logger LOGGER = LoggerFactory
-            .getLogger(AuthorController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(AuthorController.class);
 
     @Autowired
     private AuthorService authorService;
@@ -34,9 +34,7 @@ public class AuthorController {
     }
 
     @RequestMapping(value = "/{recievedAuthorID}")
-    public String elasticstart(
-            @PathVariable("recievedAuthorID") String recievedAuthorID,
-            Model model) {
+    public String elasticstart(@PathVariable("recievedAuthorID") String recievedAuthorID, Model model) {
         LOGGER.info("startpage author {}", recievedAuthorID);
         model.addAttribute("recievedUniversityID", recievedAuthorID);
         Author author = authorService.get(recievedAuthorID);
@@ -45,8 +43,7 @@ public class AuthorController {
     }
 
     @RequestMapping(value = "/update", method = RequestMethod.POST)
-    public String saveUniversity(@ModelAttribute("author") Author author,
-            BindingResult bindingResult) {
+    public String saveUniversity(@ModelAttribute("author") Author author, BindingResult bindingResult) {
         LOGGER.debug("Received request to update a author");
 
         if (bindingResult.hasErrors()) {
@@ -70,5 +67,12 @@ public class AuthorController {
     public String authorPopup() {
 
         return "authorpopup";
+    }
+
+    @RequestMapping(value = "/allauthors")
+    @ResponseBody
+    public String getAllAuthors() {
+        LOGGER.info("all authors shit");
+        return authorService.getAll().toString();
     }
 }

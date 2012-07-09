@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import de.htwkleipzig.mmdb.model.University;
 import de.htwkleipzig.mmdb.service.UniversityService;
@@ -24,40 +25,42 @@ import de.htwkleipzig.mmdb.service.UniversityService;
 @Controller
 @RequestMapping("/university")
 public class UniversityController {
-	private static final Logger LOGGER = LoggerFactory
-			.getLogger(UniversityController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(UniversityController.class);
 
-	@Autowired
-	private UniversityService universityService;
+    @Autowired
+    private UniversityService universityService;
 
-	public UniversityController() {
-	}
+    public UniversityController() {
+    }
 
-	@RequestMapping(value = "/{recievedUniversityID}")
-	public String elasticstart(
-			@PathVariable("recievedUniversityID") String recievedUniversityID,
-			Model model) {
-		LOGGER.info("startpage university {}", recievedUniversityID);
-		model.addAttribute("recievedUniversityID", recievedUniversityID);
-		University university = universityService.get(recievedUniversityID);
-		model.addAttribute("university", university);
-		return "university";
-	}
+    @RequestMapping(value = "/{recievedUniversityID}")
+    public String elasticstart(@PathVariable("recievedUniversityID") String recievedUniversityID, Model model) {
+        LOGGER.info("startpage university {}", recievedUniversityID);
+        model.addAttribute("recievedUniversityID", recievedUniversityID);
+        University university = universityService.get(recievedUniversityID);
+        model.addAttribute("university", university);
+        return "university";
+    }
 
-	@RequestMapping(value = "/update", method = RequestMethod.POST)
-	public String saveUniversity(
-			@ModelAttribute("university") University university,
-			BindingResult bindingResult) {
-		LOGGER.debug("Received request to update a university");
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
+    public String saveUniversity(@ModelAttribute("university") University university, BindingResult bindingResult) {
+        LOGGER.debug("Received request to update a university");
 
-		if (bindingResult.hasErrors()) {
-			LOGGER.debug("error:" + bindingResult.getAllErrors());
-		}
+        if (bindingResult.hasErrors()) {
+            LOGGER.debug("error:" + bindingResult.getAllErrors());
+        }
 
-		LOGGER.debug("university: {}", university.getUniversityId());
-		LOGGER.debug("title: {}", university.getName());
-		universityService.updateUniversity(university);
-		LOGGER.debug("university saved");
-		return "redirect:/university/" + university.getUniversityId() + "/";
-	}
+        LOGGER.debug("university: {}", university.getUniversityId());
+        LOGGER.debug("title: {}", university.getName());
+        universityService.updateUniversity(university);
+        LOGGER.debug("university saved");
+        return "redirect:/university/" + university.getUniversityId() + "/";
+    }
+
+    @RequestMapping(value = "/alluniversities")
+    @ResponseBody
+    public String getAllUniversities() {
+        LOGGER.info("all university shit");
+        return universityService.getAll().toString();
+    }
 }

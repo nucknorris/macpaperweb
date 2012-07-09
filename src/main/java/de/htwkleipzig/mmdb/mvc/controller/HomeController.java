@@ -29,9 +29,6 @@ public class HomeController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(HomeController.class);
 
-    // @Autowired
-    // private PaperService paperService;
-
     public HomeController() {
     }
 
