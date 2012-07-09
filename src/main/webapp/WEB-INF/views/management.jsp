@@ -101,7 +101,7 @@
 			</table>
 
 			<button id='new-paper' type='button'
-				onClick="location.href='${pageContext.request.contextPath}/paper/upload'">
+				onClick="location.href='${pageContext.request.contextPath}/upload'">
 				<span>New Paper</span>
 			</button>
 

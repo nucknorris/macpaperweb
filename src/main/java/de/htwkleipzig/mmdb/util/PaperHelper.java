@@ -34,7 +34,7 @@ public class PaperHelper {
 
         List<String> authorIds = new ArrayList<String>();
         authorIds.add("empty");
-        b.field("authorsId", paper.getAuthorIds() == null ? authorIds : paper.getAuthorIds());
+        b.field("authorIds", paper.getAuthorIds() == null ? authorIds : paper.getAuthorIds());
         b.field("createDate",
                 paper.getCreateDate() == null ? new Date(System.currentTimeMillis()) : paper.getCreateDate());
 
@@ -64,7 +64,7 @@ public class PaperHelper {
         paper.setPaperId((String) source.get("paperId"));
         paper.setTitle((String) source.get("title"));
         paper.setPaperAbstract((String) source.get("paperAbstract"));
-        paper.setAuthorIds((List<String>) source.get("authorsId"));
+        paper.setAuthorIds((List<String>) source.get("authorIds"));
 
         DateTime dt = DateTime.parse((String) source.get("createDate"));// 2012-05-27T17:35:05.989Z
         paper.setCreateDate(dt.toDate());

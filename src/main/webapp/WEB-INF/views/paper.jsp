@@ -86,12 +86,32 @@
 							src="<s:url value="/icons/glyphicons_024_parents.png" />" /></td>
 
 						<td><sf:label path="authorIds">Authors:</sf:label></td>
-						<td><sf:select path="authorIds" items="${paper.authorIds}">
-							</sf:select></td>
-						<%-- <input type="button" value="o" onclick="appendOptionLast(2);" /> --%>
-						<!-- 							<input type="button" value="Add option" -->
-						<!-- 							onclick="exampleAddOption1()"> -->
+						<td><sf:input path="authorIds" readonly="false" size="50" /></td>
 
+						<!-- 						<INPUT NAME="feldauthorID" TYPE="TEXT" VALUE=""> -->
+						<!-- 						<td><label>Authors:</label></td> -->
+
+						<%-- 						<td><c:forEach items="${paper.getAuthors()}" var="author"> --%>
+						<%-- 								<c:if test="${author}"> --%>
+						<%-- 									<a href="/author/${author}">${author}</a> --%>
+						<%-- 								</c:if> --%>
+						<%-- 								<c:choose> --%>
+						<%-- 									<c:when test="test=${author}"> --%>
+
+
+
+
+						<%-- 										<a href="/author/${author}">${author}</a> --%>
+						<%-- 									</c:when> --%>
+
+						<%-- 									<c:otherwise> --%>
+						<!-- 																				<INPUT NAME="feldauthorID" TYPE="TEXT" VALUE=""> -->
+						<!-- 																				<INPUT TYPE="button" VALUE="+" -->
+						<!-- 																					onClick="openChild('authorpopup','win2')"> -->
+
+						<%-- 									</c:otherwise> --%>
+						<%-- 								</c:choose> --%>
+						<%-- 							</c:forEach></td> --%>
 					</tr>
 
 					<tr>
@@ -175,12 +195,11 @@
 
 		return false;
 	}
-// 	function exampleAddOption1() {
-// 		var index = $('#example option').length + 1;
-// 		$('#example').append(
-// 				'<option value="example' + index + '" selected="selected">This is option #'
-// 						+ index + '</option>');
 
-// 	}
+	function authorPopup(id) {
+		window.open("/macpaperweb/paper/editListOfAuthors?id=" + id,
+				"myWindow",
+				"status = 1, height = 300, width = 300, resizable = 0");
+	}
 </script>
 </html>
