@@ -69,7 +69,31 @@
 						<td width="3%"><img
 							src="<s:url value="/icons/glyphicons_065_tag.png" />" /></td>
 						<td><sf:label path="paperId">PaperId:</sf:label></td>
-						<td><sf:input path="paperId" readonly="true" size="50" /></td>
+						<td><sf:input path="paperId" readonly="true" size="50" />
+					</tr>
+
+					<tr>
+						<td><img
+							src="<s:url value="/icons/glyphicons_024_parents.png" />" /></td>
+						<td><label>Authors:</label></td>
+
+						<td><c:forEach items="${paper.getAuthors()}" var="author">
+								<c:if test="${author}">
+									<a href="/author/${author}">${author}</a>
+								</c:if>
+
+								<c:choose>
+									<c:when test="test=${author}">
+										<a href="/author/${author}">${author}</a>
+									</c:when>
+
+									<c:otherwise>
+									no authors
+									</c:otherwise>
+								</c:choose>
+
+							</c:forEach></td>
+
 					</tr>
 
 					<tr>
@@ -122,6 +146,14 @@
 							href="${pageContext.request.contextPath}/paper/download?paperId=${ paper.getPaperId()}">Klick
 								here to start download</a></td>
 					</tr>
+					<tr>
+						<td><img
+							src="<s:url value="/icons/glyphicons_016_bin.png" />" /></td>
+						<td><sf:label path="paperAbstract">Delete</sf:label></td>
+						<td><a
+							href="${pageContext.request.contextPath}/paper/delete?paperId=${ paper.getPaperId()}"
+							onclick="return deletechecked();">Klick here to delete paper</a></td>
+					</tr>
 
 
 
@@ -136,4 +168,14 @@
 		</div>
 	</div>
 </body>
+<script type="text/javascript">
+	function deletechecked() {
+		var answer = confirm("Delete paper ?");
+		if (answer) {
+			document.messages.submit();
+		}
+
+		return false;
+	}
+</script>
 </html>
