@@ -31,7 +31,6 @@ public class Paper implements Serializable {
     private String latexBib;
     private Date uploadDate;
     private String fileName;
-    private List<String> universityIds;
     private DeweyDecimalClassification ddc;
 
     /**
@@ -220,21 +219,6 @@ public class Paper implements Serializable {
         this.paperAbstract = paperAbstract;
     }
 
-    /**
-     * @return the universityIds
-     */
-    public List<String> getUniversityIds() {
-        return universityIds;
-    }
-
-    /**
-     * @param universityIds
-     *            the universityIds to set
-     */
-    public void setUniversityIds(List<String> universityIds) {
-        this.universityIds = universityIds;
-    }
-
     /*
      * (non-Javadoc)
      * 
@@ -265,8 +249,6 @@ public class Paper implements Serializable {
         builder.append(uploadDate);
         builder.append(", fileName=");
         builder.append(fileName);
-        builder.append(", universityIds=");
-        builder.append(universityIds);
         builder.append(", ddc=");
         builder.append(ddc);
         builder.append("]");

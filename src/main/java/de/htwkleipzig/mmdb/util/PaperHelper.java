@@ -48,10 +48,6 @@ public class PaperHelper {
                 paper.getUploadDate() == null ? new Date(System.currentTimeMillis()) : paper.getUploadDate());
         b.field("fileName", paper.getFileName() == null ? "empty" : paper.getFileName());
 
-        List<String> universityIds = new ArrayList<String>();
-        universityIds.add("empty");
-        b.field("universityIds", paper.getUniversityIds() == null ? universityIds : paper.getUniversityIds());
-
         // b.field("ddc", paper.getDdc()); TODO - currently disabled
         LOGGER.debug(b.string());
         return b;
@@ -76,7 +72,6 @@ public class PaperHelper {
         paper.setKindOf((String) source.get("kindOf"));
         paper.setContent((String) source.get("content"));
         paper.setLatexBib((String) source.get("latexBib"));
-        paper.setUniversityIds((List<String>) source.get("universityIds"));
 
         dt = DateTime.parse((String) source.get("uploadDate"));// 2012-05-27T17:35:05.989Z
         paper.setUploadDate(dt.toDate());

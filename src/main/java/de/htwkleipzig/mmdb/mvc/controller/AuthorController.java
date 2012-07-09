@@ -3,6 +3,10 @@
  */
 package de.htwkleipzig.mmdb.mvc.controller;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +42,35 @@ public class AuthorController {
         LOGGER.info("startpage author {}", recievedAuthorID);
         model.addAttribute("recievedUniversityID", recievedAuthorID);
         Author author = authorService.get(recievedAuthorID);
+        model.addAttribute("author", author);
+        return "author";
+    }
+
+    /**
+     * @param name
+     * @param lastName
+     * @param Model
+     * @return
+     */
+    @RequestMapping(value = "/createAuthor")
+    public String authorCreate(String title, String name, String lastName, String email, String universityId,
+            String paperids, Model model) {
+
+        Author author = new Author();
+
+        List<String> paperIds = new ArrayList<String>();
+        paperids = paperids.replaceAll(" ", "");
+        String[] splittetPapers = paperids.split(",");
+        paperIds.addAll(Arrays.asList(splittetPapers));
+
+        author.setPaperIds(paperIds);
+        author.setAuthorId(name + lastName);
+        author.setTitle(title);
+        author.setEmail(email);
+        author.setLastname(lastName);
+        author.setName(name);
+        author.setUniversityId(universityId);
+        authorService.save(author);
         model.addAttribute("author", author);
         return "author";
     }
