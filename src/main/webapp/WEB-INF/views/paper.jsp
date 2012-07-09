@@ -86,10 +86,7 @@
 							src="<s:url value="/icons/glyphicons_024_parents.png" />" /></td>
 
 						<td><sf:label path="authorIds">Authors:</sf:label></td>
-						<td><sf:select path="authorIds" items="${paper.authorIds}"
-								name="feldauthorID">
-							</sf:select> <INPUT TYPE="button" VALUE="edit"
-							onClick="authorPopup('${paper.paperId}')"></td>
+						<td><sf:input path="authorIds" readonly="false" size="50" /></td>
 
 					</tr>
 
