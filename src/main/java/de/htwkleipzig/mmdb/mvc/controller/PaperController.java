@@ -39,7 +39,7 @@ public class PaperController {
     private PaperService paperService;
     @Autowired
     private AuthorService authorService;
-    
+
     public PaperController() {
     }
 
@@ -51,6 +51,13 @@ public class PaperController {
         model.addAttribute("paper", paper);
 
         return "paper";
+    }
+
+    @RequestMapping(value = "/editListOfAuthors")
+    public String editListOfAuthors(@RequestParam("id") String paperId, Model model) {
+        Paper paper = paperService.get(paperId);
+        model.addAttribute("paper", paper);
+        return "editListOfAuthors";
     }
 
     @RequestMapping(value = "/update", method = RequestMethod.POST)

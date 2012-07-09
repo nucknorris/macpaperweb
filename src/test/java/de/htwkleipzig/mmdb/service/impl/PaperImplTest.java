@@ -37,7 +37,7 @@ public class PaperImplTest {
         List<String> authorIds = new ArrayList<String>();
         authorIds.add("author1");
         authorIds.add("author2");
-        paper.setAuthors(authorIds);
+        paper.setAuthorIds(authorIds);
 
         paper.setCreateDate(new Date(System.currentTimeMillis()));
         List<String> keywords = new ArrayList<String>();
@@ -63,7 +63,7 @@ public class PaperImplTest {
         List<String> authorIds = new ArrayList<String>();
         authorIds.add("author3");
         authorIds.add("author2");
-        paper.setAuthors(authorIds);
+        paper.setAuthorIds(authorIds);
 
         paper.setCreateDate(new Date(System.currentTimeMillis()));
         List<String> keywords = new ArrayList<String>();
