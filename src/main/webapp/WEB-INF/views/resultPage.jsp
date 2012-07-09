@@ -36,8 +36,7 @@
 	<div class="container">
 		<div id="header">
 			<div id='search-box'>
-				<form action='search' id='search-form' method='get'
-					target='_top'>
+				<form action='search' id='search-form' method='get' target='_top'>
 					<input id='search-text' name='searchPhrase'
 						placeholder='${searchTerm}' type='text' />
 					<button id='search-button' type='submit'>
@@ -54,7 +53,8 @@
 			<tr>
 				<th width="3%"></th>
 				<th width="25%">Paper ID</th>
-				<th width="69%">Title</th>
+				<th width="66%">Title</th>
+				<th width="3%"></th>
 				<th width="3%"></th>
 				<!-- 				<th>Key Class</th> -->
 			</tr>
@@ -68,6 +68,10 @@
 						<td><a
 							href="${pageContext.request.contextPath}/paper/${ paper.getPaperId()}"><img
 								src="<s:url value="/icons/glyphicons_195_circle_info.png" />" />
+						</a></td>
+						<td><a
+							href="${pageContext.request.contextPath}/paper/download?paperId=${ paper.getPaperId()}"><img
+								src="<s:url value="/icons/glyphicons_200_download.png" />" />
 						</a></td>
 					</tr>
 				</c:if>

@@ -30,69 +30,70 @@ import de.htwkleipzig.mmdb.util.TikaParser;
 @Controller
 @RequestMapping(value = "/upload")
 public class UploadController {
-    private String paperName;
-    private String paperContent;
-    private static final Logger LOGGER = LoggerFactory.getLogger(UploadController.class);
+	private String paperName;
+	private String paperContent;
+	private static final Logger LOGGER = LoggerFactory
+			.getLogger(UploadController.class);
 
-    @Autowired
-    private PaperService paperService;
+	@Autowired
+	private PaperService paperService;
 
-    @RequestMapping(method = RequestMethod.GET)
-    public String getUploadForm(Model model) {
-        model.addAttribute(new UploadItem());
-        return "uploadForm";
-    }
+	@RequestMapping(method = RequestMethod.GET)
+	public String getUploadForm(Model model) {
+		model.addAttribute(new UploadItem());
+		return "uploadForm";
+	}
 
-    @RequestMapping(method = RequestMethod.POST)
-    public String create(UploadItem uploadItem, BindingResult result) {
-        if (result.hasErrors()) {
-            for (ObjectError error : result.getAllErrors()) {
-                LOGGER.error("Error: " + error.getCode() + " - " + error.getDefaultMessage());
-            }
-            return "uploadForm";
-        }
+	@RequestMapping(method = RequestMethod.POST)
+	public String create(UploadItem uploadItem, BindingResult result) {
+		if (result.hasErrors()) {
+			for (ObjectError error : result.getAllErrors()) {
+				LOGGER.error("Error: " + error.getCode() + " - "
+						+ error.getDefaultMessage());
+			}
+			return "uploadForm";
+		}
 
-        // Some type of file processing...
-        LOGGER.debug("-------------------------------------------");
-        LOGGER.debug("Test upload: " + uploadItem.getName());
-        LOGGER.debug("Test upload: " + uploadItem.getFileData().getOriginalFilename());
+		// Some type of file processing...
+		LOGGER.debug("-------------------------------------------");
+		LOGGER.debug("Test upload: " + uploadItem.getName());
+		LOGGER.debug("Test upload: "
+				+ uploadItem.getFileData().getOriginalFilename());
 
-        LOGGER.debug("uploading the file...");
-        paperName = FileUploader.uploadFileAndGenerateHash(uploadItem);
-        LOGGER.debug("Name of the stored pdf file: {}", paperName);
+		LOGGER.debug("uploading the file...");
+		paperName = FileUploader.uploadFileAndGenerateHash(uploadItem);
+		LOGGER.debug("Name of the stored pdf file: {}", paperName);
 
-        paperContent = parsePaperToHTML(uploadItem);
-        LOGGER.debug("is the paperContent empty? {}", paperContent.isEmpty());
+		paperContent = parsePaperToHTML(uploadItem);
+		LOGGER.debug("is the paperContent empty? {}", paperContent.isEmpty());
 
-        LOGGER.debug("saving the String to elastic Search");
-        Paper paper = new Paper();
-        savePaper(paper);
-        LOGGER.debug("-------------------------------------------");
-        // return "redirect:/";
-        // return "uploadDetailInputForm";
-        return "redirect:/paper/" + paperName;
-    }
+		LOGGER.debug("saving the String to elastic Search");
+		Paper paper = new Paper();
+		savePaper(paper);
+		LOGGER.debug("-------------------------------------------");
+		// return "redirect:/";
+		// return "uploadDetailInputForm";
+		return "redirect:/paper/" + paperName;
+	}
 
-    private void savePaper(Paper paper) {
-        paper.setPaperId(paperName);
-        paper.setFileName(paperName + ".pdf");
-        paper.setContent(paperContent);
-        paper.setCreateDate(new Date(System.currentTimeMillis()));
-        paper.setUploadDate(new Date(System.currentTimeMillis()));
-        TikaParser parser = new TikaParser();
-        paper.setPaperAbstract(parser.startTokenizing(paperContent));
-        paperService.save(paper);
-    }
+	private void savePaper(Paper paper) {
+		paper.setPaperId(paperName);
+		paper.setFileName(paperName + ".pdf");
+		paper.setContent(paperContent);
+		paper.setCreateDate(new Date(System.currentTimeMillis()));
+		paper.setUploadDate(new Date(System.currentTimeMillis()));
+		TikaParser parser = new TikaParser();
+		paper.setPaperAbstract(parser.startTokenizing(paperContent));
+		paperService.save(paper);
+	}
 
-    private String parsePaperToHTML(UploadItem paper) {
-        LOGGER.debug("start parsing the paper to html ...");
-        String originalPaper = null;
-        try {
-            originalPaper = paper.getFileData().getInputStream().toString();
-            return PDFParser.pdfParser(paper.getFileData().getInputStream());
-        } catch (IOException e) {
-            LOGGER.warn("error while parsing paper, returning the original paper");
-            return originalPaper;
-        }
-    }
+	private String parsePaperToHTML(UploadItem paper) {
+		LOGGER.debug("start parsing the paper to html ...");
+		try {
+			return PDFParser.pdfParser(paper.getFileData().getInputStream());
+		} catch (IOException e) {
+			LOGGER.warn("error while parsing paper, returning the original paper");
+			return "empty";
+		}
+	}
 }

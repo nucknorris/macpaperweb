@@ -59,4 +59,5 @@ public class AuthorController {
 		LOGGER.debug("author saved");
 		return "redirect:/author/" + author.getAuthorId() + "/";
 	}
+	
 }
