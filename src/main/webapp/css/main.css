@@ -15,27 +15,42 @@
 #uploadPic {
 	position: absolute;
 	right: 11em;
-	top: 2em;
+	top: 3em;
 	color: #F1F1F1;
 	background: transparent;
-	/* 	background: #F1F1F1; */
 	height: 2em;
+}
+
+#uploadButton {
+	position: absolute;
+	right: 1em;
+	top: 3.3em;
+	background: transparent;
+	height: 2em;
+}
+
+#managementPic {
+	position: absolute;
+	right: 11em;
+	top: .5em;
+	color: #F1F1F1;
+	background: transparent;
+	height: 2em;
+}
+
+#managementButton {
+	position: absolute;
+	right: 4.5em;
+	top: .9em;
+	background: transparent;
+	height: 2em;
+	text-decoration: none;
 }
 
 #backbutton {
 	position: absolute;
 	left: -40px;
 	top: 5px;
-	
-}
-
-#uploadButton {
-	position: absolute;
-	right: 1em;
-	top: 2.4em;
-	background: transparent;
-	/* 	background: #F1F1F1; */
-	height: 2em;
 }
 
 #startpage-search-box {
@@ -49,6 +64,12 @@
 	color: #444444;
 	text-decoration: none;
 }
+
+#managementButton a {
+	color: #444444;
+	text-decoration: none;
+}
+
 
 #subheader {
 	padding: 1em;

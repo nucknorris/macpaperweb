@@ -24,6 +24,14 @@
 	</div>
 	<div id="subhead">
 		<h3>Search Results for: ${searchTerm}</h3>
+		<div id="managementPic">
+			<a href="management"> <img
+				src="<s:url value="/icons/glyphicons_280_settings.png" />" />
+			</a>
+		</div>
+		<div id="managementButton">
+			<a href="management">Management</a>
+		</div>
 		<div id="uploadPic">
 			<a href="upload"> <img
 				src="<s:url value="/icons/glyphicons_201_upload.png" />" />
@@ -32,6 +40,7 @@
 		<div id="uploadButton">
 			<a href="upload">Upload a new Paper </a>
 		</div>
+
 	</div>
 	<div class="container">
 		<div id="header">
@@ -71,8 +80,7 @@
 						</a></td>
 						<td><a
 							href="${pageContext.request.contextPath}/paper/download?paperId=${ paper.getPaperId()}"><img
-								src="<s:url value="/icons/glyphicons_200_download.png" />" />
-						</a></td>
+								src="<s:url value="/icons/glyphicons_200_download.png" />" /> </a></td>
 					</tr>
 				</c:if>
 			</c:forEach>
