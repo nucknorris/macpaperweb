@@ -1,6 +1,8 @@
 package de.htwkleipzig.mmdb.service.impl;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import org.elasticsearch.ElasticSearchException;
@@ -14,8 +16,10 @@ import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.IndicesAdminClient;
 import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.common.xcontent.XContentBuilder;
+import org.elasticsearch.index.query.MatchAllQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.indices.IndexAlreadyExistsException;
+import org.elasticsearch.search.SearchHit;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -96,6 +100,37 @@ public class AuthorServiceImpl implements AuthorService {
             LOGGER.debug("author doesn't exist");
             return null;
         }
+    }
+
+    @Override
+    public List<Author> getAll() {
+        LOGGER.debug("get all Authors from index {}, type {}", new Object[] { INDEX_AUTHOR_NAME, INDEX_AUTHOR_TYPE });
+        SearchRequestBuilder builder = client.prepareSearch(INDEX_AUTHOR_NAME);
+        MatchAllQueryBuilder qb = new MatchAllQueryBuilder();
+
+        builder.setQuery(qb);
+        SearchResponse actionGet = builder.execute().actionGet();
+
+        List<Author> authors = new ArrayList<Author>();
+
+        for (SearchHit hit : actionGet.getHits().getHits()) {
+            if (hit.isSourceEmpty()) {
+                LOGGER.info("source is empty");
+            }
+            LOGGER.info("id of the author {}", hit.getId());
+            LOGGER.info("score of the hit {}", hit.getScore());
+
+            Map<String, Object> resultMap = hit.sourceAsMap();
+
+            Author authorObject = AuthorHelper.source2author(resultMap);
+
+            LOGGER.debug("author: {}", authorObject.toString());
+            LOGGER.debug("paper: {}", authorObject.getPaperIds().toString());
+            authors.add(authorObject);
+
+        }
+        return authors;
+
     }
 
     @Override
