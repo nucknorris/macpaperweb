@@ -59,4 +59,16 @@ public class AuthorController {
 		LOGGER.debug("author saved");
 		return "redirect:/author/" + author.getAuthorId() + "/";
 	}
+
+	@RequestMapping(value = "/test", method = RequestMethod.GET)
+	public String testJSP() {
+
+		return "test";
+	}
+	
+	   @RequestMapping(value = "/authorpopup", method = RequestMethod.GET)
+	    public String authorPopup() {
+
+	        return "authorpopup";
+	    }
 }
