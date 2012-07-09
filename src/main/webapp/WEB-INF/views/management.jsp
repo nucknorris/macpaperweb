@@ -31,37 +31,88 @@
 				src="<s:url value="/icons/glyphicons_201_upload.png" />" />
 			</a>
 		</div>
-		<div id="uploadButton">
-			<a href="upload">Upload a new Paper </a>
-		</div>
 	</div>
 	<div class="container">
 		<div id="header">
-			<div id='search-box'>
-				<form action='search' id='search-form' method='get' target='_top'>
-					<div id="backbutton">
-						<a href="javascript:history.back()"> <img
-							src="<s:url value="/icons/glyphicons_216_circle_arrow_left.png" />" /></a>
-					</div>
-					<input id='search-text' name='searchPhrase' placeholder='type here'
-						type='text' />
-					<button id='search-button' type='submit'>
-						<span>Search</span>
-					</button>
-					<button id='extendedsearch-button' type='button'
-						onClick="location.href='${pageContext.request.contextPath}/extendedSearch'">
-						<span>MacPaper - Management</span>
-					</button>
-				</form>
+
+			<div id="authors">
+
+				<table>
+
+					<c:forEach var="author" items="${authors}" varStatus="status">
+						<c:if test="${not empty author.getAuthorId()}">
+							<tr>
+								<td>${ author.getAuthorId()}</td>
+								<td>${ author.getName()}</td>
+								<td><a
+									href="${pageContext.request.contextPath}/author/${ author.getAuthorId()}">+</a></td>
+							</tr>
+						</c:if>
+					</c:forEach>
+
+				</table>
+
+
+				<button id='new-author' type='button'
+					onClick="location.href='${pageContext.request.contextPath}/author/createAuthor'">
+					<span>New Author</span>
+				</button>
 			</div>
 
-		</div>
 
-		<!-- 		<div id="header" class="prepend-1 span-22 append-1 last"> -->
-		<div id="content" class="span-24 last"></div>
-		<div id="footer" class="span-24 ">
-			<p></p>
+			<div id="universities">
+
+				<table>
+
+					<c:forEach var="university" items="${universities}"
+						varStatus="status">
+						<c:if test="${not empty university.getUniversityId()}">
+							<tr>
+								<td>${university.getUniversityId()}</td>
+								<td>${university.getName()}</td>
+								<td><a
+									href="${pageContext.request.contextPath}/university/${university.getUniversityId()}">+</a></td>
+							</tr>
+						</c:if>
+					</c:forEach>
+
+				</table>
+
+				<button id='new-university' type='button'
+					onClick="location.href='${pageContext.request.contextPath}/university/createUniversity'">
+					<span>New University</span>
+				</button>
+			</div>
+
+			<div id="papers">
+
+				<table>
+
+					<c:forEach var="paper" items="${papers}" varStatus="status">
+						<c:if test="${not empty paper.getPaperId()}">
+							<tr>
+								<td>${paper.getPaperId()}</td>
+								<td>${paper.getTitle()}</td>
+								<td><a
+									href="${pageContext.request.contextPath}/paper/${paper.getPaperId()}">+</a></td>
+							</tr>
+						</c:if>
+					</c:forEach>
+
+				</table>
+
+				<button id='new-paper' type='button'
+					onClick="location.href='${pageContext.request.contextPath}/paper/upload'">
+					<span>New Paper</span>
+				</button>
+
+			</div>
+
+			<!-- 		<div id="header" class="prepend-1 span-22 append-1 last"> -->
+			<div id="content" class="span-24 last"></div>
+			<div id="footer" class="span-24 ">
+				<p></p>
+			</div>
 		</div>
-	</div>
 </body>
 </html>
