@@ -18,6 +18,15 @@
 	type="text/css">
 <script src="<c:url value='/js/jquery-1.6.1.min.js'/>"></script>
 </head>
+
+<SCRIPT LANGUAGE="JavaScript">
+	function openChild(file, window) {
+		childWindow = open(file, window, 'resizable=no,width=200,height=400');
+		if (childWindow.opener == null)
+			childWindow.opener = self;
+	}
+</SCRIPT>
+
 <body>
 	<div id="head">
 		<div id="logo">
@@ -61,7 +70,7 @@
 		<div id="content" class="span-24 last">
 
 
-			<sf:form modelAttribute="paper" method="POST"
+			<sf:form modelAttribute="paper" method="POST " name="parentForm"
 				action="${pageContext.request.contextPath}/paper/update"
 				enctype="multipart/form-datahast ">
 				<table>
@@ -84,11 +93,22 @@
 
 								<c:choose>
 									<c:when test="test=${author}">
-										<a href="/author/${author}">${author}</a>
+
+
+										<INPUT NAME="feldauthorID" TYPE="TEXT" VALUE="">
+										<INPUT TYPE="button" VALUE="+"
+											onClick="openChild('authorpopup','win2')">
+
+
+										<%-- <a href="/author/${author}">${author}</a> --%>
 									</c:when>
 
 									<c:otherwise>
-									no authors
+
+										<INPUT NAME="feldauthorID" TYPE="TEXT" VALUE="">
+										<INPUT TYPE="button" VALUE="+"
+											onClick="openChild('authorpopup','win2')">
+
 									</c:otherwise>
 								</c:choose>
 

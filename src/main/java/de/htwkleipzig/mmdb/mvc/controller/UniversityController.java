@@ -3,6 +3,10 @@
  */
 package de.htwkleipzig.mmdb.mvc.controller;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +42,37 @@ public class UniversityController {
         LOGGER.info("startpage university {}", recievedUniversityID);
         model.addAttribute("recievedUniversityID", recievedUniversityID);
         University university = universityService.get(recievedUniversityID);
+        model.addAttribute("university", university);
+        return "university";
+    }
+
+    /**
+     * @param name
+     * @param lastName
+     * @param Model
+     * @return
+     */
+    @RequestMapping(value = "/createUniversity")
+    public String universityCreate(String name, String city, String postcode, String street, String street2,
+            String housenumber, String country, String authorids, Model model) {
+
+        University university = new University();
+        university.setUniversityId(name + country);
+
+        List<String> authorIds = new ArrayList<String>();
+        authorids = authorids.replaceAll(" ", "");
+        String[] splittetAuthors = authorids.split(",");
+        authorIds.addAll(Arrays.asList(splittetAuthors));
+
+        university.setAuthorIds(authorIds);
+        university.setCity(city);
+        university.setCountry(country);
+        university.setHousenumber(housenumber);
+        university.setName(name);
+        university.setPostcode(postcode);
+        university.setStreet(street);
+        university.setStreet2(street2);
+        universityService.save(university);
         model.addAttribute("university", university);
         return "university";
     }
