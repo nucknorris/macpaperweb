@@ -38,8 +38,7 @@
 	<div class="container">
 		<div id="header">
 			<div id='search-box'>
-				<form action='search' id='search-form' method='get'
-					target='_top'>
+				<form action='search' id='search-form' method='get' target='_top'>
 					<div id="backbutton">
 						<a href="javascript:history.back()"> <img
 							src="<s:url value="/icons/glyphicons_216_circle_arrow_left.png" />" /></a>
@@ -113,6 +112,15 @@
 							src="<s:url value="/icons/glyphicons_110_align_left.png" />" /></td>
 						<td><sf:label path="paperAbstract">Abstract:</sf:label></td>
 						<td><sf:textarea path="paperAbstract" /></td>
+					</tr>
+
+					<tr>
+						<td><img
+							src="<s:url value="/icons/glyphicons_200_download.png" />" /></td>
+						<td><sf:label path="paperAbstract">Download</sf:label></td>
+						<td><a
+							href="${pageContext.request.contextPath}/paper/download?paperId=${ paper.getPaperId()}">Klick
+								here to start download</a></td>
 					</tr>
 
 

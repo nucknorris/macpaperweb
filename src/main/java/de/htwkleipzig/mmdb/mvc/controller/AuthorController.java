@@ -24,51 +24,51 @@ import de.htwkleipzig.mmdb.service.AuthorService;
 @Controller
 @RequestMapping("/author")
 public class AuthorController {
-	private static final Logger LOGGER = LoggerFactory
-			.getLogger(AuthorController.class);
+    private static final Logger LOGGER = LoggerFactory
+            .getLogger(AuthorController.class);
 
-	@Autowired
-	private AuthorService authorService;
+    @Autowired
+    private AuthorService authorService;
 
-	public AuthorController() {
-	}
+    public AuthorController() {
+    }
 
-	@RequestMapping(value = "/{recievedAuthorID}")
-	public String elasticstart(
-			@PathVariable("recievedAuthorID") String recievedAuthorID,
-			Model model) {
-		LOGGER.info("startpage author {}", recievedAuthorID);
-		model.addAttribute("recievedUniversityID", recievedAuthorID);
-		Author author = authorService.get(recievedAuthorID);
-		model.addAttribute("author", author);
-		return "author";
-	}
+    @RequestMapping(value = "/{recievedAuthorID}")
+    public String elasticstart(
+            @PathVariable("recievedAuthorID") String recievedAuthorID,
+            Model model) {
+        LOGGER.info("startpage author {}", recievedAuthorID);
+        model.addAttribute("recievedUniversityID", recievedAuthorID);
+        Author author = authorService.get(recievedAuthorID);
+        model.addAttribute("author", author);
+        return "author";
+    }
 
-	@RequestMapping(value = "/update", method = RequestMethod.POST)
-	public String saveUniversity(@ModelAttribute("author") Author author,
-			BindingResult bindingResult) {
-		LOGGER.debug("Received request to update a author");
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
+    public String saveUniversity(@ModelAttribute("author") Author author,
+            BindingResult bindingResult) {
+        LOGGER.debug("Received request to update a author");
 
-		if (bindingResult.hasErrors()) {
-			LOGGER.debug("error:" + bindingResult.getAllErrors());
-		}
+        if (bindingResult.hasErrors()) {
+            LOGGER.debug("error:" + bindingResult.getAllErrors());
+        }
 
-		LOGGER.debug("author: {}", author.getAuthorId());
-		LOGGER.debug("name: {}", author.getName());
-		authorService.updateAuthor(author);
-		LOGGER.debug("author saved");
-		return "redirect:/author/" + author.getAuthorId() + "/";
-	}
+        LOGGER.debug("author: {}", author.getAuthorId());
+        LOGGER.debug("name: {}", author.getName());
+        authorService.updateAuthor(author);
+        LOGGER.debug("author saved");
+        return "redirect:/author/" + author.getAuthorId() + "/";
+    }
 
-	@RequestMapping(value = "/test", method = RequestMethod.GET)
-	public String testJSP() {
+    @RequestMapping(value = "/test", method = RequestMethod.GET)
+    public String testJSP() {
 
-		return "test";
-	}
-	
-	   @RequestMapping(value = "/authorpopup", method = RequestMethod.GET)
-	    public String authorPopup() {
+        return "test";
+    }
 
-	        return "authorpopup";
-	    }
+    @RequestMapping(value = "/authorpopup", method = RequestMethod.GET)
+    public String authorPopup() {
+
+        return "authorpopup";
+    }
 }

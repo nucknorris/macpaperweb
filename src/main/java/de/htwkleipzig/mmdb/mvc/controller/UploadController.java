@@ -62,6 +62,7 @@ public class UploadController {
         LOGGER.debug("Name of the stored pdf file: {}", paperName);
 
         paperContent = parsePaperToHTML(uploadItem);
+        LOGGER.debug("paperContent {}", paperContent);
         LOGGER.debug("is the paperContent empty? {}", paperContent.isEmpty());
 
         LOGGER.debug("saving the String to elastic Search");
@@ -86,13 +87,11 @@ public class UploadController {
 
     private String parsePaperToHTML(UploadItem paper) {
         LOGGER.debug("start parsing the paper to html ...");
-        String originalPaper = null;
         try {
-            originalPaper = paper.getFileData().getInputStream().toString();
             return PDFParser.pdfParser(paper.getFileData().getInputStream());
         } catch (IOException e) {
             LOGGER.warn("error while parsing paper, returning the original paper");
-            return originalPaper;
+            return "empy";
         }
     }
 }

@@ -65,6 +65,16 @@ public class PaperController {
         return "redirect:/paper/" + paper.getPaperId() + "/";
     }
 
+    @RequestMapping(value = "/delete", method = RequestMethod.POST)
+    public String deletePaper(@RequestParam("paperId") String paperId, BindingResult bindingResult) {
+        LOGGER.debug("Received request to update paper");
+        if (bindingResult.hasErrors()) {
+            LOGGER.debug("error:" + bindingResult.getAllErrors());
+        }
+        paperService.delete(paperId);
+        return "paper";
+    }
+
     @RequestMapping(value = "/download")
     public String downloadFile(@RequestParam("paperId") String paperId, HttpServletResponse resp) throws IOException {
         String paperDirectory = Utilities.getProperty("paper.directory");
