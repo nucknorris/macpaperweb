@@ -56,7 +56,7 @@ public class PaperController {
     @RequestMapping(value = "/editListOfAuthors")
     public String editListOfAuthors(@RequestParam("id") String paperId, Model model) {
         Paper paper = paperService.get(paperId);
-        model.addAttribute("paper", paper);
+        model.addAttribute("authors", paper.getAuthorIds());
         return "editListOfAuthors";
     }
 

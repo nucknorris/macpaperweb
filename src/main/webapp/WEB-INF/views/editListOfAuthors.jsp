@@ -12,11 +12,11 @@
 <BODY>
 	<div id="content" class="span-24">
 		<form name="listofauthors">
-			<c:forEach var="paper" items="${paper.authorIds}" varStatus="status">
-				${ author.getAuthorId()} - ${ author.name}
+			<c:forEach var="a" items="${authors}" varStatus="status">
+				${ a } <br />
 			</c:forEach>
 
-			<!-- 			<input type="button" value="Auswählen" onClick="updateParent();"> -->
+			<input type="button" value="Auswählen" onClick="updateParent();">
 		</form>
 
 	</div>
