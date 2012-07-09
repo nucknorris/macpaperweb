@@ -36,26 +36,7 @@
 		</div>
 	</div>
 	<div class="container">
-		<div id="header">
-			<div id='search-box'>
-				<form action='search' id='search-form' method='get' target='_top'>
-					<div id="backbutton">
-						<a href="javascript:history.back()"> <img
-							src="<s:url value="/icons/glyphicons_216_circle_arrow_left.png" />" /></a>
-					</div>
-					<input id='search-text' name='searchPhrase' placeholder='type here'
-						type='text' />
-					<button id='search-button' type='submit'>
-						<span>Search</span>
-					</button>
-					<button id='extendedsearch-button' type='button'
-						onClick="location.href='${pageContext.request.contextPath}/extendedSearch'">
-						<span>MacPaper - Management</span>
-					</button>
-				</form>
-			</div>
-
-		</div>
+		<div id="header">asasd</div>
 
 		<!-- 		<div id="header" class="prepend-1 span-22 append-1 last"> -->
 		<div id="content" class="span-24 last"></div>
