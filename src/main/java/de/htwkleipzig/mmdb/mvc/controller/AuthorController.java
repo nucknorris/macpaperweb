@@ -97,8 +97,8 @@ public class AuthorController {
     }
 
     @RequestMapping(value = "/authorpopup", method = RequestMethod.GET)
-    public String authorPopup() {
-
+    public String authorPopup(Model model) {
+        model.addAttribute("authors", authorService.getAll());
         return "authorpopup";
     }
 

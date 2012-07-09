@@ -17,9 +17,7 @@
 <BODY>
 	<FORM NAME="parentForm">
 		<INPUT TYPE="button" VALUE="Open child"
-			onClick="openChild('authorpopup','win2')"> <BR> <INPUT
-			NAME="pf1" TYPE="TEXT" VALUE=""> <BR> <INPUT NAME="pf2"
-			TYPE="TEXT" VALUE="">
+			onClick="openChild('authorpopup','win2')"> <BR> <INPUT NAME="feldauthorID" TYPE="TEXT" VALUE=""> <BR> 
 	</FORM>
 </BODY>
 </HTML>
