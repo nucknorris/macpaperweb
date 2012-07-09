@@ -3,10 +3,6 @@
  */
 package de.htwkleipzig.mmdb.mvc.controller;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,8 +36,9 @@ public class AuthorController {
     @RequestMapping(value = "/{recievedAuthorID}")
     public String elasticstart(@PathVariable("recievedAuthorID") String recievedAuthorID, Model model) {
         LOGGER.info("startpage author {}", recievedAuthorID);
-        model.addAttribute("recievedUniversityID", recievedAuthorID);
+        model.addAttribute("recievedAuthorID", recievedAuthorID);
         Author author = authorService.get(recievedAuthorID);
+
         model.addAttribute("author", author);
         return "author";
     }
@@ -53,25 +50,10 @@ public class AuthorController {
      * @return
      */
     @RequestMapping(value = "/createAuthor")
-    public String authorCreate(String title, String name, String lastName, String email, String universityId,
-            String paperids, Model model) {
+    public String authorCreate(Model model) {
+        LOGGER.debug("create a new author");
 
-        Author author = new Author();
-
-        List<String> paperIds = new ArrayList<String>();
-        paperids = paperids.replaceAll(" ", "");
-        String[] splittetPapers = paperids.split(",");
-        paperIds.addAll(Arrays.asList(splittetPapers));
-
-        author.setPaperIds(paperIds);
-        author.setAuthorId(name + lastName);
-        author.setTitle(title);
-        author.setEmail(email);
-        author.setLastname(lastName);
-        author.setName(name);
-        author.setUniversityId(universityId);
-        authorService.save(author);
-        model.addAttribute("author", author);
+        model.addAttribute("author", new Author());
         return "author";
     }
 
@@ -82,7 +64,10 @@ public class AuthorController {
         if (bindingResult.hasErrors()) {
             LOGGER.debug("error:" + bindingResult.getAllErrors());
         }
-
+        if (author.getAuthorId().isEmpty()) {
+            LOGGER.debug("auhtor id is empty");
+            author.setAuthorId(author.getName() + author.getLastname());
+        }
         LOGGER.debug("author: {}", author.getAuthorId());
         LOGGER.debug("name: {}", author.getName());
         authorService.updateAuthor(author);

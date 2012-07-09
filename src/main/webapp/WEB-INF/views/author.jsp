@@ -25,7 +25,7 @@
 		</div>
 	</div>
 	<div id="subhead">
-		<h3>Detailed Information about ${recievedAuthor}</h3>
+		<h3>Detailed Information about the Author</h3>
 	</div>
 	<div class="container">
 		<div id="header"></div>
@@ -50,7 +50,7 @@
 						<td width="3%"><img
 							src="<s:url value="/icons/glyphicons_341_github.png" />" /></td>
 						<td><sf:label path="name">Name:</sf:label></td>
-						<td><sf:input path="name" readonly="true" size="50" /></td>
+						<td><sf:input path="name" readonly="false" size="50" /></td>
 					</tr>
 					<tr>
 						<td width="3%"><img
@@ -68,13 +68,13 @@
 						<td width="3%"><img
 							src="<s:url value="/icons/glyphicons_341_github.png" />" /></td>
 						<td><sf:label path="universityId">UniversityId:</sf:label></td>
-						<td><sf:input path="universityId" readonly="true" size="50" /></td>
+						<td><sf:input path="universityId" readonly="false" size="50" /></td>
 					</tr>
 					<tr>
 						<td width="3%"><img
 							src="<s:url value="/icons/glyphicons_341_github.png" />" /></td>
 						<td><sf:label path="paperIds">PaperIds:</sf:label></td>
-						<td><sf:input path="paperIds" readonly="true" size="50" /></td>
+						<td><sf:input path="paperIds" readonly="false" size="50" /></td>
 					</tr>
 				</table>
 				<input id='save-button' type="submit" value="Save" />
