@@ -1,6 +1,8 @@
 package de.htwkleipzig.mmdb.service.impl;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import org.elasticsearch.ElasticSearchException;
@@ -15,8 +17,10 @@ import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.IndicesAdminClient;
 import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.common.xcontent.XContentBuilder;
+import org.elasticsearch.index.query.MatchAllQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.indices.IndexAlreadyExistsException;
+import org.elasticsearch.search.SearchHit;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -97,6 +101,37 @@ public class UniversityServiceImpl implements UniversityService {
             LOGGER.debug("University doesn't exist");
             return null;
         }
+    }
+
+    @Override
+    public List<University> getAll() {
+        LOGGER.debug("get all universitys from index {}, type {}", new Object[] { INDEX_UNIVERSITY_NAME,
+                INDEX_UNIVERSITY_TYPE });
+        SearchRequestBuilder builder = client.prepareSearch(INDEX_UNIVERSITY_NAME);
+        MatchAllQueryBuilder qb = new MatchAllQueryBuilder();
+
+        builder.setQuery(qb);
+        SearchResponse actionGet = builder.execute().actionGet();
+
+        List<University> universitys = new ArrayList<University>();
+
+        for (SearchHit hit : actionGet.getHits().getHits()) {
+            if (hit.isSourceEmpty()) {
+                LOGGER.info("source is empty");
+            }
+            LOGGER.info("id of the university {}", hit.getId());
+            LOGGER.info("score of the hit {}", hit.getScore());
+
+            Map<String, Object> resultMap = hit.sourceAsMap();
+
+            University universityObject = UniversityHelper.source2University(resultMap);
+
+            LOGGER.debug("university: {}", universityObject.toString());
+            universitys.add(universityObject);
+
+        }
+        return universitys;
+
     }
 
     @Override

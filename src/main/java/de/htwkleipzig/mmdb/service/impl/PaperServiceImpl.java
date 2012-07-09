@@ -1,6 +1,8 @@
 package de.htwkleipzig.mmdb.service.impl;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import org.elasticsearch.ElasticSearchException;
@@ -14,8 +16,10 @@ import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.IndicesAdminClient;
 import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.common.xcontent.XContentBuilder;
+import org.elasticsearch.index.query.MatchAllQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.indices.IndexAlreadyExistsException;
+import org.elasticsearch.search.SearchHit;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -95,6 +99,36 @@ public class PaperServiceImpl implements PaperService {
             LOGGER.debug("Paper doesn't exist");
             return null;
         }
+    }
+
+    @Override
+    public List<Paper> getAll() {
+        LOGGER.debug("get all papers from index {}, type {}", new Object[] { INDEX_PAPER_NAME, INDEX_PAPER_TYPE });
+        SearchRequestBuilder builder = client.prepareSearch(INDEX_PAPER_NAME);
+        MatchAllQueryBuilder qb = new MatchAllQueryBuilder();
+
+        builder.setQuery(qb);
+        SearchResponse actionGet = builder.execute().actionGet();
+
+        List<Paper> papers = new ArrayList<Paper>();
+
+        for (SearchHit hit : actionGet.getHits().getHits()) {
+            if (hit.isSourceEmpty()) {
+                LOGGER.info("source is empty");
+            }
+            LOGGER.info("id of the paper {}", hit.getId());
+            LOGGER.info("score of the hit {}", hit.getScore());
+
+            Map<String, Object> resultMap = hit.sourceAsMap();
+
+            Paper paperObject = PaperHelper.source2Paper(resultMap);
+
+            LOGGER.debug("paper: {}", paperObject.toString());
+            papers.add(paperObject);
+
+        }
+        return papers;
+
     }
 
     @Override

@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import de.htwkleipzig.mmdb.model.Paper;
 import de.htwkleipzig.mmdb.service.PaperService;
@@ -90,5 +91,12 @@ public class PaperController {
         out.close();
 
         return null;
+    }
+
+    @RequestMapping(value = "/allpapers")
+    @ResponseBody
+    public String getAllAuthors() {
+        LOGGER.info("all paper shit");
+        return paperService.getAll().toString();
     }
 }

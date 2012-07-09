@@ -4,6 +4,7 @@
 package de.htwkleipzig.mmdb.service;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Map;
 
 import org.elasticsearch.action.search.SearchResponse;
@@ -27,6 +28,8 @@ public interface PaperService extends Serializable {
      * @return the resource
      */
     Paper get(String id);
+
+    List<Paper> getAll();
 
     /**
      * save the paper, mapping is in the hashmap?
