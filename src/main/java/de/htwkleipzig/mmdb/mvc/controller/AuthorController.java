@@ -3,6 +3,9 @@
  */
 package de.htwkleipzig.mmdb.mvc.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,6 +70,16 @@ public class AuthorController {
         if (author.getAuthorId().isEmpty()) {
             LOGGER.debug("auhtor id is empty");
             author.setAuthorId(author.getName() + author.getLastname());
+        }
+        if (author.getUniversityId().isEmpty()) {
+            LOGGER.debug("university id is empty");
+            author.setUniversityId("empty");
+        }
+        if (author.getPaperIds().isEmpty()) {
+            LOGGER.debug("university id is empty");
+            List<String> paperIds = new ArrayList<String>();
+            paperIds.add("empty");
+            author.setPaperIds(paperIds);
         }
         LOGGER.debug("author: {}", author.getAuthorId());
         LOGGER.debug("name: {}", author.getName());

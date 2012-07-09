@@ -4,7 +4,6 @@
 package de.htwkleipzig.mmdb.mvc.controller;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -53,27 +52,10 @@ public class UniversityController {
      * @return
      */
     @RequestMapping(value = "/createUniversity")
-    public String universityCreate(String name, String city, String postcode, String street, String street2,
-            String housenumber, String country, String authorids, Model model) {
+    public String authorCreate(Model model) {
+        LOGGER.debug("create a new university");
 
-        University university = new University();
-        university.setUniversityId(name + country);
-
-        List<String> authorIds = new ArrayList<String>();
-        authorids = authorids.replaceAll(" ", "");
-        String[] splittetAuthors = authorids.split(",");
-        authorIds.addAll(Arrays.asList(splittetAuthors));
-
-        university.setAuthorIds(authorIds);
-        university.setCity(city);
-        university.setCountry(country);
-        university.setHousenumber(housenumber);
-        university.setName(name);
-        university.setPostcode(postcode);
-        university.setStreet(street);
-        university.setStreet2(street2);
-        universityService.save(university);
-        model.addAttribute("university", university);
+        model.addAttribute("university", new University());
         return "university";
     }
 
@@ -84,7 +66,16 @@ public class UniversityController {
         if (bindingResult.hasErrors()) {
             LOGGER.debug("error:" + bindingResult.getAllErrors());
         }
-
+        if (university.getUniversityId().isEmpty()) {
+            LOGGER.debug("university id is empty");
+            university.setUniversityId(university.getName() + university.getCity());
+        }
+        if (university.getAuthorIds().isEmpty()) {
+            LOGGER.debug("university id is empty");
+            List<String> authorIds = new ArrayList<String>();
+            authorIds.add("empty");
+            university.setAuthorIds(authorIds);
+        }
         LOGGER.debug("university: {}", university.getUniversityId());
         LOGGER.debug("title: {}", university.getName());
         universityService.updateUniversity(university);

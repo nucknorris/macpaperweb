@@ -208,12 +208,12 @@ public class UniversityServiceImpl implements UniversityService {
 
     @Override
     public boolean updateUniversity(University university) {
-        LOGGER.debug("update author with id {}", university.getUniversityId());
+        LOGGER.debug("update university with id {}", university.getUniversityId());
         if (universityExists(university.getUniversityId())) {
             return save(university);
         }
-        LOGGER.error("author with id {} doesn't exists", university.getUniversityId());
-        return false;
+        LOGGER.debug("university with id {} doesn't exists", university.getUniversityId());
+        return save(university);
     }
 
     @Override
