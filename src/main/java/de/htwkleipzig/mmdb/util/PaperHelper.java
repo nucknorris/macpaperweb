@@ -58,6 +58,7 @@ public class PaperHelper {
      * @param source
      * @return
      */
+    @SuppressWarnings("unchecked")
     public static Paper source2Paper(Map<String, Object> source) {
         LOGGER.debug("convert from source to paper");
         Paper paper = new Paper();

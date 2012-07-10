@@ -35,6 +35,7 @@ public class UniversityHelper {
         return b;
     }
 
+    @SuppressWarnings("unchecked")
     public static University source2University(Map<String, Object> source) {
         LOGGER.debug("convert from source to university");
         University university = new University();
