@@ -27,20 +27,20 @@
 	<div id="subhead">
 		<h3>Adding or editing an author</h3>
 		<div id="managementPic">
-			<a href="management"> <img
+			<a href="/macpaperweb/management"> <img
 				src="<s:url value="/icons/glyphicons_280_settings.png" />" />
 			</a>
 		</div>
 		<div id="managementButton">
-			<a href="management">Management</a>
+			<a href="/macpaperweb/management">Management</a>
 		</div>
 		<div id="uploadPic">
-			<a href="upload"> <img
+			<a href="/macpaperweb/upload"> <img
 				src="<s:url value="/icons/glyphicons_201_upload.png" />" />
 			</a>
 		</div>
 		<div id="uploadButton">
-			<a href="upload">Upload a new Paper </a>
+			<a href="/macpaperweb/upload">Upload a new Paper </a>
 		</div>
 	</div>
 	<div class="container">
@@ -57,39 +57,51 @@
 						<td><sf:input path="authorId" readonly="true" size="50" /></td>
 					</tr>
 					<tr>
-						<td width="3%"><img
+						<td><img
 							src="<s:url value="/icons/glyphicons_264_vcard.png" />" /></td>
 						<td><sf:label path="title">Title:</sf:label></td>
 						<td><sf:input path="title" readonly="false" size="50" /></td>
 					</tr>
 					<tr>
-						<td width="3%">
+						<td>
 							<%-- 						<img src="<s:url value="/icons/glyphicons_264_vcard.png" />" /> --%>
 						</td>
 						<td><sf:label path="name">Name:</sf:label></td>
 						<td><sf:input path="name" readonly="false" size="50" /></td>
 					</tr>
 					<tr>
-						<td width="3%">
+						<td>
 							<!-- 						<img --> <%-- 							src="<s:url value="/icons/glyphicons_264_vcard.png" />" /> --%>
 						</td>
 						<td><sf:label path="lastname">Lastname:</sf:label></td>
 						<td><sf:input path="lastname" readonly="false" size="50" /></td>
 					</tr>
 					<tr>
-						<td width="3%"><img
+						<td><img
 							src="<s:url value="/icons/glyphicons_010_envelope.png" />" /></td>
 						<td><sf:label path="email">Email:</sf:label></td>
 						<td><sf:input path="email" readonly="false" size="50" /></td>
 					</tr>
 					<tr>
-						<td width="3%"><img
+						<td><img
 							src="<s:url value="/icons/glyphicons_263_bank.png" />" /></td>
-						<td><sf:label path="universityId">UniversityId:</sf:label></td>
+						<td><sf:label path="universityId">Uni:</sf:label></td>
 						<td><sf:input path="universityId" readonly="false" size="50" /></td>
 					</tr>
 					<tr>
-						<td width="3%"><img
+						<td><img
+							src="<s:url value="/icons/glyphicons_024_parents.png" />" /></td>
+
+						<td><sf:label path="authorIds">Universities:</sf:label></td>
+						<td><sf:select items="${paper.universityIds}" path="authorIds"
+								multiple="true" id="selectField" /> <br /> <input
+							type="button" value="add"
+							onClick="openChild('authorpopup','win2')" />Only selected values
+							will be saved!</td>
+
+					</tr>
+					<tr>
+						<td><img
 							src="<s:url value="/icons/glyphicons_039_notes.png" />" /></td>
 						<td><sf:label path="paperIds">PaperIds:</sf:label></td>
 						<td><sf:input path="paperIds" readonly="false" size="50" /></td>

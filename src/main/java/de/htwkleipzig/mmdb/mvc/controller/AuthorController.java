@@ -6,6 +6,8 @@ package de.htwkleipzig.mmdb.mvc.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import de.htwkleipzig.mmdb.model.Author;
@@ -106,4 +109,14 @@ public class AuthorController {
         LOGGER.info("all authors shit");
         return authorService.getAll().toString();
     }
+    
+    @RequestMapping(value = "/delete")
+    public String deletePaper(@RequestParam("authorId") String authorId, HttpServletResponse resp) {
+        LOGGER.debug("Received request to delete author");
+        authorService.delete(authorId);
+        LOGGER.debug("author with authorId {} deleted", authorId);
+        return "redirect:/management/";
+    }
+
+    
 }

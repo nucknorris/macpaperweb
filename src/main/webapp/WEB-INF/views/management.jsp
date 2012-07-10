@@ -16,6 +16,9 @@
 	type="text/css" media="print">
 <link rel="stylesheet" href="<c:url value='/css/main.css'/>"
 	type="text/css">
+<!-- Plugin CSS -->
+<link rel="stylesheet" href="/blueprint-plugins/tabs/screen.css"
+	type="text/css" media="screen">
 <script src="<c:url value='/js/jquery-1.6.1.min.js'/>"></script>
 </head>
 <body>
@@ -27,97 +30,152 @@
 	<div id="subhead">
 		<h3>MacPaper - Management</h3>
 		<div id="managementPic">
-			<a href="management"> <img
+			<a href="/macpaperweb/management"> <img
 				src="<s:url value="/icons/glyphicons_280_settings.png" />" />
 			</a>
 		</div>
 		<div id="managementButton">
-			<a href="management">Management</a>
+			<a href="/macpaperweb/management">Management</a>
 		</div>
 		<div id="uploadPic">
-			<a href="upload"> <img
+			<a href="/macpaperweb/upload"> <img
 				src="<s:url value="/icons/glyphicons_201_upload.png" />" />
 			</a>
 		</div>
 		<div id="uploadButton">
-			<a href="upload">Upload a new Paper </a>
+			<a href="/macpaperweb/upload">Upload a new Paper </a>
 		</div>
 	</div>
 	<div class="container">
 
 		<!-- 		<div id="header"></div> -->
-		<div id="authors" class="box">
+		<div id="authors">
 			<h2>List of Authors</h2>
 			<table>
 
+				<tr>
+					<th width="50%">Name</th>
+					<th width="40%">Id</th>
+					<th width="5%"></th>
+					<th width="5%"></th>
+				</tr>
 				<c:forEach var="author" items="${authors}" varStatus="status">
 					<c:if test="${not empty author.getAuthorId()}">
 						<tr>
-							<td>${ author.getAuthorId()}</td>
 							<td>${ author.getName()}</td>
+							<td>${ author.getAuthorId()}</td>
 							<td><a
-								href="${pageContext.request.contextPath}/author/${ author.getAuthorId()}">+</a></td>
+								href="${pageContext.request.contextPath}/author/${ author.getAuthorId()}"><img
+									src="<s:url value="/icons/glyphicons_195_circle_info.png" />" />
+							</a></td>
+							<td><a
+								href="${pageContext.request.contextPath}/author/delete?authorId=${author.getAuthorId()}"><img
+									src="<s:url value="/icons/glyphicons_016_bin.png" />" /> </a></td>
 						</tr>
 					</c:if>
 				</c:forEach>
+				<tr>
+					<td>
+						<button id='new-author' type='button'
+							onClick="location.href='${pageContext.request.contextPath}/author/createAuthor'">
+							<span>New Author</span>
+						</button>
+					</td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+
 
 			</table>
 
 
-			<button id='new-author' type='button'
-				onClick="location.href='${pageContext.request.contextPath}/author/createAuthor'">
-				<span>New Author</span>
-			</button>
+
 		</div>
 
-		<div id="universities" class="box">
+		<div id="universities">
 			<h2>List of Universities</h2>
 
 
 			<table>
-
+				<tr>
+					<th width="50%">Name</th>
+					<th width="40%">Id</th>
+					<th width="5%"></th>
+					<th width="5%"></th>
+				</tr>
 				<c:forEach var="university" items="${universities}"
 					varStatus="status">
 					<c:if test="${not empty university.getUniversityId()}">
 						<tr>
-							<td>${university.getUniversityId()}</td>
 							<td>${university.getName()}</td>
+							<td>${university.getUniversityId()}</td>
 							<td><a
-								href="${pageContext.request.contextPath}/university/${university.getUniversityId()}">+</a></td>
+								href="${pageContext.request.contextPath}/university/${ university.getUniversityId()}"><img
+									src="<s:url value="/icons/glyphicons_195_circle_info.png" />" />
+							</a></td>
+							<td><a
+								href="${pageContext.request.contextPath}/university/delete?universityId=${university.getUniversityId()}"><img
+									src="<s:url value="/icons/glyphicons_016_bin.png" />" /> </a></td>
 						</tr>
 					</c:if>
 				</c:forEach>
+				<tr>
+					<td>
+						<button id='new-university' type='button'
+							onClick="location.href='${pageContext.request.contextPath}/university/createUniversity'">
+							<span>New University</span>
+						</button>
+					</td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
 
 			</table>
 
-			<button id='new-university' type='button'
-				onClick="location.href='${pageContext.request.contextPath}/university/createUniversity'">
-				<span>New University</span>
-			</button>
+
 		</div>
 
-		<div id="papers" class="box">
+		<div id="papers">
 			<h2>List of Papers</h2>
 
 			<table>
-
+				<tr>
+					<th width="50%">Name</th>
+					<th width="40%">Id</th>
+					<th width="5%"></th>
+					<th width="5%"></th>
+				</tr>
 				<c:forEach var="paper" items="${papers}" varStatus="status">
 					<c:if test="${not empty paper.getPaperId()}">
 						<tr>
-							<td>${paper.getPaperId()}</td>
 							<td>${paper.getTitle()}</td>
+							<td>${paper.getPaperId()}</td>
 							<td><a
-								href="${pageContext.request.contextPath}/paper/${paper.getPaperId()}">+</a></td>
+								href="${pageContext.request.contextPath}/paper/${  paper.getPaperId()}"><img
+									src="<s:url value="/icons/glyphicons_195_circle_info.png" />" />
+							</a></td>
+							<td><a
+								href="${pageContext.request.contextPath}/paper/delete?paperId=${ paper.getPaperId()}"><img
+									src="<s:url value="/icons/glyphicons_016_bin.png" />" /> </a></td>
 						</tr>
 					</c:if>
 				</c:forEach>
+				<tr>
+					<td>
 
+						<button id='new-paper' type='button'
+							onClick="location.href='${pageContext.request.contextPath}/upload'">
+							<span>New Paper</span>
+						</button>
+					</td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
 			</table>
 
-			<button id='new-paper' type='button'
-				onClick="location.href='${pageContext.request.contextPath}/upload'">
-				<span>New Paper</span>
-			</button>
 
 		</div>
 

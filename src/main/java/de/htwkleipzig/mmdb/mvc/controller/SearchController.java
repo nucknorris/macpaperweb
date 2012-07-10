@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
@@ -20,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import de.htwkleipzig.mmdb.model.Author;
+import de.htwkleipzig.mmdb.model.Categories;
 import de.htwkleipzig.mmdb.model.Paper;
 import de.htwkleipzig.mmdb.model.University;
 import de.htwkleipzig.mmdb.service.AuthorService;
@@ -87,8 +90,9 @@ public class SearchController {
     }
 
     @RequestMapping(value = "/extendedSearch")
-    public String extendedSearch() {
+    public String extendedSearch(Model model) {
         LOGGER.info("starting extended search");
+        model.addAttribute("categories", Categories.values());
         return "extendedSearch";
     }
 
@@ -164,8 +168,9 @@ public class SearchController {
     @RequestMapping(value = "/evaluateExtendedSearch")
     public String evaluateExtendedSearch(@RequestParam String author, @RequestParam String uni,
             @RequestParam String category, @RequestParam String tags, @RequestParam String and,
-            @RequestParam String or, @RequestParam String secialand, Model model) {
+            @RequestParam String or, @RequestParam String secialand, Model model, HttpServletRequest request) {
         LOGGER.info("starting evaluating of extended Search");
+
         model.addAttribute("searchTerm", and);
         BoolQueryBuilder boolQuery = QueryBuilders.boolQuery();
         if (!and.isEmpty()) {

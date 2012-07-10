@@ -6,6 +6,8 @@ package de.htwkleipzig.mmdb.mvc.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import de.htwkleipzig.mmdb.model.University;
@@ -86,7 +89,16 @@ public class UniversityController {
     @RequestMapping(value = "/alluniversities")
     @ResponseBody
     public String getAllUniversities() {
-        LOGGER.info("all university shit");
+        LOGGER.info("getting all universities");
         return universityService.getAll().toString();
     }
+
+    @RequestMapping(value = "/delete")
+    public String deletePaper(@RequestParam("universityId") String universityId, HttpServletResponse resp) {
+        LOGGER.debug("Received request to delete university");
+        universityService.delete(universityId);
+        LOGGER.debug("university with universityId {} deleted", universityId);
+        return "redirect:/management/";
+    }
+
 }

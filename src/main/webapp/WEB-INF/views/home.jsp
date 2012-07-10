@@ -20,20 +20,20 @@
 </head>
 <body>
 	<div id="managementPic">
-		<a href="management"> <img
+		<a href="/macpaperweb/management"> <img
 			src="<s:url value="/icons/glyphicons_280_settings.png" />" />
 		</a>
 	</div>
 	<div id="managementButton">
-		<a href="management">Management</a>
+		<a href="/macpaperweb/management">Management</a>
 	</div>
 	<div id="uploadPic">
-		<a href="upload"> <img
+		<a href="/macpaperweb/upload"> <img
 			src="<s:url value="/icons/glyphicons_201_upload.png" />" />
 		</a>
 	</div>
 	<div id="uploadButton">
-		<a href="upload">Upload a new Paper </a>
+		<a href="/macpaperweb/upload">Upload a new Paper </a>
 	</div>
 	<div class="container">
 		<div id="startpage-search-box">

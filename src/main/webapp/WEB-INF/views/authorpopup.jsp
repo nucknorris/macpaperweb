@@ -8,16 +8,25 @@
 <!DOCTYPE HTML>
 <HTML>
 <HEAD>
+<link
+	href='http://fonts.googleapis.com/css?family=Open+Sans:400,600,700'
+	rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="<c:url value='/css/blueprint/screen.css'/>"
+	type="text/css" media="screen, projection">
+<link rel="stylesheet" href="<c:url value='/css/blueprint/print.css'/>"
+	type="text/css" media="print">
+<link rel="stylesheet" href="<c:url value='/css/main.css'/>"
+	type="text/css">
 <SCRIPT LANGUAGE="JavaScript">
 	function updateParent() {
 
-// 		if (opener.document.parentForm.feldauthorID.value == "") {
-// 			opener.document.parentForm.feldauthorID.value = radioWert(document.listofauthors.myRadio);
-// 		} else {
-// 			opener.document.parentForm.feldauthorID.value = opener.document.parentForm.feldauthorID.value
-// 					+ ", " + radioWert(document.listofauthors.myRadio);
-// 		}
-		
+		// 		if (opener.document.parentForm.feldauthorID.value == "") {
+		// 			opener.document.parentForm.feldauthorID.value = radioWert(document.listofauthors.myRadio);
+		// 		} else {
+		// 			opener.document.parentForm.feldauthorID.value = opener.document.parentForm.feldauthorID.value
+		// 					+ ", " + radioWert(document.listofauthors.myRadio);
+		// 		}
+
 		var oSelField = opener.document.getElementById("selectField");
 		var oOption = opener.document.createElement("OPTION");
 		oSelField.options.add(oOption);
@@ -36,19 +45,37 @@
 </SCRIPT>
 </HEAD>
 <BODY>
-	<div id="content" class="span-24 last">
-		<form name="listofauthors">
+	<!-- 	<div id="content" class="span-24 last"> -->
+	<div id="head">
+		<h3>Choose the author you want to add</h3>
+	</div>
+	<form name="listofauthors">
+		<table>
+			<tr>
+				<td></td>
+				<td>Name</td>
+				<td>ID</td>
+			</tr>
 
 			<c:forEach var="author" items="${authors}" varStatus="status">
-				<c:if test="${not empty author.getAuthorId()}">
 
-					<input type="radio" name="myRadio" value=${ author.getAuthorId()}>${ author.getName()}<BR>
-				</c:if>
+				<tr>
+					<td><input type="radio" name="myRadio"
+						value=${ author.getAuthorId()}></td>
+					<td>${ author.getName()}</td>
+					<td>${ author.getAuthorId()}</td>
+				</tr>
+
+				<%-- 				<c:if test="${not empty author.getAuthorId()}"> --%>
+
+				<%-- 					<input type="radio" name="myRadio" value=${ author.getAuthorId()}>Name: ${ author.getName()}, ID: ${ author.getAuthorId()}<BR> --%>
+				<%-- 				</c:if> --%>
 			</c:forEach>
 
-			<input type="button" value="Auswählen" onClick="updateParent();">
-		</form>
+		</table>
+		<input type="button" value="Add" onClick="updateParent();">
+	</form>
 
-	</div>
+	<!-- 	</div> -->
 </BODY>
 </HTML>

@@ -27,20 +27,20 @@
 	<div id="subhead">
 		<h3>Adding or editing an university</h3>
 		<div id="managementPic">
-			<a href="management"> <img
+			<a href="/macpaperweb/management"> <img
 				src="<s:url value="/icons/glyphicons_280_settings.png" />" />
 			</a>
 		</div>
 		<div id="managementButton">
-			<a href="management">Management</a>
+			<a href="/macpaperweb/management">Management</a>
 		</div>
 		<div id="uploadPic">
-			<a href="upload"> <img
+			<a href="/macpaperweb/upload"> <img
 				src="<s:url value="/icons/glyphicons_201_upload.png" />" />
 			</a>
 		</div>
 		<div id="uploadButton">
-			<a href="upload">Upload a new Paper </a>
+			<a href="/macpaperweb/upload">Upload a new Paper </a>
 		</div>
 	</div>
 	<div class="container">
@@ -102,7 +102,7 @@
 					<tr>
 						<td width="3%"><img
 							src="<s:url value="/icons/glyphicons_024_parents.png" />" /></td>
-						<td><sf:label path="authorIds">Authoren:</sf:label></td>
+						<td><sf:label path="authorIds">Authors:</sf:label></td>
 						<td><sf:input path="authorIds" readonly="false" size="50" /></td>
 					</tr>
 				</table>

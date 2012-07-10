@@ -19,7 +19,7 @@
 <script src="<c:url value='/js/jquery-1.6.1.min.js'/>"></script>
 <script>
 	function openChild(file, window) {
-		childWindow = open(file, window, 'resizable=no,width=200,height=400');
+		childWindow = open(file, window, 'resizable=no,width=300,height=600');
 		if (childWindow.opener == null)
 			childWindow.opener = self;
 	}
@@ -35,20 +35,20 @@
 	<div id="subhead">
 		<h3>Detailed Information about the paper ${recievedPaperName}</h3>
 		<div id="managementPic">
-			<a href="management"> <img
+			<a href="/macpaperweb/management"> <img
 				src="<s:url value="/icons/glyphicons_280_settings.png" />" />
 			</a>
 		</div>
 		<div id="managementButton">
-			<a href="management">Management</a>
+			<a href="/macpaperweb/management">Management</a>
 		</div>
 		<div id="uploadPic">
-			<a href="upload"> <img
+			<a href="/macpaperweb/upload"> <img
 				src="<s:url value="/icons/glyphicons_201_upload.png" />" />
 			</a>
 		</div>
 		<div id="uploadButton">
-			<a href="upload">Upload a new Paper </a>
+			<a href="/macpaperweb/upload">Upload a new Paper </a>
 		</div>
 	</div>
 	<div class="container">
@@ -88,22 +88,16 @@
 						<td><sf:input path="paperId" readonly="true" size="50" />
 					</tr>
 
-					<!-- 					<tr> -->
-					<!-- 						<td><img -->
-					<%-- 							src="<s:url value="/icons/glyphicons_024_parents.png" />" /></td> --%>
-
-					<%-- 						<td><sf:label path="authorIds">Authors:</sf:label></td> --%>
-					<%-- 						<td><sf:input path="authorIds" readonly="false" size="50" /></td> --%>
-					<!-- 					</tr> -->
-
 					<tr>
 						<td><img
 							src="<s:url value="/icons/glyphicons_024_parents.png" />" /></td>
 
 						<td><sf:label path="authorIds">Authors:</sf:label></td>
 						<td><sf:select items="${paper.authorIds}" path="authorIds"
-								multiple="true" id="selectField" /> <INPUT TYPE="button"
-							VALUE="Add author" onClick="openChild('authorpopup','win2')">Only selected values will be saved!</td>
+								multiple="true" id="selectField" /> <br /> <input
+							type="button" value="add"
+							onClick="openChild('authorpopup','win2')" />Only selected values
+							will be saved!</td>
 
 					</tr>
 
@@ -129,12 +123,24 @@
 						<td><sf:input path="createDate" size="50" /></td>
 					</tr>
 
+					<!-- 					<tr> -->
+					<!-- 						<td><img -->
+					<%-- 							src="<s:url value="/icons/glyphicons_319_sort.png" />" /></td> --%>
+					<%-- 						<td><sf:label path="kindOf">Categories:</sf:label></td> --%>
+					<%-- 						<td><sf:input path="kindOf" size="50" /></td> --%>
+					<!-- 					</tr> -->
+
+
 					<tr>
 						<td><img
 							src="<s:url value="/icons/glyphicons_319_sort.png" />" /></td>
-						<td><sf:label path="kindOf">Categories:</sf:label></td>
-						<td><sf:input path="kindOf" size="50" /></td>
+
+						<td><sf:label path="keywords">Categories:</sf:label></td>
+						<td><sf:select items="${categories}" path="keywords"
+								multiple="true" id="selectField" /> <br /></td>
+
 					</tr>
+
 
 					<tr>
 						<td><img

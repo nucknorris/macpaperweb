@@ -38,6 +38,10 @@
 	height: 2em;
 }
 
+.extendedsearchbutton {
+	margin: 1em;
+}
+
 #managementButton {
 	position: absolute;
 	right: 4.5em;
@@ -69,7 +73,6 @@
 	color: #444444;
 	text-decoration: none;
 }
-
 
 #subheader {
 	padding: 1em;

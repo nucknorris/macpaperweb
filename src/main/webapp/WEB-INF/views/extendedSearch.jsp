@@ -26,79 +26,90 @@
 	</div>
 	<div id="subhead">
 		<h3>Extended Search:</h3>
+		<div id="managementPic">
+			<a href="/macpaperweb/management"> <img
+				src="<s:url value="/icons/glyphicons_280_settings.png" />" />
+			</a>
+		</div>
+		<div id="managementButton">
+			<a href="/macpaperweb/management">Management</a>
+		</div>
 		<div id="uploadPic">
-			<a href="upload"> <img
+			<a href="/macpaperweb/upload"> <img
 				src="<s:url value="/icons/glyphicons_201_upload.png" />" />
 			</a>
 		</div>
 		<div id="uploadButton">
-			<a href="upload">Upload a new Paper </a>
+			<a href="/macpaperweb/upload">Upload a new Paper </a>
 		</div>
 	</div>
 	<div class="container">
-		<div id="header">
-			<div id='search-box'>
-				<form action='search' id='search-form' method='get' target='_top'>
-					<input id='search-text' name='searchPhrase' placeholder='type here'
-						type='text' />
-					<button id='search-button' type='submit'>
-						<span>Search</span>
-					</button>
-					<button id='extendedsearch-button' type='button'
-						onClick="location.href='${pageContext.request.contextPath}/extendedSearch'">
-						<span>Extended Search</span>
-					</button>
-				</form>
-			</div>
-		</div>
 
 		<div id="content" class="span-24 last">
 			<form action='evaluateExtendedSearch' id='search-form' method='get'>
-				<fieldset>
-					<legend>Filter: </legend>
-					<table border="0" width="100%" cellpadding="0" cellspacing="0">
-						<tr>
-							<td>Author:</td>
-							<td><input type="text" name="author"
-								placeholder='Please insert author' /></td>
-						</tr>
-						<tr>
-							<td>University:</td>
-							<td><input type="text" name="uni"
-								placeholder='Please insert university' /></td>
-						</tr>
-						<tr>
-							<td>Category:</td>
-							<td><input type="text" name="category"
-								placeholder='Please insert category' /></td>
-						</tr>
-						<tr>
-							<td>Tags:</td>
-							<td><input type="text" name="tags"
-								placeholder='Please insert tags' /></td>
-						</tr>
-					</table>
-				</fieldset>
-				<fieldset>
-					<legend>Search papers, ... </legend>
-					<table border="0" width="100%" cellpadding="0" cellspacing="0">
-						<tr>
-							<td>contain all these words:</td>
-							<td><input type="text" name="and"
-								placeholder='Foo Bar Bull Shit' /></td>
-						</tr>
-						<tr>
-							<td>contain exactly the word or the phrase:</td>
-							<td><input type="text" name="secialand"
-								placeholder='"Foo Bar"' /></td>
-						</tr>
-						<tr>
-							<td>one of these words include:</td>
-							<td><input type="text" name="or" placeholder='Foo OR Bar' /></td>
-						</tr>
-					</table>
-				</fieldset>
-				<input id="save-button" type="submit" value="Search" />
+				<div class="box">
+					<fieldset>
+						<legend>Filter: </legend>
+						<table>
+							<tr>
+								<td width="25%">Author:</td>
+								<td><input size="70" type="text" name="author"
+									placeholder='Please insert author' /></td>
+							</tr>
+							<tr>
+								<td>University:</td>
+								<td><input size="70" type="text" name="uni"
+									placeholder='Please insert university' /></td>
+							</tr>
+							<tr>
+								<td>Category:</td>
+								<td><input size="70" type="text" name="category"
+									placeholder='Please insert category' /></td>
+							</tr>
+							<tr>
+								<td>Tags:</td>
+								<td><input size="70" type="text" name="tags"
+									placeholder='Please insert tags' /></td>
+							</tr>
+						</table>
+					</fieldset>
+				</div>
+				<div class="box">
+
+					<fieldset>
+						<legend>Search papers that ... </legend>
+						<table>
+							<tr>
+								<td width="25%">contain all these words:</td>
+								<td><input size="70" type="text" name="and"
+									placeholder='Foo Bar Bull Shit' /></td>
+							</tr>
+							<tr>
+								<td>contain exactly the word or phrase:</td>
+								<td><input size="70" type="text" name="secialand"
+									placeholder='"Foo Bar"' /></td>
+							</tr>
+							<tr>
+								<td>one of these words include:</td>
+								<td><input size="70" type="text" name="or"
+									placeholder='Foo OR Bar' /></td>
+							</tr>
+						</table>
+					</fieldset>
+				</div>
+
+				<div class="box">
+					<fieldset>
+						<legend>Categories: </legend>
+						<c:forEach var="cat" items="${categories}">
+							<input type="checkbox" value="${cat}" name="category" />${cat} <br />
+						</c:forEach>
+					</fieldset>
+				</div>
+				<div class="extendedsearchbutton">
+					<input id="save-button" type="submit" value="Search" />
+				</div>
+
 			</form>
 		</div>
 	</div>

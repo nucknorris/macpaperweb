@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.Arrays;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import de.htwkleipzig.mmdb.model.Categories;
 import de.htwkleipzig.mmdb.model.Paper;
 import de.htwkleipzig.mmdb.service.AuthorService;
 import de.htwkleipzig.mmdb.service.PaperService;
@@ -48,6 +50,7 @@ public class PaperController {
         LOGGER.info("startpage paper {}", recievedPaperName);
         model.addAttribute("recievedPaperName", recievedPaperName);
         Paper paper = paperService.get(recievedPaperName);
+        model.addAttribute("categories", Categories.values());
         model.addAttribute("paper", paper);
 
         return "paper";
@@ -108,7 +111,7 @@ public class PaperController {
         return paperService.getAll().toString();
     }
 
-    @RequestMapping(value = "/{.*}/authorpopup", method = RequestMethod.GET)
+    @RequestMapping(value = {"/{.*}/authorpopup", "/authorpopup"}, method = RequestMethod.GET)
     public String authorPopup(Model model) {
         model.addAttribute("authors", authorService.getAll());
         return "authorpopup";
