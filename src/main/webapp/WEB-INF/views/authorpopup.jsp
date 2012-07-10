@@ -17,15 +17,8 @@
 	type="text/css" media="print">
 <link rel="stylesheet" href="<c:url value='/css/main.css'/>"
 	type="text/css">
-<SCRIPT LANGUAGE="JavaScript">
+<script>
 	function updateParent() {
-
-		// 		if (opener.document.parentForm.feldauthorID.value == "") {
-		// 			opener.document.parentForm.feldauthorID.value = radioWert(document.listofauthors.myRadio);
-		// 		} else {
-		// 			opener.document.parentForm.feldauthorID.value = opener.document.parentForm.feldauthorID.value
-		// 					+ ", " + radioWert(document.listofauthors.myRadio);
-		// 		}
 
 		var oSelField = opener.document.getElementById("selectField");
 		var oOption = opener.document.createElement("OPTION");
@@ -42,7 +35,15 @@
 				return rObj[i].value;
 		return false;
 	}
-</SCRIPT>
+
+	function createNewAuthor() {
+		opener.window.open('/macpaperweb/author/createAuthor', '_blank');
+		// 		opener.location.href = '/macpaperweb/author/createAuthor';
+
+		self.close();
+		return false;
+	}
+</script>
 </HEAD>
 <BODY>
 	<!-- 	<div id="content" class="span-24 last"> -->
@@ -72,9 +73,18 @@
 				<%-- 				</c:if> --%>
 			</c:forEach>
 
+			<tr>
+				<td></td>
+				<td><input type="button" value="Add" onClick="updateParent();"></td>
+				<td></td>
+			</tr>
 		</table>
-		<input type="button" value="Add" onClick="updateParent();">
 	</form>
+	<form name="newauthor">
+		<input type="button" value="Create new author"
+			onClick="createNewAuthor();">
+	</form>
+
 
 	<!-- 	</div> -->
 </BODY>
