@@ -46,6 +46,7 @@ public class AuthorHelper {
         author.setLastname((String) source.get("lastName"));
         author.setEmail((String) source.get("email"));
         author.setUniversityId((String) source.get("universityId"));
+        @SuppressWarnings("unchecked")
         List<String> paperIds = (List<String>) source.get("paperIds");
         LOGGER.debug("counted papers {}", paperIds.size());
         author.setPaperIds(paperIds);

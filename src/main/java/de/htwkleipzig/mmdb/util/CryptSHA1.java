@@ -5,13 +5,21 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 /**
- * 
+ * The Class CryptSHA1.
+ *
  * @author men0x
  */
 public class CryptSHA1 {
 
+	/** The buf. */
 	StringBuilder buf;
 
+	/**
+	 * Convert to hex.
+	 *
+	 * @param data the data
+	 * @return the string
+	 */
 	private static String convertToHex(byte[] data) {
 		StringBuilder buf = new StringBuilder();
 		for (int i = 0; i < data.length; i++) {
@@ -29,6 +37,14 @@ public class CryptSHA1 {
 		return buf.toString();
 	}
 
+	/**
+	 * SH a1.
+	 *
+	 * @param text the text
+	 * @return the string
+	 * @throws NoSuchAlgorithmException the no such algorithm exception
+	 * @throws UnsupportedEncodingException the unsupported encoding exception
+	 */
 	public static String SHA1(String text) throws NoSuchAlgorithmException,
 			UnsupportedEncodingException {
 		MessageDigest md;

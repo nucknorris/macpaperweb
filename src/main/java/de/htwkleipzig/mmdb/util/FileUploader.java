@@ -21,17 +21,28 @@ import org.springframework.web.multipart.MultipartFile;
 import de.htwkleipzig.mmdb.model.UploadItem;
 
 /**
+ * The Class FileUploader.
+ *
  * @author men0x
- * 
  */
 public class FileUploader {
 
+    /**
+     * Instantiates a new file uploader.
+     */
     public FileUploader() {
         // fileUploader(uploadItem);
     }
 
+    /** The Constant LOGGER. */
     private static final Logger LOGGER = LoggerFactory.getLogger(FileUploader.class);
 
+    /**
+     * Upload file and generate hash.
+     *
+     * @param uploadItem the upload item
+     * @return the string
+     */
     public static String uploadFileAndGenerateHash(UploadItem uploadItem) {
         String md5Hash = null;
         try {
@@ -85,6 +96,13 @@ public class FileUploader {
         return md5Hash;
     }
 
+    /**
+     * Convert stream to string.
+     *
+     * @param is the is
+     * @return the string
+     * @throws IOException Signals that an I/O exception has occurred.
+     */
     public String convertStreamToString(InputStream is) throws IOException {
         if (is != null) {
             Writer writer = new StringWriter();
