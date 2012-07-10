@@ -17,15 +17,14 @@
 <link rel="stylesheet" href="<c:url value='/css/main.css'/>"
 	type="text/css">
 <script src="<c:url value='/js/jquery-1.6.1.min.js'/>"></script>
-</head>
-
-<SCRIPT LANGUAGE="JavaScript">
+<script>
 	function openChild(file, window) {
 		childWindow = open(file, window, 'resizable=no,width=200,height=400');
 		if (childWindow.opener == null)
 			childWindow.opener = self;
 	}
-</SCRIPT>
+</script>
+</head>
 
 <body>
 	<div id="head">
@@ -35,6 +34,14 @@
 	</div>
 	<div id="subhead">
 		<h3>Detailed Information about the paper ${recievedPaperName}</h3>
+		<div id="managementPic">
+			<a href="management"> <img
+				src="<s:url value="/icons/glyphicons_280_settings.png" />" />
+			</a>
+		</div>
+		<div id="managementButton">
+			<a href="management">Management</a>
+		</div>
 		<div id="uploadPic">
 			<a href="upload"> <img
 				src="<s:url value="/icons/glyphicons_201_upload.png" />" />
@@ -81,38 +88,25 @@
 						<td><sf:input path="paperId" readonly="true" size="50" />
 					</tr>
 
+					<!-- 					<tr> -->
+					<!-- 						<td><img -->
+					<%-- 							src="<s:url value="/icons/glyphicons_024_parents.png" />" /></td> --%>
+
+					<%-- 						<td><sf:label path="authorIds">Authors:</sf:label></td> --%>
+					<%-- 						<td><sf:input path="authorIds" readonly="false" size="50" /></td> --%>
+					<!-- 					</tr> -->
+
 					<tr>
 						<td><img
 							src="<s:url value="/icons/glyphicons_024_parents.png" />" /></td>
 
 						<td><sf:label path="authorIds">Authors:</sf:label></td>
-						<td><sf:input path="authorIds" readonly="false" size="50" /></td>
+						<td><sf:select items="${paper.authorIds}" path="authorIds"
+								multiple="true" id="selectField" /> <INPUT TYPE="button"
+							VALUE="Add author" onClick="openChild('authorpopup','win2')">Only selected values will be saved!</td>
 
-						<!-- 						<INPUT NAME="feldauthorID" TYPE="TEXT" VALUE=""> -->
-						<!-- 						<td><label>Authors:</label></td> -->
-
-						<%-- 						<td><c:forEach items="${paper.getAuthors()}" var="author"> --%>
-						<%-- 								<c:if test="${author}"> --%>
-						<%-- 									<a href="/author/${author}">${author}</a> --%>
-						<%-- 								</c:if> --%>
-						<%-- 								<c:choose> --%>
-						<%-- 									<c:when test="test=${author}"> --%>
-
-
-
-
-						<%-- 										<a href="/author/${author}">${author}</a> --%>
-						<%-- 									</c:when> --%>
-
-						<%-- 									<c:otherwise> --%>
-						<!-- 																				<INPUT NAME="feldauthorID" TYPE="TEXT" VALUE=""> -->
-						<!-- 																				<INPUT TYPE="button" VALUE="+" -->
-						<!-- 																					onClick="openChild('authorpopup','win2')"> -->
-
-						<%-- 									</c:otherwise> --%>
-						<%-- 								</c:choose> --%>
-						<%-- 							</c:forEach></td> --%>
 					</tr>
+
 
 					<tr>
 						<td><img
@@ -164,6 +158,7 @@
 							href="${pageContext.request.contextPath}/paper/download?paperId=${ paper.getPaperId()}">Klick
 								here to start download</a></td>
 					</tr>
+					<sf:hidden path="content" />
 					<tr>
 						<td><img
 							src="<s:url value="/icons/glyphicons_016_bin.png" />" /></td>

@@ -26,17 +26,28 @@
 	</div>
 	<div id="subhead">
 		<h3>MacPaper - Management</h3>
+		<div id="managementPic">
+			<a href="management"> <img
+				src="<s:url value="/icons/glyphicons_280_settings.png" />" />
+			</a>
+		</div>
+		<div id="managementButton">
+			<a href="management">Management</a>
+		</div>
 		<div id="uploadPic">
 			<a href="upload"> <img
 				src="<s:url value="/icons/glyphicons_201_upload.png" />" />
 			</a>
 		</div>
+		<div id="uploadButton">
+			<a href="upload">Upload a new Paper </a>
+		</div>
 	</div>
 	<div class="container">
 
-		<div id="header"></div>
-		<div id="authors">
-
+		<!-- 		<div id="header"></div> -->
+		<div id="authors" class="box">
+			<h2>List of Authors</h2>
 			<table>
 
 				<c:forEach var="author" items="${authors}" varStatus="status">
@@ -59,7 +70,9 @@
 			</button>
 		</div>
 
-		<div id="universities">
+		<div id="universities" class="box">
+			<h2>List of Universities</h2>
+
 
 			<table>
 
@@ -83,7 +96,8 @@
 			</button>
 		</div>
 
-		<div id="papers">
+		<div id="papers" class="box">
+			<h2>List of Papers</h2>
 
 			<table>
 

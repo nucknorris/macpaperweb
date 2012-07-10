@@ -25,66 +25,83 @@
 		</div>
 	</div>
 	<div id="subhead">
-		<h3>Detailed Information about ${recievedUniversity}</h3>
+		<h3>Adding or editing an university</h3>
+		<div id="managementPic">
+			<a href="management"> <img
+				src="<s:url value="/icons/glyphicons_280_settings.png" />" />
+			</a>
+		</div>
+		<div id="managementButton">
+			<a href="management">Management</a>
+		</div>
+		<div id="uploadPic">
+			<a href="upload"> <img
+				src="<s:url value="/icons/glyphicons_201_upload.png" />" />
+			</a>
+		</div>
+		<div id="uploadButton">
+			<a href="upload">Upload a new Paper </a>
+		</div>
 	</div>
 	<div class="container">
-		<div id="header"></div>
 		<div id="content" class="span-24 last">
+			<h2>To add a new University enter fill the fields and click on save.</h2>
+
 			<sf:form modelAttribute="university" method="POST"
 				action="${pageContext.request.contextPath}/university/update"
 				enctype="multipart/form-datahast ">
 				<table>
 					<tr>
 						<td width="3%"><img
-							src="<s:url value="/icons/glyphicons_341_github.png" />" /></td>
+							src="<s:url value="/icons/glyphicons_065_tag.png" />" /></td>
 						<td><sf:label path="universityId">UniversityId:</sf:label></td>
 						<td><sf:input path="universityId" readonly="true" size="50" /></td>
 					</tr>
 					<tr>
 						<td width="3%"><img
-							src="<s:url value="/icons/glyphicons_341_github.png" />" /></td>
+							src="<s:url value="/icons/glyphicons_264_vcard.png" />" /></td>
 						<td><sf:label path="name">Name:</sf:label></td>
 						<td><sf:input path="name" readonly="false" size="50" /></td>
 					</tr>
 					<tr>
 						<td width="3%"><img
-							src="<s:url value="/icons/glyphicons_341_github.png" />" /></td>
+							src="<s:url value="/icons/glyphicons_242_google_maps.png" />" /></td>
 						<td><sf:label path="city">City:</sf:label></td>
 						<td><sf:input path="city" readonly="false" size="50" /></td>
 					</tr>
 					<tr>
 						<td width="3%"><img
-							src="<s:url value="/icons/glyphicons_341_github.png" />" /></td>
+							src="<s:url value="/icons/glyphicons_242_google_maps.png" />" /></td>
 						<td><sf:label path="postcode">Postcode:</sf:label></td>
 						<td><sf:input path="postcode" readonly="false" size="50" /></td>
 					</tr>
 					<tr>
 						<td width="3%"><img
-							src="<s:url value="/icons/glyphicons_341_github.png" />" /></td>
+							src="<s:url value="/icons/glyphicons_242_google_maps.png" />" /></td>
 						<td><sf:label path="street">Street:</sf:label></td>
 						<td><sf:input path="street" readonly="false" size="50" /></td>
 					</tr>
 					<tr>
 						<td width="3%"><img
-							src="<s:url value="/icons/glyphicons_341_github.png" />" /></td>
+							src="<s:url value="/icons/glyphicons_242_google_maps.png" />" /></td>
 						<td><sf:label path="street2">Street2:</sf:label></td>
 						<td><sf:input path="street2" readonly="false" size="50" /></td>
 					</tr>
 					<tr>
 						<td width="3%"><img
-							src="<s:url value="/icons/glyphicons_341_github.png" />" /></td>
+							src="<s:url value="/icons/glyphicons_242_google_maps.png" />" /></td>
 						<td><sf:label path="housenumber">Housenumber:</sf:label></td>
 						<td><sf:input path="housenumber" readonly="false" size="50" /></td>
 					</tr>
 					<tr>
 						<td width="3%"><img
-							src="<s:url value="/icons/glyphicons_341_github.png" />" /></td>
+							src="<s:url value="/icons/glyphicons_242_google_maps.png" />" /></td>
 						<td><sf:label path="country">Country:</sf:label></td>
 						<td><sf:input path="country" readonly="false" size="50" /></td>
 					</tr>
 					<tr>
 						<td width="3%"><img
-							src="<s:url value="/icons/glyphicons_341_github.png" />" /></td>
+							src="<s:url value="/icons/glyphicons_024_parents.png" />" /></td>
 						<td><sf:label path="authorIds">Authoren:</sf:label></td>
 						<td><sf:input path="authorIds" readonly="false" size="50" /></td>
 					</tr>

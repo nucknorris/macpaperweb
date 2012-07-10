@@ -108,7 +108,7 @@ public class PaperController {
         return paperService.getAll().toString();
     }
 
-    @RequestMapping(value = "/authorpopup", method = RequestMethod.GET)
+    @RequestMapping(value = "/{.*}/authorpopup", method = RequestMethod.GET)
     public String authorPopup(Model model) {
         model.addAttribute("authors", authorService.getAll());
         return "authorpopup";

@@ -11,12 +11,18 @@
 <SCRIPT LANGUAGE="JavaScript">
 	function updateParent() {
 
-		if (opener.document.parentForm.feldauthorID.value == "") {
-			opener.document.parentForm.feldauthorID.value = radioWert(document.listofauthors.myRadio);
-		} else {
-			opener.document.parentForm.feldauthorID.value = opener.document.parentForm.feldauthorID.value
-					+ ", " + radioWert(document.listofauthors.myRadio);
-		}
+// 		if (opener.document.parentForm.feldauthorID.value == "") {
+// 			opener.document.parentForm.feldauthorID.value = radioWert(document.listofauthors.myRadio);
+// 		} else {
+// 			opener.document.parentForm.feldauthorID.value = opener.document.parentForm.feldauthorID.value
+// 					+ ", " + radioWert(document.listofauthors.myRadio);
+// 		}
+		
+		var oSelField = opener.document.getElementById("selectField");
+		var oOption = opener.document.createElement("OPTION");
+		oSelField.options.add(oOption);
+		oOption.text = radioWert(document.listofauthors.myRadio);
+		oOption.value = radioWert(document.listofauthors.myRadio);
 
 		self.close();
 		return false;

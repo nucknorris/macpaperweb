@@ -25,54 +25,72 @@
 		</div>
 	</div>
 	<div id="subhead">
-		<h3>Detailed Information about the Author</h3>
+		<h3>Adding or editing an author</h3>
+		<div id="managementPic">
+			<a href="management"> <img
+				src="<s:url value="/icons/glyphicons_280_settings.png" />" />
+			</a>
+		</div>
+		<div id="managementButton">
+			<a href="management">Management</a>
+		</div>
+		<div id="uploadPic">
+			<a href="upload"> <img
+				src="<s:url value="/icons/glyphicons_201_upload.png" />" />
+			</a>
+		</div>
+		<div id="uploadButton">
+			<a href="upload">Upload a new Paper </a>
+		</div>
 	</div>
 	<div class="container">
-		<div id="header"></div>
 		<div id="content" class="span-24 last">
+			<h2>To add a new Author enter fill the fields and click on save.</h2>
 			<sf:form modelAttribute="author" method="POST"
 				action="${pageContext.request.contextPath}/author/update"
 				enctype="multipart/form-datahast ">
 				<table>
 					<tr>
 						<td width="3%"><img
-							src="<s:url value="/icons/glyphicons_341_github.png" />" /></td>
+							src="<s:url value="/icons/glyphicons_065_tag.png" />" /></td>
 						<td><sf:label path="authorId">AuthorId:</sf:label></td>
 						<td><sf:input path="authorId" readonly="true" size="50" /></td>
 					</tr>
 					<tr>
 						<td width="3%"><img
-							src="<s:url value="/icons/glyphicons_341_github.png" />" /></td>
+							src="<s:url value="/icons/glyphicons_264_vcard.png" />" /></td>
 						<td><sf:label path="title">Title:</sf:label></td>
 						<td><sf:input path="title" readonly="false" size="50" /></td>
 					</tr>
 					<tr>
-						<td width="3%"><img
-							src="<s:url value="/icons/glyphicons_341_github.png" />" /></td>
+						<td width="3%">
+							<%-- 						<img src="<s:url value="/icons/glyphicons_264_vcard.png" />" /> --%>
+						</td>
 						<td><sf:label path="name">Name:</sf:label></td>
 						<td><sf:input path="name" readonly="false" size="50" /></td>
 					</tr>
 					<tr>
-						<td width="3%"><img
-							src="<s:url value="/icons/glyphicons_341_github.png" />" /></td>
+						<td width="3%">
+							<!-- 						<img --> <%-- 							src="<s:url value="/icons/glyphicons_264_vcard.png" />" /> --%>
+						</td>
 						<td><sf:label path="lastname">Lastname:</sf:label></td>
 						<td><sf:input path="lastname" readonly="false" size="50" /></td>
 					</tr>
 					<tr>
 						<td width="3%"><img
-							src="<s:url value="/icons/glyphicons_341_github.png" />" /></td>
+							src="<s:url value="/icons/glyphicons_010_envelope.png" />" /></td>
 						<td><sf:label path="email">Email:</sf:label></td>
 						<td><sf:input path="email" readonly="false" size="50" /></td>
 					</tr>
 					<tr>
 						<td width="3%"><img
-							src="<s:url value="/icons/glyphicons_341_github.png" />" /></td>
+							src="<s:url value="/icons/glyphicons_263_bank.png" />" /></td>
 						<td><sf:label path="universityId">UniversityId:</sf:label></td>
 						<td><sf:input path="universityId" readonly="false" size="50" /></td>
 					</tr>
 					<tr>
 						<td width="3%"><img
-							src="<s:url value="/icons/glyphicons_341_github.png" />" /></td>
+							src="<s:url value="/icons/glyphicons_039_notes.png" />" /></td>
 						<td><sf:label path="paperIds">PaperIds:</sf:label></td>
 						<td><sf:input path="paperIds" readonly="false" size="50" /></td>
 					</tr>
