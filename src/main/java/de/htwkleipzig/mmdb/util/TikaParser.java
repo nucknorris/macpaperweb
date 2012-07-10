@@ -14,7 +14,10 @@ import org.apache.tika.parser.Parser;
 import org.apache.tika.sax.ToHTMLContentHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
+/**
+ * 
+ * @author snuck
+ */
 public class TikaParser {
     private static final Logger logger = LoggerFactory.getLogger(TikaParser.class);
 

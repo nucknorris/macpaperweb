@@ -11,7 +11,10 @@ import org.apache.tika.parser.Parser;
 import org.apache.tika.sax.ToHTMLContentHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
+/**
+ * 
+ * @author snuck
+ */
 public class PDFParser {
     private static final Logger logger = LoggerFactory.getLogger(PDFParser.class);
 
