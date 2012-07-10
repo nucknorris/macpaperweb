@@ -3,12 +3,21 @@ package de.htwkleipzig.mmdb.util;
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 import java.util.Random;
+
 /**
- * 
+ * The Class OwnHash.
+ *
  * @author men0x
  */
 public class OwnHash {
 
+    /**
+     * Own hash.
+     *
+     * @param name the name
+     * @param lastname the lastname
+     * @return the string
+     */
     public static String ownHash(String name, String lastname) {
         String hash = "";
 
