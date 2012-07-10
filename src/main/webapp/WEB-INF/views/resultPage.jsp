@@ -72,7 +72,7 @@
 					<tr>
 						<td><img
 							src="<s:url value="/icons/glyphicons_039_notes.png" />" /></td>
-						<td>${ paper.getPaperId()}</td>
+						<td>${paper.getPaperId()}</td>
 						<td><b>${ paper.getTitle()}</b></td>
 						<td><a
 							href="${pageContext.request.contextPath}/paper/${ paper.getPaperId()}"><img
