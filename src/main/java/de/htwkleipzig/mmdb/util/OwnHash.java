@@ -6,16 +6,18 @@ import java.util.Random;
 
 /**
  * The Class OwnHash.
- *
+ * 
  * @author men0x
  */
 public class OwnHash {
 
     /**
      * Own hash.
-     *
-     * @param name the name
-     * @param lastname the lastname
+     * 
+     * @param name
+     *            the name
+     * @param lastname
+     *            the lastname
      * @return the string
      */
     public static String ownHash(String name, String lastname) {
@@ -73,5 +75,16 @@ public class OwnHash {
         }
 
         return hash;
+    }
+
+    /**
+     * Own hash.
+     *
+     * @param name the name
+     * @return the string
+     */
+    public static String ownHash(String name) {
+
+        return ownHash(name, "");
     }
 }
