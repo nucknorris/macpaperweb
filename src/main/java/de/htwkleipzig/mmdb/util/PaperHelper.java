@@ -49,7 +49,7 @@ public class PaperHelper {
         b.field("fileName", paper.getFileName() == null ? "empty" : paper.getFileName());
 
         // b.field("ddc", paper.getDdc()); TODO - currently disabled
-        LOGGER.debug(b.string());
+        // LOGGER.debug(b.string());
         return b;
     }
 
@@ -78,7 +78,7 @@ public class PaperHelper {
 
         paper.setFileName((String) source.get("street2"));
         // paper.setDdc((String) source.get("ddc")); TODO - currently disabled
-        LOGGER.debug("finished converting {}", paper.toString());
+        // LOGGER.debug("finished converting {}", paper.toString());
         return paper;
     }
 }

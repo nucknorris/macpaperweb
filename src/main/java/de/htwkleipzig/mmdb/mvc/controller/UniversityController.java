@@ -71,7 +71,8 @@ public class UniversityController {
         }
         if (university.getUniversityId().isEmpty()) {
             LOGGER.debug("university id is empty");
-            university.setUniversityId(university.getName() + university.getCity());
+            university.setUniversityId(university.getName().replaceAll(" ", "")
+                    + university.getCity().replaceAll(" ", ""));
         }
         if (university.getAuthorIds().isEmpty()) {
             LOGGER.debug("university id is empty");

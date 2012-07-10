@@ -72,7 +72,7 @@ public class AuthorController {
         }
         if (author.getAuthorId().isEmpty()) {
             LOGGER.debug("auhtor id is empty");
-            author.setAuthorId(author.getName() + author.getLastname());
+            author.setAuthorId(author.getName().replaceAll(" ", "") + author.getLastname().replaceAll(" ", ""));
         }
         if (author.getUniversityId().isEmpty()) {
             LOGGER.debug("university id is empty");
@@ -109,7 +109,7 @@ public class AuthorController {
         LOGGER.info("all authors shit");
         return authorService.getAll().toString();
     }
-    
+
     @RequestMapping(value = "/delete")
     public String deletePaper(@RequestParam("authorId") String authorId, HttpServletResponse resp) {
         LOGGER.debug("Received request to delete author");
@@ -118,5 +118,4 @@ public class AuthorController {
         return "redirect:/management/";
     }
 
-    
 }

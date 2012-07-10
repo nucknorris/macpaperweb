@@ -1,5 +1,6 @@
 package de.htwkleipzig.mmdb.mvc.controller;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -11,7 +12,6 @@ import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.index.query.QueryStringQueryBuilder;
-import org.elasticsearch.index.query.QueryStringQueryBuilder.Operator;
 import org.elasticsearch.search.SearchHit;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -170,7 +170,14 @@ public class SearchController {
             @RequestParam String category, @RequestParam String tags, @RequestParam String and,
             @RequestParam String or, @RequestParam String secialand, Model model, HttpServletRequest request) {
         LOGGER.info("starting evaluating of extended Search");
-
+        try {
+            request.setCharacterEncoding("UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        LOGGER.debug("secialand {}", secialand);
+        LOGGER.debug("or {}", or);
         model.addAttribute("searchTerm", and);
         BoolQueryBuilder boolQuery = QueryBuilders.boolQuery();
         if (!and.isEmpty()) {
@@ -190,7 +197,7 @@ public class SearchController {
 
         }
         if (!category.isEmpty()) {
-            boolQuery.must(categoryQuery(category));
+            boolQuery.should(categoryQuery(category));
 
         }
         if (!tags.isEmpty()) {
@@ -311,7 +318,7 @@ public class SearchController {
     private QueryBuilder tagsQuery(String tags) {
         LOGGER.debug("tagsQuery build");
         tags = tags.replace("+", " ");
-        QueryBuilder tagsQuery = QueryBuilders.queryString(tags).defaultOperator(Operator.OR).field("keywords");
+        QueryBuilder tagsQuery = QueryBuilders.queryString(tags).field("keywords");
         LOGGER.debug("query build: {}", tagsQuery.toString());
         return tagsQuery;
     }
@@ -325,7 +332,7 @@ public class SearchController {
     private QueryBuilder categoryQuery(String category) {
         LOGGER.debug("categoryQuery build");
         category = category.replace("+", " ");
-        QueryBuilder categoryQuery = QueryBuilders.queryString(category).defaultOperator(Operator.OR).field("kindOf");
+        QueryBuilder categoryQuery = QueryBuilders.queryString(category).field("keywords");
         LOGGER.debug("query build: {}", categoryQuery.toString());
         return categoryQuery;
     }
@@ -339,8 +346,7 @@ public class SearchController {
     private QueryBuilder secialandQuery(String secialand) {
         LOGGER.debug("secialand query builder");
         secialand = secialand.replace("+", " ");
-        QueryBuilder secialandQuery = QueryBuilders.queryString(secialand).defaultOperator(Operator.OR).field("title")
-                .field("content");
+        QueryBuilder secialandQuery = QueryBuilders.queryString(secialand).field("title").field("content");
         LOGGER.debug("query build: {}", secialandQuery.toString());
         return secialandQuery;
 
@@ -355,8 +361,7 @@ public class SearchController {
     private QueryBuilder orQuery(String or) {
         LOGGER.debug("or is not empty");
         or = or.replace("+", " ");
-        QueryBuilder orQuery = QueryBuilders.queryString(or).defaultOperator(Operator.OR).field("title")
-                .field("content");
+        QueryBuilder orQuery = QueryBuilders.queryString(or).field("title").field("content");
         LOGGER.debug("query build: {}", orQuery.toString());
         return orQuery;
     }
@@ -370,8 +375,7 @@ public class SearchController {
     private QueryBuilder andQuery(String and) {
         LOGGER.debug("and is not empty");
         and = and.replace("+", " ");
-        QueryBuilder andQuery = QueryBuilders.queryString(and).defaultOperator(Operator.AND).field("title")
-                .field("content");
+        QueryBuilder andQuery = QueryBuilders.queryString(and).field("title").field("content");
         LOGGER.debug("query build: {}", andQuery.toString());
         return andQuery;
     }

@@ -4,7 +4,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import de.htwkleipzig.mmdb.model.Author;
 import de.htwkleipzig.mmdb.model.Categories;
 import de.htwkleipzig.mmdb.model.Paper;
 import de.htwkleipzig.mmdb.service.AuthorService;
@@ -74,6 +76,23 @@ public class PaperController {
         LOGGER.debug("paper: {}", paper.getPaperId());
         LOGGER.debug("title: {}", paper.getTitle());
         LOGGER.debug("abstract: {}", paper.getPaperAbstract());
+        if (!paper.getAuthorIds().isEmpty()) {
+            LOGGER.debug("paper has authors");
+            for (String authorId : paper.getAuthorIds()) {
+                Author author = authorService.get(authorId);
+                if (author == null) {
+                    LOGGER.debug("author is empty");
+                } else {
+                    List<String> paperIds = new ArrayList<String>();
+                    if (author.getPaperIds() == null) {
+                        paperIds.addAll(author.getPaperIds());
+                    }
+                    paperIds.add(paper.getPaperId());
+                    LOGGER.debug("update author with name {} {}", author.getName(), author.getLastname());
+                    authorService.updateAuthor(author);
+                }
+            }
+        }
         paperService.updatePaper(paper);
         LOGGER.debug("paper saved");
         return "redirect:/paper/" + paper.getPaperId() + "/";
@@ -111,7 +130,7 @@ public class PaperController {
         return paperService.getAll().toString();
     }
 
-    @RequestMapping(value = {"/{.*}/authorpopup", "/authorpopup"}, method = RequestMethod.GET)
+    @RequestMapping(value = { "/{.*}/authorpopup", "/authorpopup" }, method = RequestMethod.GET)
     public String authorPopup(Model model) {
         model.addAttribute("authors", authorService.getAll());
         return "authorpopup";
