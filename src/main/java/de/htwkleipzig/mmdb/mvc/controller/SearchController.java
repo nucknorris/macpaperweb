@@ -197,7 +197,7 @@ public class SearchController {
 
         }
         if (!category.isEmpty()) {
-            boolQuery.should(categoryQuery(category));
+            boolQuery.must(categoryQuery(category));
 
         }
         if (!tags.isEmpty()) {

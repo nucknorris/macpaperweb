@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import de.htwkleipzig.mmdb.model.Author;
 import de.htwkleipzig.mmdb.service.AuthorService;
+import de.htwkleipzig.mmdb.service.UniversityService;
 
 /**
  * @author spinner0815, men0x
@@ -35,6 +36,9 @@ public class AuthorController {
 
     @Autowired
     private AuthorService authorService;
+
+    @Autowired
+    private UniversityService universityService;
 
     public AuthorController() {
     }
@@ -72,7 +76,7 @@ public class AuthorController {
         }
         if (author.getAuthorId().isEmpty()) {
             LOGGER.debug("auhtor id is empty");
-            author.setAuthorId(author.getName().replaceAll(" ", "") + author.getLastname().replaceAll(" ", ""));
+            author.setAuthorId(author.getName() + author.getLastname());
         }
         if (author.getUniversityId().isEmpty()) {
             LOGGER.debug("university id is empty");
@@ -118,4 +122,12 @@ public class AuthorController {
         return "redirect:/management/";
     }
 
+<<<<<<< HEAD
+=======
+    @RequestMapping(value = { "/{.*}/universitypopup", "/universitypopup" }, method = RequestMethod.GET)
+    public String universityPopup(Model model) {
+        model.addAttribute("universities", universityService.getAll());
+        return "universitypopup";
+    }
+>>>>>>> e641487835c2032db226b6e3c937f9a0c3072639
 }
