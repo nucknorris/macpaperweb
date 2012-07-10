@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import de.htwkleipzig.mmdb.model.Author;
 import de.htwkleipzig.mmdb.service.AuthorService;
+import de.htwkleipzig.mmdb.service.UniversityService;
 
 /**
  * @author spinner0815, men0x
@@ -35,6 +36,9 @@ public class AuthorController {
 
     @Autowired
     private AuthorService authorService;
+
+    @Autowired
+    private UniversityService universityService;
 
     public AuthorController() {
     }
@@ -109,7 +113,7 @@ public class AuthorController {
         LOGGER.info("all authors shit");
         return authorService.getAll().toString();
     }
-    
+
     @RequestMapping(value = "/delete")
     public String deletePaper(@RequestParam("authorId") String authorId, HttpServletResponse resp) {
         LOGGER.debug("Received request to delete author");
@@ -118,5 +122,9 @@ public class AuthorController {
         return "redirect:/management/";
     }
 
-    
+    @RequestMapping(value = { "/{.*}/universitypopup", "/universitypopup" }, method = RequestMethod.GET)
+    public String universityPopup(Model model) {
+        model.addAttribute("universities", universityService.getAll());
+        return "universitypopup";
+    }
 }

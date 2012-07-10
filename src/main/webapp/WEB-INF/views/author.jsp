@@ -17,6 +17,13 @@
 <link rel="stylesheet" href="<c:url value='/css/main.css'/>"
 	type="text/css">
 <script src="<c:url value='/js/jquery-1.6.1.min.js'/>"></script>
+<script>
+	function openChild(file, window) {
+		childWindow = open(file, window, 'resizable=no,width=300,height=600');
+		if (childWindow.opener == null)
+			childWindow.opener = self;
+	}
+</script>
 </head>
 <body>
 	<div id="head">
@@ -86,19 +93,9 @@
 						<td><img
 							src="<s:url value="/icons/glyphicons_263_bank.png" />" /></td>
 						<td><sf:label path="universityId">Uni:</sf:label></td>
-						<td><sf:input path="universityId" readonly="false" size="50" /></td>
-					</tr>
-					<tr>
-						<td><img
-							src="<s:url value="/icons/glyphicons_024_parents.png" />" /></td>
-
-						<td><sf:label path="authorIds">Universities:</sf:label></td>
-						<td><sf:select items="${paper.universityIds}" path="authorIds"
-								multiple="true" id="selectField" /> <br /> <input
-							type="button" value="add"
-							onClick="openChild('authorpopup','win2')" />Only selected values
-							will be saved!</td>
-
+						<td><input type="button" value="choose"
+							onClick="openChild('universitypopup','win2')" /> <sf:input
+								path="universityId" readonly="true" size="43" id="uniInput" /></td>
 					</tr>
 					<tr>
 						<td><img

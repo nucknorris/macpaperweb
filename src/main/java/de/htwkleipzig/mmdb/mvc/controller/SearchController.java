@@ -170,7 +170,6 @@ public class SearchController {
             @RequestParam String category, @RequestParam String tags, @RequestParam String and,
             @RequestParam String or, @RequestParam String secialand, Model model, HttpServletRequest request) {
         LOGGER.info("starting evaluating of extended Search");
-
         model.addAttribute("searchTerm", and);
         BoolQueryBuilder boolQuery = QueryBuilders.boolQuery();
         if (!and.isEmpty()) {
