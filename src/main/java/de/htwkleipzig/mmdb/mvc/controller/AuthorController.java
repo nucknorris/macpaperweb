@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import de.htwkleipzig.mmdb.model.Author;
 import de.htwkleipzig.mmdb.service.AuthorService;
 import de.htwkleipzig.mmdb.service.UniversityService;
+import de.htwkleipzig.mmdb.util.OwnHash;
 
 /**
  * @author spinner0815, men0x
@@ -76,7 +77,7 @@ public class AuthorController {
         }
         if (author.getAuthorId().isEmpty()) {
             LOGGER.debug("auhtor id is empty");
-            author.setAuthorId(author.getName() + author.getLastname());
+            author.setAuthorId(OwnHash.ownHash(author.getName(), author.getLastname()));
         }
         if (author.getUniversityId().isEmpty()) {
             LOGGER.debug("university id is empty");
