@@ -123,12 +123,9 @@ public class AuthorController {
         return "redirect:/management/";
     }
 
-<<<<<<< HEAD
-=======
     @RequestMapping(value = { "/{.*}/universitypopup", "/universitypopup" }, method = RequestMethod.GET)
     public String universityPopup(Model model) {
         model.addAttribute("universities", universityService.getAll());
         return "universitypopup";
     }
->>>>>>> e641487835c2032db226b6e3c937f9a0c3072639
 }

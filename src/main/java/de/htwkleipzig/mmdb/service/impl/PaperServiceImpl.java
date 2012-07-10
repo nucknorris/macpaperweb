@@ -123,7 +123,7 @@ public class PaperServiceImpl implements PaperService {
 
             Paper paperObject = PaperHelper.source2Paper(resultMap);
 
-            LOGGER.debug("paper: {}", paperObject.toString());
+            LOGGER.debug("paper: {}", paperObject.getTitle());
             papers.add(paperObject);
 
         }
