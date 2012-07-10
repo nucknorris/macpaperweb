@@ -75,7 +75,6 @@ public class PaperController {
 
         LOGGER.debug("paper: {}", paper.getPaperId());
         LOGGER.debug("title: {}", paper.getTitle());
-        LOGGER.debug("abstract: {}", paper.getPaperAbstract());
         if (!paper.getAuthorIds().isEmpty()) {
             LOGGER.debug("paper has authors");
             for (String authorId : paper.getAuthorIds()) {
@@ -126,7 +125,7 @@ public class PaperController {
     @RequestMapping(value = "/allpapers")
     @ResponseBody
     public String getAllAuthors() {
-        LOGGER.info("all paper shit");
+        LOGGER.info("all paper");
         return paperService.getAll().toString();
     }
 

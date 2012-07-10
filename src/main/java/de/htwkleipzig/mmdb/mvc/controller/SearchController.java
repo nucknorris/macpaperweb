@@ -8,10 +8,13 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.elasticsearch.action.search.SearchResponse;
+import org.elasticsearch.index.query.BaseQueryBuilder;
 import org.elasticsearch.index.query.BoolQueryBuilder;
+import org.elasticsearch.index.query.FuzzyLikeThisQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.index.query.QueryStringQueryBuilder;
+import org.elasticsearch.index.query.TextQueryBuilder;
 import org.elasticsearch.search.SearchHit;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -52,6 +55,7 @@ public class SearchController {
     @RequestMapping(value = "/search")
     public String elasticsearch(@RequestParam(required = true) String searchPhrase, Model model) {
         // search at QuizRDF
+        List<Paper> papers = new ArrayList<Paper>();
         LOGGER.info("search for a query");
         if (searchPhrase.isEmpty()) {
             LOGGER.debug("searchPhrase is empty");
@@ -59,11 +63,22 @@ public class SearchController {
         }
         QueryStringQueryBuilder query = QueryBuilders.queryString(searchPhrase).allowLeadingWildcard(false)
                 .useDisMax(true);
+        papers.addAll(searchResult(query));
+        if (papers.isEmpty()) {
+            papers.addAll(fuzzyLikeSearch(searchPhrase));
+        }
+        // LOGGER.info("MaxScore {}", response.getHits().getHits());
+        model.addAttribute("paper", papers);
+        model.addAttribute("searchTerm", searchPhrase);
+        return "resultPage";
+    }
+
+    private List<Paper> searchResult(BaseQueryBuilder query) {
         SearchResponse response = paperService.search(query);
         LOGGER.info("total hits {}", response.getHits().getTotalHits());
         LOGGER.info("MaxScore {}", response.getHits().getMaxScore());
-        model.addAttribute("totalHits", response.getHits().getTotalHits());
-        model.addAttribute("maxScore", response.getHits().getMaxScore());
+        // model.addAttribute("totalHits", response.getHits().getTotalHits());
+        // model.addAttribute("maxScore", response.getHits().getMaxScore());
         List<Paper> papers = new ArrayList<Paper>();
         for (SearchHit hit : response.getHits().getHits()) {
             if (hit.isSourceEmpty()) {
@@ -71,8 +86,8 @@ public class SearchController {
             }
             LOGGER.info("id of the document {}", hit.getId());
             LOGGER.info("score of the hit {}", hit.getScore());
-            model.addAttribute("documentId", hit.getId());
-            model.addAttribute("documentScore", hit.getScore());
+            // model.addAttribute("documentId", hit.getId());
+            // model.addAttribute("documentScore", hit.getScore());
 
             Map<String, Object> resultMap = hit.sourceAsMap();
 
@@ -83,10 +98,15 @@ public class SearchController {
             papers.add(paper);
 
         }
-        // LOGGER.info("MaxScore {}", response.getHits().getHits());
-        model.addAttribute("paper", papers);
-        model.addAttribute("searchTerm", searchPhrase);
-        return "resultPage";
+        return papers;
+    }
+
+    private List<Paper> fuzzyLikeSearch(String searchPhrase) {
+        LOGGER.debug("start fuzzy search");
+        FuzzyLikeThisQueryBuilder likeText = QueryBuilders.fuzzyLikeThisQuery().likeText(searchPhrase);
+        LOGGER.debug("likeText {}", likeText.toString());
+        return searchResult(likeText);
+
     }
 
     @RequestMapping(value = "/extendedSearch")
@@ -111,7 +131,7 @@ public class SearchController {
             Map<String, Object> resultMap = hit.sourceAsMap();
 
             University universityObject = UniversityHelper.source2University(resultMap);
-            LOGGER.debug("university: {}", universityObject.toString());
+            LOGGER.debug("university: {}", universityObject.getName());
             universities.add(universityObject);
 
         }
@@ -135,7 +155,7 @@ public class SearchController {
             Map<String, Object> resultMap = hit.sourceAsMap();
 
             Author authorObject = AuthorHelper.source2author(resultMap);
-            LOGGER.debug("university: {}", authorObject.toString());
+            LOGGER.debug("author: {}", authorObject.getLastname());
             authors.add(authorObject);
 
         }
@@ -176,8 +196,6 @@ public class SearchController {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        LOGGER.debug("secialand {}", secialand);
-        LOGGER.debug("or {}", or);
         model.addAttribute("searchTerm", and);
         BoolQueryBuilder boolQuery = QueryBuilders.boolQuery();
         if (!and.isEmpty()) {
@@ -205,7 +223,8 @@ public class SearchController {
 
         }
         if (!secialand.isEmpty()) {
-            boolQuery.must(secialandQuery(secialand));
+            // exakt der inhalt
+            boolQuery.should(secialandQuery(secialand));
 
         }
 
@@ -251,7 +270,7 @@ public class SearchController {
 
             University universityObject = UniversityHelper.source2University(resultMap);
 
-            LOGGER.debug("university: {}", universityObject.toString());
+            LOGGER.debug("university: {}", universityObject.getName());
             LOGGER.debug("universityIds: {}", universityObject.getUniversityId());
             universityIds.add(universityObject.getUniversityId());
 
@@ -299,8 +318,8 @@ public class SearchController {
 
             Author authorObject = AuthorHelper.source2author(resultMap);
 
-            LOGGER.debug("author: {}", authorObject.toString());
-            LOGGER.debug("paper: {}", authorObject.getPaperIds().toString());
+            LOGGER.debug("author: {}", authorObject.getName());
+            LOGGER.debug("paper: {}", authorObject.getPaperIds());
             paperIds.addAll(authorObject.getPaperIds());
 
         }
@@ -346,9 +365,9 @@ public class SearchController {
     private QueryBuilder secialandQuery(String secialand) {
         LOGGER.debug("secialand query builder");
         secialand = secialand.replace("+", " ");
-        QueryBuilder secialandQuery = QueryBuilders.queryString(secialand).field("title").field("content");
-        LOGGER.debug("query build: {}", secialandQuery.toString());
-        return secialandQuery;
+        TextQueryBuilder textPhraseQuery = QueryBuilders.textPhraseQuery("content", secialand);
+        LOGGER.debug("query build: {}", textPhraseQuery.toString());
+        return textPhraseQuery;
 
     }
 
