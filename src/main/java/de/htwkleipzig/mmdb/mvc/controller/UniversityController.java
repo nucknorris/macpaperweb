@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import de.htwkleipzig.mmdb.model.University;
 import de.htwkleipzig.mmdb.service.UniversityService;
+import de.htwkleipzig.mmdb.util.OwnHash;
 
 /**
  * @author spinner0815, men0x
@@ -71,8 +72,7 @@ public class UniversityController {
         }
         if (university.getUniversityId().isEmpty()) {
             LOGGER.debug("university id is empty");
-            university.setUniversityId(university.getName().replaceAll(" ", "")
-                    + university.getCity().replaceAll(" ", ""));
+            university.setUniversityId(OwnHash.ownHash(university.getName(), university.getCity()));
         }
         if (university.getAuthorIds().isEmpty()) {
             LOGGER.debug("university id is empty");

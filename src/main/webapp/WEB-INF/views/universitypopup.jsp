@@ -17,7 +17,7 @@
 	type="text/css" media="print">
 <link rel="stylesheet" href="<c:url value='/css/main.css'/>"
 	type="text/css">
-<SCRIPT LANGUAGE="JavaScript">
+<script>
 	function updateParent() {
 
 		opener.document.getElementById("uniInput").value = radioWert(document.listofuniversities.myRadio);
@@ -37,7 +37,13 @@
 				return rObj[i].value;
 		return false;
 	}
-</SCRIPT>
+	function createNewUniversity() {
+		opener.window
+				.open('/macpaperweb/university/createUniversity', '_blank');
+		self.close();
+		return false;
+	}
+</script>
 </HEAD>
 <BODY>
 	<!-- 	<div id="content" class="span-24 last"> -->
@@ -70,6 +76,10 @@
 
 		</table>
 		<input type="button" value="Add" onClick="updateParent();">
+	</form>
+	<form name="newuni">
+		<input type="button" value="Create new university"
+			onClick="createNewUniversity();">
 	</form>
 
 	<!-- 	</div> -->
