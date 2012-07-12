@@ -142,12 +142,12 @@
 					</tr>
 
 
-					<tr>
-						<td><img
-							src="<s:url value="/icons/glyphicons_036_file.png" />" /></td>
-						<td><sf:label path="fileName">Filename:</sf:label></td>
-						<td><sf:input path="fileName" size="50" /></td>
-					</tr>
+<!-- 					<tr> -->
+<!-- 						<td><img -->
+<%-- 							src="<s:url value="/icons/glyphicons_036_file.png" />" /></td> --%>
+<%-- 						<td><sf:label path="fileName">Filename:</sf:label></td> --%>
+<%-- 						<td><sf:input path="fileName" size="50" /></td> --%>
+<!-- 					</tr> -->
 
 					<tr>
 						<td><img

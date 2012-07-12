@@ -22,7 +22,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import de.htwkleipzig.mmdb.model.Author;
+import de.htwkleipzig.mmdb.model.Paper;
+import de.htwkleipzig.mmdb.model.University;
 import de.htwkleipzig.mmdb.service.AuthorService;
+import de.htwkleipzig.mmdb.service.PaperService;
 import de.htwkleipzig.mmdb.service.UniversityService;
 import de.htwkleipzig.mmdb.util.OwnHash;
 
@@ -40,6 +43,9 @@ public class AuthorController {
 
     @Autowired
     private UniversityService universityService;
+
+    @Autowired
+    private PaperService paperService;
 
     public AuthorController() {
     }
@@ -82,13 +88,33 @@ public class AuthorController {
         if (author.getUniversityId().isEmpty()) {
             LOGGER.debug("university id is empty");
             author.setUniversityId("empty");
+        } // add authorId to university
+        else {
+            List<String> authorIds;
+            University university = universityService.get(author.getUniversityId());
+            authorIds = university.getAuthorIds();
+            authorIds.add(author.getAuthorId());
+            university.setAuthorIds(authorIds);
+            universityService.updateUniversity(university);
+            authorIds = null;
         }
         if (author.getPaperIds().isEmpty()) {
-            LOGGER.debug("university id is empty");
+            LOGGER.debug("paperId is empty");
             List<String> paperIds = new ArrayList<String>();
             paperIds.add("empty");
             author.setPaperIds(paperIds);
+        } else {
+            List<String> authorIds;
+            for (String paperId : author.getPaperIds()) {
+                Paper paper = paperService.get(paperId);
+                authorIds = paper.getAuthorIds();
+                authorIds.add(author.getAuthorId());
+                paper.setAuthorIds(authorIds);
+                paperService.updatePaper(paper);
+                authorIds = null;
+            }
         }
+
         LOGGER.debug("author: {}", author.getAuthorId());
         LOGGER.debug("name: {}", author.getName());
         authorService.updateAuthor(author);

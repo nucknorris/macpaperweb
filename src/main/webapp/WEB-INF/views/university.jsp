@@ -99,12 +99,12 @@
 						<td><sf:label path="country">Country:</sf:label></td>
 						<td><sf:input path="country" readonly="false" size="50" /></td>
 					</tr>
-					<tr>
-						<td width="3%"><img
-							src="<s:url value="/icons/glyphicons_024_parents.png" />" /></td>
-						<td><sf:label path="authorIds">Authors:</sf:label></td>
-						<td><sf:input path="authorIds" readonly="false" size="50" /></td>
-					</tr>
+<!-- 					<tr> -->
+<!-- 						<td width="3%"><img -->
+<%-- 							src="<s:url value="/icons/glyphicons_024_parents.png" />" /></td> --%>
+<%-- 						<td><sf:label path="authorIds">Authors:</sf:label></td> --%>
+<%-- 						<td><sf:input path="authorIds" readonly="false" size="50" /></td> --%>
+<!-- 					</tr> -->
 				</table>
 				<input id='save-button' type="submit" value="Save" />
 			</sf:form>

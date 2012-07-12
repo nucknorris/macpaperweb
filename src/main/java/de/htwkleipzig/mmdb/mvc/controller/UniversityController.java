@@ -21,7 +21,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import de.htwkleipzig.mmdb.model.Author;
 import de.htwkleipzig.mmdb.model.University;
+import de.htwkleipzig.mmdb.service.AuthorService;
 import de.htwkleipzig.mmdb.service.UniversityService;
 import de.htwkleipzig.mmdb.util.OwnHash;
 
@@ -36,6 +38,9 @@ public class UniversityController {
 
     @Autowired
     private UniversityService universityService;
+
+    @Autowired
+    private AuthorService authorService;
 
     public UniversityController() {
     }
@@ -74,11 +79,19 @@ public class UniversityController {
             LOGGER.debug("university id is empty");
             university.setUniversityId(OwnHash.ownHash(university.getName(), university.getCity()));
         }
-        if (university.getAuthorIds().isEmpty()) {
+        if (university.getAuthorIds() == null) {
             LOGGER.debug("university id is empty");
             List<String> authorIds = new ArrayList<String>();
-            authorIds.add("empty");
+            authorIds.add("");
             university.setAuthorIds(authorIds);
+        } else {
+            // store universityId in author
+
+            for (String authorId : university.getAuthorIds()) {
+                Author author = authorService.get(authorId);
+                author.setUniversityId(university.getUniversityId());
+                authorService.updateAuthor(author);
+            }
         }
         LOGGER.debug("university: {}", university.getUniversityId());
         LOGGER.debug("title: {}", university.getName());

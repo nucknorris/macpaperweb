@@ -83,11 +83,13 @@ public class PaperController {
                     LOGGER.debug("author is empty");
                 } else {
                     List<String> paperIds = new ArrayList<String>();
-                    if (author.getPaperIds() == null) {
+                    if (author.getPaperIds() != null) {
                         paperIds.addAll(author.getPaperIds());
                     }
                     paperIds.add(paper.getPaperId());
+                    author.setPaperIds(paperIds);
                     LOGGER.debug("update author with name {} {}", author.getName(), author.getLastname());
+                    LOGGER.debug("paperIds: {}", paperIds.toString());
                     authorService.updateAuthor(author);
                 }
             }

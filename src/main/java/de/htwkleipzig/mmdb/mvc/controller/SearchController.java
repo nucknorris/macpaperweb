@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.index.query.BaseQueryBuilder;
 import org.elasticsearch.index.query.BoolQueryBuilder;
+import org.elasticsearch.index.query.FieldQueryBuilder;
 import org.elasticsearch.index.query.FuzzyLikeThisQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
@@ -188,8 +189,8 @@ public class SearchController {
      */
     @RequestMapping(value = "/evaluateExtendedSearch")
     public String evaluateExtendedSearch(@RequestParam String author, @RequestParam String uni,
-            @RequestParam String category, @RequestParam String tags, @RequestParam String and,
-            @RequestParam String or, @RequestParam String secialand, Model model, HttpServletRequest request) {
+            @RequestParam String category, @RequestParam String and, @RequestParam String or,
+            @RequestParam String secialand, Model model, HttpServletRequest request) {
         LOGGER.info("starting evaluating of extended Search");
         try {
             request.setCharacterEncoding("UTF-8");
@@ -222,10 +223,10 @@ public class SearchController {
             boolQuery.must(categoryQuery(category));
 
         }
-        if (!tags.isEmpty()) {
-            boolQuery.must(tagsQuery(tags));
-
-        }
+        // if (!tags.isEmpty()) {
+        // boolQuery.must(tagsQuery(tags));
+        //
+        // }
         if (!secialand.isEmpty()) {
             // exakt der inhalt
             boolQuery.should(secialandQuery(secialand));
@@ -281,7 +282,7 @@ public class SearchController {
             paperIds.addAll(authorObject.getPaperIds());
 
         }
-        paperIdsQuery = QueryBuilders.inQuery("paperIds", paperIds.toArray());
+        paperIdsQuery = QueryBuilders.inQuery("paperId", paperIds.toArray());
         LOGGER.debug("query with paperIds for documentSearch {}", paperIdsQuery.toString());
         return paperIdsQuery;
     }
@@ -289,7 +290,8 @@ public class SearchController {
     private QueryBuilder getUniversitiesIdsQueryBuilder(QueryBuilder universityQuery) {
         SearchResponse universityResponse = universityService.search(universityQuery);
         QueryBuilder universityIdsQuery;
-        List<String> universityIds = new ArrayList<String>();
+        // List<String> universityIds = new ArrayList<String>();
+        BoolQueryBuilder boolQuery = QueryBuilders.boolQuery();
         for (SearchHit hit : universityResponse.getHits().getHits()) {
             if (hit.isSourceEmpty()) {
                 LOGGER.info("source is empty");
@@ -300,14 +302,15 @@ public class SearchController {
             Map<String, Object> resultMap = hit.sourceAsMap();
 
             University universityObject = UniversityHelper.source2University(resultMap);
-
+            FieldQueryBuilder fieldQuery = QueryBuilders.fieldQuery("universityId", universityObject.getUniversityId());
+            boolQuery.should(fieldQuery);
             LOGGER.debug("university: {}", universityObject.getName());
-            universityIds.add(universityObject.getUniversityId());
+            // universityIds.add(universityObject.getUniversityId());
 
         }
-        universityIdsQuery = QueryBuilders.inQuery("universityId", universityIds.toArray());
-        LOGGER.debug("query with universityIds for author search {}", universityIdsQuery.toString());
-        return universityIdsQuery;
+        // universityIdsQuery = QueryBuilders.inQuery("universityId", universityIds.toArray());
+        LOGGER.debug("query with universityIds for author search {}", boolQuery.toString());
+        return boolQuery;
     }
 
     /**

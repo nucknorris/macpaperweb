@@ -55,6 +55,7 @@
 			<tr>
 				<td></td>
 				<td>Name</td>
+				<td>Lastname</td>
 				<td>ID</td>
 			</tr>
 
@@ -64,6 +65,7 @@
 					<td><input type="radio" name="myRadio"
 						value=${ author.getAuthorId()}></td>
 					<td>${ author.getName()}</td>
+					<td>${ author.getLastname()}</td>
 					<td>${ author.getAuthorId()}</td>
 				</tr>
 

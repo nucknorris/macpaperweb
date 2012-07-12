@@ -12,8 +12,8 @@
 		class="fr.pilato.spring.elasticsearch.ElasticsearchTransportClientFactoryBean">
 		<property name="esNodes">
 			<list>
-				<value>leichentraktor.dyndns.org:9300</value>
-				<!-- <value>localhost:9300</value> -->
+<!-- 				<value>leichentraktor.dyndns.org:9300</value> -->
+				<value>localhost:9300</value>
 			</list>
 		</property>
 	</bean>

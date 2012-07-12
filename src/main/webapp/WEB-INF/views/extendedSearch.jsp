@@ -63,14 +63,14 @@
 							</tr>
 							<tr>
 								<td>Category:</td>
-								<td><input size="70" type="text" name="category"
+								<td><input type="hidden" "70" name="category"
 									placeholder='Please insert category' /></td>
 							</tr>
-							<tr>
-								<td>Tags:</td>
-								<td><input size="70" type="text" name="tags"
-									placeholder='Please insert tags' /></td>
-							</tr>
+<!-- 							<tr> -->
+<!-- 								<td>Tags:</td> -->
+<!-- 								<td><input size="70" type="text" name="tags" -->
+<!-- 									placeholder='Please insert tags' /></td> -->
+<!-- 							</tr> -->
 						</table>
 					</fieldset>
 				</div>
